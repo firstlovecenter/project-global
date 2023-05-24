@@ -16,7 +16,7 @@ import { useAuth } from 'contexts/AuthContext'
 import { Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { useState } from 'react'
-import { Input } from '@jaedag/admin-portal-core'
+import { Input } from '@jaedag/admin-portal-react-core'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 const ForgotPassword = () => {
