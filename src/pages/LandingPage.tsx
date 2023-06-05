@@ -1,17 +1,9 @@
 import { Container, Text, Center } from '@chakra-ui/layout'
 import React, { useState } from 'react'
 import { useAuth } from 'contexts/AuthContext'
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-} from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
+import { MenuButton } from '@jaedag/admin-portal-react-core'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
@@ -29,31 +21,58 @@ const LandingPage = () => {
     }
   }
 
-  return (
-    <Center height="60vh">
-      <Container textAlign="center">
-        <Card>
-          <CardHeader>Profile</CardHeader>
-          <CardBody>
-            {error && (
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle>Error!</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-            <Text>Email: {currentUser.email}</Text>
+  const data = [
+    {
+      ledearName: 'John-Dag',
+      roles: [
+        {
+          levelName: 'First Love Church',
+          levelType: 'Denominational',
+          role: 'Leader',
+        },
+        {
+          levelName: 'Africa',
+          levelType: 'Continent',
+          role: 'Leader',
+        },
+        {
+          levelName: 'Ghana',
+          levelType: 'Country',
+          role: 'Admin',
+        },
+        {
+          levelName: 'Accra',
+          levelType: 'Council',
+          role: 'Leader',
+        },
+        {
+          levelName: 'Legon',
+          levelType: 'Campus',
+          role: 'Leader',
+        },
+      ],
+    },
+  ]
 
-            <Button marginTop={2} onClick={() => navigate('/update-profile')}>
-              Update Profile
-            </Button>
-          </CardBody>
-        </Card>
-        <Button variant="link" onClick={handleLogout}>
-          Log Out
-        </Button>
-      </Container>
-    </Center>
+  return (
+    <Container centerContent>
+      <Text fontSize="3xl" fontWeight="semi-bold" marginTop={14}>
+        Welcome {data[0].ledearName}
+      </Text>
+      <Text fontSize="xl" fontWeight="semi-bold" marginBottom={12}>
+        Choose A Profile
+      </Text>
+      {data[0].roles?.map((role, index) => (
+        <MenuButton
+          key={index}
+          icon={null}
+          color="white"
+          title={`${role.levelName}`}
+          subtitle={` ${role.levelType} ${role.role}`}
+          onClick={() => navigate('/directory')}
+        />
+      ))}
+    </Container>
   )
 }
 
