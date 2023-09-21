@@ -25,11 +25,11 @@ const UpdateProfile = () => {
   const [show, setShow] = useState(false)
   const [error, setError] = useState('')
   const handleClick = () => setShow(!show)
-  const { currentUser, updateEmail, updatePassword } = useAuth()
+  const { user, updateEmail, updatePassword } = useAuth()
   const navigate = useNavigate()
 
   const initialValues = {
-    email: currentUser.email,
+    email: user.email,
     password: '',
     passwordConfirm: '',
   }
@@ -50,7 +50,7 @@ const UpdateProfile = () => {
     const { setSubmitting } = onSubmitProps
 
     const promises = []
-    if (values.email !== currentUser.email) {
+    if (values.email !== user.email) {
       promises.push(updateEmail(values.email ?? ''))
     }
     if (values.password) {

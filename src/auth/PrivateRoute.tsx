@@ -10,13 +10,13 @@ interface ProtectedRouteProps {
 
 const PrivateRoute: (props: ProtectedRouteProps) => JSX.Element = (props) => {
   const { children, roles, placeholder } = props
-  const { currentUser } = useAuth()
+  const { user } = useAuth()
 
   if (placeholder) {
     return children
   }
 
-  if (!currentUser) {
+  if (!user) {
     return <LogIn />
   }
 

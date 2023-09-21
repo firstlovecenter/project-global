@@ -15,12 +15,14 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
 import { ColorModeSwitcher } from '../components/ColorModeSwitcher'
 import useCustomColorMode from '../hooks/useCustomColors'
+import { useAuth } from 'contexts/AuthContext'
 
 function Navigation() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef(null)
   const navigate = useNavigate()
   const { bg } = useCustomColorMode()
+  const { user, logout } = useAuth()
 
   const menuItems = [
     {
@@ -74,6 +76,7 @@ function Navigation() {
           </DrawerBody>
 
           <DrawerFooter>
+            {user && <Button onClick={logout}>Log Me Out</Button>}
             <ColorModeSwitcher justifySelf="flex-end" />
           </DrawerFooter>
         </DrawerContent>

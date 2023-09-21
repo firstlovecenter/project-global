@@ -22,7 +22,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom'
 const ForgotPassword = () => {
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
-  const { resetPassword, currentUser } = useAuth()
+  const { resetPassword, user } = useAuth()
   const navigate = useNavigate()
 
   const initialValues = {
@@ -74,7 +74,7 @@ const ForgotPassword = () => {
                   <AlertDescription>{message}</AlertDescription>
                 </Alert>
               )}
-              <Text>{JSON.stringify(currentUser?.email)}</Text>
+              <Text>{JSON.stringify(user?.email)}</Text>
 
               <Formik
                 initialValues={initialValues}

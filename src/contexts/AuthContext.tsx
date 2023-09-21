@@ -9,6 +9,7 @@ import {
   updateEmail as updateEmailAuth,
   updatePassword as updatePasswordAuth,
 } from 'firebase/auth'
+import SplashScreen from 'pages/SplashScreen'
 import {
   ReactNode,
   createContext,
@@ -18,7 +19,7 @@ import {
 } from 'react'
 
 interface AuthContextType {
-  currentUser: User
+  user: User
   signup: (email: string, password: string) => Promise<UserCredential>
   login: (email: string, password: string) => Promise<UserCredential>
   logout: () => Promise<void>
@@ -28,7 +29,7 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType>({
-  currentUser: {} as User,
+  user: {} as User,
   signup: () => Promise.resolve({} as UserCredential),
   login: () => Promise.resolve({} as UserCredential),
   logout: () => Promise.resolve(),
@@ -47,11 +48,10 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [currentUser, setCurrentUser] = useState<User>({} as User)
+  const [user, setuser] = useState<User>({} as User)
   const [loading, setLoading] = useState(true)
 
   const signup = (email: string, password: string) => {
-    console.log('here')
     return createUserWithEmailAndPassword(auth, email, password)
   }
 
@@ -68,16 +68,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const updateEmail = (email: string) => {
-    return updateEmailAuth(currentUser, email)
+    return updateEmailAuth(user, email)
   }
 
   const updatePassword = (password: string) => {
-    return updatePasswordAuth(currentUser, password)
+    return updatePasswordAuth(user, password)
   }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user as User)
+      setuser(user as User)
       setLoading(false)
     })
 
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   const value = {
-    currentUser,
+    user,
     signup,
     login,
     logout,
@@ -96,6 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={value}>
+      {loading && <SplashScreen />}
       {!loading && children}
     </AuthContext.Provider>
   )

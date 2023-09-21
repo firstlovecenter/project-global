@@ -7,7 +7,7 @@ import { MenuButton } from '@jaedag/admin-portal-react-core'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
-  const { currentUser, logout } = useAuth()
+  const { user, logout } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = async () => {

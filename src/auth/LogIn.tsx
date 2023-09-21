@@ -25,7 +25,7 @@ const LogIn = () => {
   const [show, setShow] = useState(false)
   const [error, setError] = useState('')
   const handleClick = () => setShow(!show)
-  const { login, currentUser } = useAuth()
+  const { login, user } = useAuth()
   const navigate = useNavigate()
 
   const initialValues = {
@@ -70,7 +70,7 @@ const LogIn = () => {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-              <Text>{JSON.stringify(currentUser?.email)}</Text>
+              <Text>{JSON.stringify(user?.email)}</Text>
 
               <Formik
                 initialValues={initialValues}
