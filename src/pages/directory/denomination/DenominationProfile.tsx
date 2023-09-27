@@ -1,6 +1,5 @@
 import { Box, Container, Flex, Text } from '@chakra-ui/react'
 import LevelProfile from 'components/LevelProfile'
-import { useNavigate } from 'react-router-dom'
 
 const DenominationProfile = () => {
   const data = [
