@@ -31,7 +31,6 @@ const DenominationProfile = () => {
     },
   ]
 
-  const navigate = useNavigate()
   return (
     <Container>
       <Flex justify="space-between" align="center">
