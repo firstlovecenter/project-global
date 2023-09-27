@@ -50,6 +50,7 @@
     "no-console": "error",
     "import/extensions": "off",
     "react/react-in-jsx-scope": "off",
+    "ban-ts-comment": "off",
     "no-relative-import-paths/no-relative-import-paths": [
       "warn",
       { "allowSameFolder": true }

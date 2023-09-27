@@ -15,11 +15,18 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useAuth } from 'contexts/AuthContext'
-import { Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { useState } from 'react'
 import { Input } from '@jaedag/admin-portal-react-core'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+
+export type ProfileFormValues = {
+  email: string
+  password?: string
+  passwordConfirm?: string
+}
 
 const UpdateProfile = () => {
   const [show, setShow] = useState(false)
@@ -28,8 +35,8 @@ const UpdateProfile = () => {
   const { user, updateEmail, updatePassword } = useAuth()
   const navigate = useNavigate()
 
-  const initialValues = {
-    email: user.email,
+  const initialValues: ProfileFormValues = {
+    email: user.email ?? '',
     password: '',
     passwordConfirm: '',
   }
@@ -43,12 +50,7 @@ const UpdateProfile = () => {
     ),
   })
 
-  const onSubmit = async (
-    values: typeof initialValues,
-    onSubmitProps: FormikHelpers<typeof initialValues>
-  ) => {
-    const { setSubmitting } = onSubmitProps
-
+  const onSubmit = async (values: ProfileFormValues) => {
     const promises = []
     if (values.email !== user.email) {
       promises.push(updateEmail(values.email ?? ''))
@@ -58,15 +60,21 @@ const UpdateProfile = () => {
     }
 
     try {
-      setSubmitting(true)
       await Promise.all(promises)
       navigate('/')
     } catch (error) {
       setError('Failed to update account')
-    } finally {
-      setSubmitting(false)
     }
   }
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<ProfileFormValues>({
+    resolver: yupResolver(validationSchema),
+    defaultValues: initialValues,
+  })
 
   return (
     <Container>
@@ -85,55 +93,57 @@ const UpdateProfile = () => {
                 </Alert>
               )}
 
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-              >
-                {(formik) => (
-                  <Form>
-                    <Input size="lg" name="email" label="Email" />
-                    <InputGroup size="md" marginY={5}>
-                      <Input
-                        // paddingRight="4.5rem"
-                        size="lg"
-                        name="password"
-                        type={show ? 'text' : 'password'}
-                        placeholder="Leave blank to keep the same"
-                      />
-                      <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                          {show ? 'Hide' : 'Show'}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-                    <InputGroup size="md">
-                      <Input
-                        size="lg"
-                        // paddingRight="4.5rem"
-                        name="passwordConfirm"
-                        type={show ? 'text' : 'password'}
-                        placeholder="Leave blank to keep the same"
-                      />
-                      <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                          {show ? 'Hide' : 'Show'}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-
-                    <Button
-                      size="lg"
-                      width="100%"
-                      type="submit"
-                      marginTop={5}
-                      isLoading={formik.isSubmitting}
-                    >
-                      Update
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                  size="lg"
+                  name="email"
+                  label="Email"
+                  control={control}
+                  errors={errors}
+                />
+                <InputGroup size="md" marginY={5}>
+                  <Input
+                    // paddingRight="4.5rem"
+                    size="lg"
+                    name="password"
+                    type={show ? 'text' : 'password'}
+                    placeholder="Leave blank to keep the same"
+                    control={control}
+                    errors={errors}
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      {show ? 'Hide' : 'Show'}
                     </Button>
-                  </Form>
-                )}
-              </Formik>
+                  </InputRightElement>
+                </InputGroup>
+                <InputGroup size="md">
+                  <Input
+                    size="lg"
+                    // paddingRight="4.5rem"
+                    name="passwordConfirm"
+                    type={show ? 'text' : 'password'}
+                    placeholder="Leave blank to keep the same"
+                    control={control}
+                    errors={errors}
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      {show ? 'Hide' : 'Show'}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+
+                <Button
+                  size="lg"
+                  width="100%"
+                  type="submit"
+                  marginTop={5}
+                  isLoading={isSubmitting}
+                >
+                  Update
+                </Button>
+              </form>
             </CardBody>
           </Card>
           <Center width={'100%'} marginTop={2}>
