@@ -2,8 +2,15 @@ import { Container, Text } from '@chakra-ui/layout'
 import { useState } from 'react'
 import { useAuth } from 'contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { MenuButton } from '@jaedag/admin-portal-react-core'
-import { Button, VStack, Spacer } from '@chakra-ui/react'
+import {
+  Button,
+  VStack,
+  Spacer,
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from '@chakra-ui/react'
 import HomeLogo from 'assets/HomeLogo'
 
 const Home = () => {
@@ -84,7 +91,14 @@ const Home = () => {
         <Spacer />
         <Spacer />
         <Spacer />
-        <Button size="lg" onClick={logout}>
+        {error && (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle>Error!</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+        <Button size="lg" onClick={handleLogout}>
           Logout
         </Button>
       </VStack>
