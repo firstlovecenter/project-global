@@ -1,5 +1,6 @@
 import { Container, Text } from '@chakra-ui/react'
 import { MenuButton } from '@jaedag/admin-portal-react-core'
+import { FaQuestion } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 const Directory = () => {
@@ -15,7 +16,7 @@ const Directory = () => {
       </Text>
       {[1].map(() => (
         <MenuButton
-          icon={null}
+          icon={FaQuestion}
           color="white"
           title="Directory"
           onClick={() => navigate('/directory/denomination-profile')}

@@ -1,5 +1,5 @@
 import { Container, Flex, Box, Text } from '@chakra-ui/react'
-import { EditButton, MenuButton } from '@jaedag/admin-portal-react-core'
+import { EditButton } from '@jaedag/admin-portal-react-core'
 import LevelProfile from 'components/LevelProfile'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'

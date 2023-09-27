@@ -1,7 +1,5 @@
-import { Box, Button, Container, Flex, HStack, Text } from '@chakra-ui/react'
-import { EditButton, MenuButton } from '@jaedag/admin-portal-react-core'
+import { Box, Container, Flex, Text } from '@chakra-ui/react'
 import LevelProfile from 'components/LevelProfile'
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const DenominationProfile = () => {
