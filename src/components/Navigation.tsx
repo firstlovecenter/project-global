@@ -34,7 +34,6 @@ function Navigation() {
   return (
     <>
       <IconButton
-        colorScheme="gray"
         aria-label="Side Nav Toggle"
         size="lg"
         position="fixed"

@@ -3,6 +3,7 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
+  Box,
   Button,
   Card,
   CardBody,
@@ -15,11 +16,13 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useAuth } from 'contexts/AuthContext'
-import { Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import { useState } from 'react'
 import { Input } from '@jaedag/admin-portal-react-core'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import SplashLogo from 'assets/SplashLogo'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const LogIn = () => {
   const [show, setShow] = useState(false)
@@ -38,86 +41,90 @@ const LogIn = () => {
     password: Yup.string().min(6).required(),
   })
 
-  const onSubmit = async (
-    values: typeof initialValues,
-    onSubmitProps: FormikHelpers<typeof initialValues>
-  ) => {
-    const { setSubmitting } = onSubmitProps
+  const onSubmit = async (values: typeof initialValues) => {
     try {
-      setSubmitting(true)
       await login(values.email, values.password)
       navigate('/')
     } catch (error) {
       setError('Failed to log in')
     }
-
-    setSubmitting(false)
   }
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<typeof initialValues>({
+    resolver: yupResolver(validationSchema),
+    defaultValues: initialValues,
+  })
 
   return (
     <Container>
       <Center height="80vh">
         <Container>
-          <Card>
-            <CardBody>
-              <Heading textAlign={'center'} marginBottom={4}>
-                Log In
-              </Heading>
-              {error && (
-                <Alert status="error">
-                  <AlertIcon />
-                  <AlertTitle>Error!</AlertTitle>
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-              <Text>{JSON.stringify(user?.email)}</Text>
+          <Box>
+            <Heading textAlign={'center'} marginBottom={4}>
+              <Center>
+                <SplashLogo />
+              </Center>
+            </Heading>
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                <AlertTitle>Error!</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            <Text>{JSON.stringify(user?.email)}</Text>
 
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Input
+                name="email"
+                label="Email Address"
+                placeholder="Enter Email Address"
+                size="lg"
+                borderRadius="50px"
+                control={control}
+                errors={errors}
+              />
+              <InputGroup size="lg" marginY={5}>
+                <Input
+                  name="password"
+                  type={show ? 'text' : 'password'}
+                  placeholder="Enter password"
+                  borderRadius="50px"
+                  control={control}
+                  errors={errors}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                    {show ? 'Hide' : 'Show'}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+
+              <Button
+                width="100%"
+                type="submit"
+                size="lg"
+                marginTop={5}
+                isLoading={isSubmitting}
               >
-                {(formik) => (
-                  <Form>
-                    <Input name="email" label="Email" size="lg" />
-                    <InputGroup size="lg" marginY={5}>
-                      <Input
-                        // paddingRight="4.5rem"
-                        name="password"
-                        type={show ? 'text' : 'password'}
-                        placeholder="Enter password"
-                      />
-                      <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                          {show ? 'Hide' : 'Show'}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
+                LOGIN
+              </Button>
+            </form>
 
-                    <Button
-                      width="100%"
-                      type="submit"
-                      size="lg"
-                      marginTop={5}
-                      isLoading={formik.isSubmitting}
-                    >
-                      Log In
-                    </Button>
-                  </Form>
-                )}
-              </Formik>
-
-              <Container marginTop={3}>
-                <Text
-                  textAlign="center"
-                  color="blue.500"
-                  onClick={() => navigate('/forgot-password')}
-                >
-                  Forgot Password?
-                </Text>
-              </Container>
-            </CardBody>
-          </Card>
+            <Container marginTop={3}>
+              <Text
+                textAlign="center"
+                color="blue.500"
+                onClick={() => navigate('/forgot-password')}
+              >
+                Forgot Password?
+              </Text>
+            </Container>
+          </Box>
           <Center width={'100%'} marginTop={2}>
             <Text>
               Need an account?{' '}

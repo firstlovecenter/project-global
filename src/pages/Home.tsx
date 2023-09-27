@@ -1,11 +1,12 @@
-import { Container, Text, Center } from '@chakra-ui/layout'
-import React, { useState } from 'react'
+import { Container, Text } from '@chakra-ui/layout'
+import { useState } from 'react'
 import { useAuth } from 'contexts/AuthContext'
-import { Stack } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { MenuButton } from '@jaedag/admin-portal-react-core'
+import { Button, VStack, Spacer } from '@chakra-ui/react'
+import HomeLogo from 'assets/HomeLogo'
 
-const LandingPage = () => {
+const Home = () => {
   const [error, setError] = useState('')
   const { user, logout } = useAuth()
   const navigate = useNavigate()
@@ -57,23 +58,38 @@ const LandingPage = () => {
   return (
     <Container centerContent>
       <Text fontSize="3xl" fontWeight="semi-bold" marginTop={14}>
-        Welcome {data[0].ledearName}
+        Welcome {user.displayName}
       </Text>
-      <Text fontSize="xl" fontWeight="semi-bold" marginBottom={12}>
-        Choose A Profile
+      <Text
+        fontSize="xl"
+        color="brandGold.500"
+        fontWeight="bold"
+        marginBottom={12}
+      >
+        HOME
       </Text>
-      {data[0].roles?.map((role, index) => (
-        <MenuButton
-          key={index}
-          icon={null}
-          color="white"
-          title={`${role.levelName}`}
-          subtitle={` ${role.levelType} ${role.role}`}
-          onClick={() => navigate('/directory')}
-        />
-      ))}
+
+      <HomeLogo />
+
+      <VStack marginTop={10} spacing={4} align="stretch">
+        <Button paddingX={20} size="lg" variant="outline">
+          Directory
+        </Button>
+        <Button paddingX={20} size="lg" variant="outline">
+          Churches
+        </Button>
+        <Button paddingX={20} size="lg" variant="outline">
+          Buiding Projects
+        </Button>
+        <Spacer />
+        <Spacer />
+        <Spacer />
+        <Button size="lg" onClick={logout}>
+          Logout
+        </Button>
+      </VStack>
     </Container>
   )
 }
 
-export default LandingPage
+export default Home

@@ -1,30 +1,77 @@
-// theme.ts
+import {
+  defineStyleConfig,
+  extendTheme,
+  type ThemeConfig,
+} from '@chakra-ui/react'
 
-// 1. import `extendTheme` function
-import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
+import '@fontsource/bai-jamjuree/400.css'
+import '@fontsource/bai-jamjuree/700.css'
 
-// 2. Add your color mode config
 const config: ThemeConfig = {
   initialColorMode: 'dark',
   useSystemColorMode: false,
 }
 
 const colors = {
-  brand: {
-    light: '#2ad5dc',
-    dark: '#2ad5dc',
+  brandGold: {
+    50: '#f9f5f3',
+    100: '#f5e3d9',
+    200: '#e9c7b3',
+    300: '#dca98f',
+    400: '#d09b6b',
+    500: '#DDB995',
+    600: '#c37d47',
+    700: '#8c5732',
+    800: '#6f4227',
+    900: '#522d1c',
   },
-  accent: { light: '#DDB995', dark: '#DDB995' },
+  brandTeal: {
+    50: '#f5f9fc',
+    100: '#eaf3fa',
+    200: '#a9c1d1',
+    300: '#456b7e',
+    400: '#2e596e',
+    500: '#17465e',
+    600: '#153f55',
+    700: '#12384b',
+    800: '#103142',
+    900: '#0e2a38',
+  },
 }
 
-// 3. extend the theme
+const Button = defineStyleConfig({
+  baseStyle: {
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    borderRadius: '50px',
+  },
+
+  variants: {
+    outline: {
+      border: '2px solid',
+      borderColor: 'white',
+      color: '#DDB995',
+    },
+    solid: {
+      color: '#17465e',
+    },
+  },
+  defaultProps: {
+    size: 'md',
+    variant: 'solid',
+    colorScheme: 'brandGold',
+  },
+})
 
 const theme = extendTheme({
   config,
   colors,
+  components: {
+    Button,
+  },
   fonts: {
-    heading: `'Heading Font Name', sans-serif`,
-    body: `'Bal Jamjuree', sans-serif`,
+    heading: `'Bai Jamjuree', sans-serif`,
+    body: `Bai Jamjuree, sans-serif`,
   },
   styles: {
     global: () => ({
