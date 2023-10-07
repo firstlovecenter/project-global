@@ -26,17 +26,16 @@ const Home = () => {
 
       <VStack marginTop={10} spacing={4} align="stretch">
         <Button
-          paddingX={20}
           size="lg"
           variant="outline"
           onClick={() => navigate('/directory')}
         >
           Directory
         </Button>
-        <Button paddingX={20} size="lg" variant="outline">
+        <Button size="lg" variant="outline">
           Churches
         </Button>
-        <Button paddingX={20} size="lg" variant="outline">
+        <Button size="lg" variant="outline">
           Buiding Projects
         </Button>
       </VStack>

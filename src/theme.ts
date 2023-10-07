@@ -63,11 +63,21 @@ const Button = defineStyleConfig({
   },
 })
 
+const Heading = defineStyleConfig({
+  baseStyle: {
+    color: '#DDB995',
+    marginTop: '10',
+    textTransform: 'uppercase',
+    // textAlign: 'center',
+  },
+})
+
 const theme = extendTheme({
   config,
   colors,
   components: {
     Button,
+    Heading,
   },
   fonts: {
     heading: `'Bai Jamjuree', sans-serif`,

@@ -24,6 +24,8 @@ const DenominationProfile = lazy(
   () => import('./denomination/DenominationProfile')
 )
 
+const BishopsList = lazy(() => import('./members/BishopsList'))
+
 export const directoryRoutes: LazyRouteTypes[] = [
   {
     path: '/directory',
@@ -108,6 +110,11 @@ export const directoryRoutes: LazyRouteTypes[] = [
     path: '/directory/campus/create',
     element: CreateCampus,
     placeholder: true,
+    roles: ['all'],
+  },
+  {
+    path: 'directory/members/bishops',
+    element: BishopsList,
     roles: ['all'],
   },
 ]
