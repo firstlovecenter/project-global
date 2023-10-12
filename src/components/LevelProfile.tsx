@@ -1,4 +1,4 @@
-import { Box, Badge, Divider, VStack, Text, Button } from '@chakra-ui/react'
+import { Box, Badge, Divider, Text } from '@chakra-ui/react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 

@@ -1,11 +1,8 @@
 import { Container } from '@chakra-ui/react'
 import ChurchListHeader from 'components/ChurchListHeader'
 import DetailCard from 'components/DetailCard'
-import { useNavigate } from 'react-router-dom'
 
 function ContinentCountryList() {
-  const navigate = useNavigate()
-
   const data = [
     {
       leaderName: 'John Doe',

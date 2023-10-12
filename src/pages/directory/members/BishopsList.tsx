@@ -1,15 +1,6 @@
-import {
-  Avatar,
-  Box,
-  Container,
-  Divider,
-  HStack,
-  Heading,
-  Text,
-} from '@chakra-ui/react'
+import { Container, Divider, Heading } from '@chakra-ui/react'
 import MemberListCard from 'components/MemberListCard'
 import SearchBar from 'components/SearchBar'
-import React from 'react'
 
 const BishopsList = () => {
   const member = {
