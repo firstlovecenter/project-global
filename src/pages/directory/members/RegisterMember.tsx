@@ -1,0 +1,169 @@
+import { Button, Center, Container, Heading } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import {
+  GENDER_OPTIONS,
+  ImageUpload,
+  Input,
+  MARITAL_STATUS_OPTIONS,
+  PHONE_NUM_REGEX,
+  Select,
+} from '@jaedag/admin-portal-react-core'
+import { useAuth } from 'contexts/AuthContext'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
+
+const RegisterMember = () => {
+  const { user } = useAuth()
+  const initialValues = {
+    pictureUrl: '',
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    whatsappNumber: '',
+    gender: '',
+    maritalStatus: '',
+    occupation: '',
+    dateOfBirth: '',
+    campus: '',
+  }
+
+  const validationSchema = Yup.object({
+    pictureUrl: Yup.string().required('You must upload a picture'),
+    firstName: Yup.string().required(),
+    middleName: Yup.string(),
+    lastName: Yup.string().required(),
+    email: Yup.string().email().required(),
+    phoneNumber: Yup.string()
+      .matches(
+        PHONE_NUM_REGEX,
+        `Phone Number must start with + and country code (eg. '+233')`
+      )
+      .required('Phone Number is required'),
+    whatsappNumber: Yup.string()
+      .required('Whatsapp Number is required')
+      .matches(
+        PHONE_NUM_REGEX,
+        `Phone Number must start with + and country code (eg. '+233')`
+      ),
+    gender: Yup.string().required(),
+    maritalStatus: Yup.string().required(),
+    occupation: Yup.string().required(),
+    dateOfBirth: Yup.date()
+      .max(new Date(), "You can't be born after today")
+      .required('Date of Birth is a required field'),
+    campus: Yup.string().required(),
+  })
+
+  const onSubmit = async (values: typeof initialValues) => {
+    console.log(values)
+  }
+
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<typeof initialValues>({
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    resolver: yupResolver(validationSchema),
+    defaultValues: initialValues,
+  })
+
+  return (
+    <Container>
+      <Heading>Register Member</Heading>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <ImageUpload
+          user={user}
+          cloudinaryAccount="church-insights"
+          uploadPreset="developer-tests"
+          name="pictureUrl"
+          label="Picture"
+          setValue={setValue}
+          control={control}
+          errors={errors}
+        />
+        <Input
+          name="firstName"
+          label="First Name"
+          control={control}
+          errors={errors}
+        />
+        <Input
+          name="middleName"
+          label="Middle Name"
+          control={control}
+          errors={errors}
+        />
+        <Input
+          name="lastName"
+          label="Last Name"
+          control={control}
+          errors={errors}
+        />
+        <Input
+          name="email"
+          label="Email"
+          control={control}
+          errors={errors}
+          type="email"
+        />
+        <Input
+          name="phoneNumber"
+          label="Phone Number"
+          control={control}
+          errors={errors}
+          type="tel"
+        />
+        <Input
+          name="whatsappNumber"
+          label="WhatsApp Number"
+          control={control}
+          errors={errors}
+          type="tel"
+        />
+
+        <Select
+          name="gender"
+          label="Gender"
+          control={control}
+          errors={errors}
+          options={GENDER_OPTIONS}
+        />
+        <Select
+          name="maritalStatus"
+          label="Marital Status"
+          control={control}
+          errors={errors}
+          options={MARITAL_STATUS_OPTIONS}
+        />
+        <Input
+          name="occupation"
+          label="Occupation"
+          control={control}
+          errors={errors}
+        />
+        <Input
+          name="dateOfBirth"
+          label="Date of Birth"
+          control={control}
+          errors={errors}
+          type="date"
+        />
+        <Input name="campus" label="Campus" control={control} errors={errors} />
+
+        <Center>
+          <Button type="submit" marginTop={5} isLoading={isSubmitting}>
+            Submit
+          </Button>
+        </Center>
+      </form>
+    </Container>
+  )
+}
+
+export default RegisterMember

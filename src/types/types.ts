@@ -25,11 +25,11 @@ export interface Member extends User {
 }
 
 export type ChurchLevel =
-  | 'Global'
-  | 'Continent'
-  | 'Country'
-  | 'Council'
-  | 'Campus'
+  | 'global'
+  | 'continent'
+  | 'country'
+  | 'council'
+  | 'campus'
 
 export type Role =
   | 'adminGlobal'
@@ -42,6 +42,7 @@ export type Role =
   | 'leaderCountry'
   | 'leaderCouncil'
   | 'leaderCampus'
+  | 'all'
 
 export interface Church {
   id: string

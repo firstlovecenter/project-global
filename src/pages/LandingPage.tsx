@@ -13,10 +13,12 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { MenuButton } from '@jaedag/admin-portal-react-core'
 import { FaChurch } from 'react-icons/fa'
+import { useUser } from 'contexts/UserContext'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
   const { logout } = useAuth()
+  const { user } = useUser()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -66,7 +68,7 @@ const LandingPage = () => {
   return (
     <Container centerContent>
       <Text fontSize="3xl" fontWeight="semi-bold" marginTop={14}>
-        Welcome {data[0].ledearName}
+        Welcome {user.firstName} {user.lastName}
       </Text>
       <Text fontSize="xl" fontWeight="semi-bold" marginBottom={12}>
         Choose A Profile
@@ -85,6 +87,9 @@ const LandingPage = () => {
             subColor="white"
           />
         ))}
+        <Button size="lg" onClick={() => navigate('/member/register')}>
+          Register A Member
+        </Button>
         <Spacer />
         <Spacer />
         {error && (

@@ -20,6 +20,7 @@ import { Member } from 'types/types'
 
 interface AuthContextType {
   user: Member
+  setUser: (user: Member) => void
   signup: (email: string, password: string) => Promise<UserCredential>
   login: (email: string, password: string) => Promise<UserCredential>
   logout: () => Promise<void>
@@ -30,6 +31,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({
   user: {} as Member,
+  setUser: () => null,
   signup: () => Promise.resolve({} as UserCredential),
   login: () => Promise.resolve({} as UserCredential),
   logout: () => Promise.resolve(),
@@ -41,6 +43,7 @@ const AuthContext = createContext<AuthContextType>({
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext)
+
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider')
   }
@@ -48,7 +51,7 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setuser] = useState<Member>({} as Member)
+  const [user, setUser] = useState<Member>({} as Member)
   const [loading, setLoading] = useState(true)
 
   const signup = (email: string, password: string) => {
@@ -77,7 +80,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setuser(user as Member)
+      setUser({
+        ...user,
+      } as Member)
       setLoading(false)
     })
 
@@ -86,6 +91,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const value = {
     user,
+    setUser,
     signup,
     login,
     logout,
