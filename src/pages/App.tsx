@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Navigation from './components/Navigation'
+import Navigation from '../components/Navigation'
 import { AuthProvider } from 'contexts/AuthContext'
 import PrivateRoute from 'auth/PrivateRoute'
 import { authRoutes } from 'auth/authRoutes'

@@ -1,6 +1,5 @@
 import { auth } from 'firebase'
 import {
-  User,
   UserCredential,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -17,9 +16,10 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { Member } from 'types/types'
 
 interface AuthContextType {
-  user: User
+  user: Member
   signup: (email: string, password: string) => Promise<UserCredential>
   login: (email: string, password: string) => Promise<UserCredential>
   logout: () => Promise<void>
@@ -29,7 +29,7 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType>({
-  user: {} as User,
+  user: {} as Member,
   signup: () => Promise.resolve({} as UserCredential),
   login: () => Promise.resolve({} as UserCredential),
   logout: () => Promise.resolve(),
@@ -48,7 +48,7 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setuser] = useState<User>({} as User)
+  const [user, setuser] = useState<Member>({} as Member)
   const [loading, setLoading] = useState(true)
 
   const signup = (email: string, password: string) => {
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setuser(user as User)
+      setuser(user as Member)
       setLoading(false)
     })
 
