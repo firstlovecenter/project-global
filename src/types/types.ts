@@ -17,7 +17,7 @@ export interface Member extends User {
   phoneNumber: string
   campus: Church
 
-  dob: Date
+  dateOfBirth: string
   title: TitleOptions
   gender: GenderOptions
   maritalStatus: MaritalStatusOptions

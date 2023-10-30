@@ -41,9 +41,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       const querySnapshot = await getDocs(
         query(collection(db, 'members'), where('email', '==', email), limit(1))
       )
-      const members = querySnapshot.docs.map((doc) => doc.data())
+
+      const members = querySnapshot.docs.map((doc) => ({
+        id: doc.ref.id,
+        ...doc.data(),
+      }))
 
       setCurrentUser(members[0] as unknown as Member)
+
       return members[0]
     }
 

@@ -6,7 +6,7 @@ import { authRoutes } from 'auth/authRoutes'
 import { LoadingPage, PageNotFound } from '@jaedag/admin-portal-react-core'
 import { Suspense } from 'react'
 import { directoryRoutes } from 'pages/directory/directoryRoutes'
-import { IdContextProvider } from 'contexts/IdContext'
+import { RefContextProvider } from 'contexts/RefContext'
 import { FirestoreProvider, useFirebaseApp } from 'reactfire'
 import { getFirestore } from 'firebase/firestore'
 import { UserProvider } from 'contexts/UserContext'
@@ -18,7 +18,7 @@ function App() {
     <FirestoreProvider sdk={firestoreInstance}>
       <AuthProvider>
         <UserProvider>
-          <IdContextProvider>
+          <RefContextProvider>
             <BrowserRouter>
               <Navigation />
               <Suspense fallback={<LoadingPage />}>
@@ -41,7 +41,7 @@ function App() {
                 </Routes>
               </Suspense>
             </BrowserRouter>
-          </IdContextProvider>
+          </RefContextProvider>
         </UserProvider>
       </AuthProvider>
     </FirestoreProvider>

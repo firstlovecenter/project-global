@@ -19,6 +19,7 @@ const LandingPage = () => {
   const [error, setError] = useState('')
   const { logout } = useAuth()
   const { user } = useUser()
+  console.log('🚀 ~ file: LandingPage.tsx:22 ~ user:', user)
   const navigate = useNavigate()
 
   const handleLogout = async () => {

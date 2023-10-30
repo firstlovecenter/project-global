@@ -1,4 +1,4 @@
-import { Button, Center, Container, Heading } from '@chakra-ui/react'
+import { Button, Center, Container, Heading, useToast } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   GENDER_OPTIONS,
@@ -9,11 +9,18 @@ import {
   Select,
 } from '@jaedag/admin-portal-react-core'
 import { useAuth } from 'contexts/AuthContext'
+import { useRef } from 'contexts/RefContext'
+import { useUser } from 'contexts/UserContext'
+import { addDoc, collection, getFirestore } from 'firebase/firestore'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 const RegisterMember = () => {
-  const { user } = useAuth()
+  const { user } = useUser()
+  const { setMemberRef } = useRef()
+  const navigate = useNavigate()
+  const { signup, resetPassword } = useAuth()
   const initialValues = {
     pictureUrl: '',
     firstName: '',
@@ -22,8 +29,8 @@ const RegisterMember = () => {
     email: '',
     phoneNumber: '',
     whatsappNumber: '',
-    gender: '',
-    maritalStatus: '',
+    gender: 'Male',
+    maritalStatus: 'Single',
     occupation: '',
     dateOfBirth: '',
     campus: '',
@@ -56,8 +63,31 @@ const RegisterMember = () => {
     campus: Yup.string().required(),
   })
 
+  const toast = useToast()
   const onSubmit = async (values: typeof initialValues) => {
-    console.log(values)
+    const db = getFirestore()
+    const memberRef = collection(db, 'members')
+    try {
+      const ref = await addDoc(memberRef, {
+        ...values,
+        dateOfBirth: new Date(values.dateOfBirth),
+      })
+
+      await signup(values.email, 'rAnd0MLEtters0')
+      await resetPassword(values.email)
+      setMemberRef(ref)
+      navigate('/member/profile')
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast({
+          title: 'An error occurred.',
+          description: e.message,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+    }
   }
 
   const {
