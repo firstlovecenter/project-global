@@ -7,7 +7,6 @@ import { User } from 'firebase/auth'
 
 export interface Member extends User {
   id: string
-  roles: Role[]
   firstName: string
   middleName: string
   lastName: string
@@ -22,6 +21,26 @@ export interface Member extends User {
   gender: GenderOptions
   maritalStatus: MaritalStatusOptions
   occupation: string
+
+  leadsCampuses?: string[]
+  leadsCouncils?: string[]
+  leadsCountries?: string[]
+  leadsContinents?: string[]
+  leadsDenominations?: string[]
+
+  roles: Role[]
+  roleChurches: RoleChurches
+}
+
+type RoleChurch = {
+  id: string
+  name: string
+  level: ChurchLevel
+  role: string | 'Leader' | 'Admin'
+}
+
+export type RoleChurches = {
+  campuses: RoleChurch[]
 }
 
 export type ChurchLevel =

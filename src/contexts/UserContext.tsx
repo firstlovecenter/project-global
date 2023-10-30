@@ -79,7 +79,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     [user]
   )
 
-  const isUserLoading = !user
+  const isUserLoading = !user.id
 
   if (isUserLoading) {
     return <InitialLoading text={'Retrieving your church information...'} />

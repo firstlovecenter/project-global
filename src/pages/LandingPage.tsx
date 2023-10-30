@@ -14,12 +14,13 @@ import { useNavigate } from 'react-router-dom'
 import { MenuButton } from '@jaedag/admin-portal-react-core'
 import { FaChurch } from 'react-icons/fa'
 import { useUser } from 'contexts/UserContext'
+import { collection, getFirestore, query, where } from 'firebase/firestore'
+import { useFirestoreCollectionData } from 'reactfire'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
   const { logout } = useAuth()
   const { user } = useUser()
-  console.log('🚀 ~ file: LandingPage.tsx:22 ~ user:', user)
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -33,38 +34,28 @@ const LandingPage = () => {
     }
   }
 
-  const data = [
-    {
-      ledearName: 'John-Dag',
-      roles: [
-        {
-          levelName: 'First Love Church',
-          levelType: 'Denominational',
-          role: 'Leader',
-        },
-        {
-          levelName: 'Africa',
-          levelType: 'Continent',
-          role: 'Leader',
-        },
-        {
-          levelName: 'Ghana',
-          levelType: 'Country',
-          role: 'Admin',
-        },
-        {
-          levelName: 'Accra',
-          levelType: 'Council',
-          role: 'Leader',
-        },
-        {
-          levelName: 'Legon',
-          levelType: 'Campus',
-          role: 'Leader',
-        },
-      ],
-    },
-  ]
+  const db = getFirestore()
+  const campusCollRef = collection(db, 'campuses')
+
+  const campusQueryRef = query(
+    campusCollRef,
+    where('id', 'in', user.leadsCampuses)
+  )
+
+  const { data: campuses } = useFirestoreCollectionData(campusQueryRef, {
+    idField: 'id',
+  })
+
+  const leadsCampuses = campuses?.map((campus) => ({
+    campusId: campus.id,
+    levelName: campus.name,
+    levelType: 'Campus',
+    role: 'Leader',
+  }))
+
+  const data = {
+    roles: [...leadsCampuses],
+  }
 
   return (
     <Container centerContent>
@@ -76,7 +67,7 @@ const LandingPage = () => {
       </Text>
 
       <VStack spacing={2} align="stretch">
-        {data[0].roles?.map((role, index) => (
+        {data.roles?.map((role, index) => (
           <MenuButton
             key={index}
             icon={FaChurch}
