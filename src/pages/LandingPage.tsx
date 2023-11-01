@@ -41,6 +41,7 @@ const LandingPage = () => {
     campusCollRef,
     where('id', 'in', user.leadsCampuses)
   )
+  console.log('🚀 ~ file: LandingPage.tsx:44 ~ campusQueryRef:', campusQueryRef)
 
   const { data: campuses } = useFirestoreCollectionData(campusQueryRef, {
     idField: 'id',

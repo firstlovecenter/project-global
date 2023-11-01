@@ -1,4 +1,3 @@
-import { DocumentData, DocumentReference } from 'firebase/firestore'
 import React, {
   ReactNode,
   createContext,
@@ -8,18 +7,18 @@ import React, {
 } from 'react'
 
 interface RefContextType {
-  denominationRef?: DocumentReference<DocumentData>
-  continentRef?: DocumentReference<DocumentData>
-  countryRef?: DocumentReference<DocumentData>
-  councilRef?: DocumentReference<DocumentData>
-  campusRef?: DocumentReference<DocumentData>
-  memberRef?: DocumentReference<DocumentData>
-  setDenominationRef: (planetRef: DocumentReference) => void
-  setContinentRef: (continentRef: DocumentReference) => void
-  setCountryRef: (continentRef: DocumentReference) => void
-  setCouncilRef: (councilRef: DocumentReference) => void
-  setCampusRef: (continentRef: DocumentReference) => void
-  setMemberRef: (memberRef: DocumentReference) => void
+  denominationRef?: string
+  continentRef?: string
+  countryRef?: string
+  councilRef?: string
+  campusRef?: string
+  memberRef?: string
+  setDenominationRef: (planetRef: string) => void
+  setContinentRef: (continentRef: string) => void
+  setCountryRef: (continentRef: string) => void
+  setCouncilRef: (councilRef: string) => void
+  setCampusRef: (continentRef: string) => void
+  setMemberRef: (memberRef: string) => void
 }
 
 const RefContext = createContext<RefContextType>({
@@ -47,54 +46,54 @@ export const useRef = () => {
 }
 
 export const RefContextProvider = ({ children }: { children: ReactNode }) => {
-  const [denominationRef, setDenominationRef] = useState<DocumentReference>(
-    JSON.parse(sessionStorage.getItem('denominationRef') ?? '{}')
+  const [denominationRef, setDenominationRef] = useState<string>(
+    JSON.parse(sessionStorage.getItem('denominationRef') ?? '')
   )
 
-  const [continentRef, setContinentRef] = useState<DocumentReference>(
-    JSON.parse(sessionStorage.getItem('continentRef') ?? '{}')
+  const [continentRef, setContinentRef] = useState<string>(
+    JSON.parse(sessionStorage.getItem('continentRef') ?? '')
   )
 
-  const [countryRef, setCountryRef] = useState<DocumentReference>(
-    JSON.parse(sessionStorage.getItem('countryRef') ?? '{}')
+  const [countryRef, setCountryRef] = useState<string>(
+    JSON.parse(sessionStorage.getItem('countryRef') ?? '')
   )
 
-  const [councilRef, setCouncilRef] = useState<DocumentReference>(
-    JSON.parse(sessionStorage.getItem('councilRef') ?? '{}')
+  const [councilRef, setCouncilRef] = useState<string>(
+    JSON.parse(sessionStorage.getItem('councilRef') ?? '')
   )
 
-  const [campusRef, setCampusRef] = useState<DocumentReference>(
-    JSON.parse(sessionStorage.getItem('campusRef') ?? '{}')
+  const [campusRef, setCampusRef] = useState<string>(
+    JSON.parse(sessionStorage.getItem('campusRef') ?? '')
   )
-  const [memberRef, setMemberRef] = useState<DocumentReference>(
-    JSON.parse(sessionStorage.getItem('memberRef') ?? '{}')
+  const [memberRef, setMemberRef] = useState<string>(
+    JSON.parse(sessionStorage.getItem('memberRef') ?? '')
   )
 
-  const setDenRef = (denominationRef: DocumentReference) => {
+  const setDenRef = (denominationRef: string) => {
     setDenominationRef(denominationRef)
     sessionStorage.setItem('denominationRef', JSON.stringify(denominationRef))
   }
 
-  const setContRef = (continentRef: DocumentReference) => {
+  const setContRef = (continentRef: string) => {
     setContinentRef(continentRef)
     sessionStorage.setItem('continentRef', JSON.stringify(continentRef))
   }
 
-  const setCountRef = (countryRef: DocumentReference) => {
+  const setCountRef = (countryRef: string) => {
     setCountryRef(countryRef)
     sessionStorage.setItem('countryRef', JSON.stringify(countryRef))
   }
 
-  const setCouncRef = (councilRef: DocumentReference) => {
+  const setCouncRef = (councilRef: string) => {
     setCouncilRef(councilRef)
     sessionStorage.setItem('councilRef', JSON.stringify(councilRef))
   }
 
-  const setCampRef = (campusRef: DocumentReference) => {
+  const setCampRef = (campusRef: string) => {
     setCampusRef(campusRef)
     sessionStorage.setItem('campusRef', JSON.stringify(campusRef))
   }
-  const setMemRef = (memberRef: DocumentReference) => {
+  const setMemRef = (memberRef: string) => {
     setMemberRef(memberRef)
     sessionStorage.setItem('memberRef', JSON.stringify(memberRef))
   }

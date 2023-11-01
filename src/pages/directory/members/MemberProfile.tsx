@@ -9,11 +9,13 @@ import { useUser } from 'contexts/UserContext'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
+  console.log('🚀 ~ file: MemberProfile.tsx:12 ~ memberRef:', memberRef)
   const { user } = useUser()
 
-  const memRef = doc(useFirestore(), 'members', memberRef?.id ?? user.uid)
+  const memRef = doc(useFirestore(), 'members', memberRef ?? user.uid)
 
   const { status, data, error } = useFirestoreDocData(memRef)
+  console.log('🚀 ~ file: MemberProfile.tsx:18 ~ data:', data)
   const member = data as unknown as Member
   const details = []
   details.push({

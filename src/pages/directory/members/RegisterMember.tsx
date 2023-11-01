@@ -8,10 +8,10 @@ import {
   PHONE_NUM_REGEX,
   Select,
 } from '@jaedag/admin-portal-react-core'
-import { useAuth } from 'contexts/AuthContext'
+import { parsePhoneNumber } from '@jaedag/admin-portal-types'
 import { useRef } from 'contexts/RefContext'
 import { useUser } from 'contexts/UserContext'
-import { addDoc, collection, getFirestore } from 'firebase/firestore'
+import { collection, doc, getFirestore, setDoc } from 'firebase/firestore'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
@@ -20,7 +20,6 @@ const RegisterMember = () => {
   const { user } = useUser()
   const { setMemberRef } = useRef()
   const navigate = useNavigate()
-  const { signup, resetPassword } = useAuth()
   const initialValues = {
     pictureUrl: '',
     firstName: '',
@@ -68,14 +67,22 @@ const RegisterMember = () => {
     const db = getFirestore()
     const memberRef = collection(db, 'members')
     try {
-      const ref = await addDoc(memberRef, {
+      const customRef = doc(
+        memberRef,
+        '/' + parsePhoneNumber(values.whatsappNumber)
+      )
+
+      await setDoc(customRef, {
         ...values,
+        whatsappNumber: parsePhoneNumber(values.whatsappNumber),
+        parsePhoneNumber: parsePhoneNumber(values.phoneNumber),
         dateOfBirth: new Date(values.dateOfBirth),
       })
 
-      await signup(values.email, 'rAnd0MLEtters0')
-      await resetPassword(values.email)
-      setMemberRef(ref)
+      // await signup(values.email, 'rAnd0MLEtters0')
+      // await resetPassword(values.email)
+      setMemberRef(parsePhoneNumber(values.whatsappNumber))
+
       navigate('/member/profile')
     } catch (e: unknown) {
       if (e instanceof Error) {
