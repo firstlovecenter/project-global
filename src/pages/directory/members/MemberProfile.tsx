@@ -15,7 +15,6 @@ const MemberProfile = () => {
   const memRef = doc(useFirestore(), 'members', memberRef ?? user.uid)
 
   const { status, data, error } = useFirestoreDocData(memRef)
-  console.log('🚀 ~ file: MemberProfile.tsx:18 ~ data:', data)
   const member = data as unknown as Member
   const details = []
   details.push({

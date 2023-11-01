@@ -30,9 +30,10 @@ export interface Member extends User {
 
   roles: Role[]
   roleChurches: RoleChurches
+  selectedProfile: RoleChurch
 }
 
-type RoleChurch = {
+export type RoleChurch = {
   id: string
   name: string
   level: ChurchLevel
@@ -44,11 +45,11 @@ export type RoleChurches = {
 }
 
 export type ChurchLevel =
-  | 'global'
-  | 'continent'
-  | 'country'
-  | 'council'
-  | 'campus'
+  | 'Global'
+  | 'Continent'
+  | 'Country'
+  | 'Council'
+  | 'Campus'
 
 export type Role =
   | 'adminGlobal'

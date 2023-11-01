@@ -1,6 +1,7 @@
 import React, {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -13,12 +14,7 @@ interface RefContextType {
   councilRef?: string
   campusRef?: string
   memberRef?: string
-  setDenominationRef: (planetRef: string) => void
-  setContinentRef: (continentRef: string) => void
-  setCountryRef: (continentRef: string) => void
-  setCouncilRef: (councilRef: string) => void
-  setCampusRef: (continentRef: string) => void
-  setMemberRef: (memberRef: string) => void
+  clickCard: (ref: string, type: string) => void
 }
 
 const RefContext = createContext<RefContextType>({
@@ -28,12 +24,7 @@ const RefContext = createContext<RefContextType>({
   councilRef: undefined,
   campusRef: undefined,
   memberRef: undefined,
-  setDenominationRef: () => null,
-  setContinentRef: () => null,
-  setCountryRef: () => null,
-  setCouncilRef: () => null,
-  setCampusRef: () => null,
-  setMemberRef: () => null,
+  clickCard: () => null,
 })
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -47,26 +38,26 @@ export const useRef = () => {
 
 export const RefContextProvider = ({ children }: { children: ReactNode }) => {
   const [denominationRef, setDenominationRef] = useState<string>(
-    JSON.parse(sessionStorage.getItem('denominationRef') ?? '')
+    sessionStorage.getItem('denominationRef') ?? ''
   )
 
   const [continentRef, setContinentRef] = useState<string>(
-    JSON.parse(sessionStorage.getItem('continentRef') ?? '')
+    sessionStorage.getItem('continentRef') ?? ''
   )
 
   const [countryRef, setCountryRef] = useState<string>(
-    JSON.parse(sessionStorage.getItem('countryRef') ?? '')
+    sessionStorage.getItem('countryRef') ?? ''
   )
 
   const [councilRef, setCouncilRef] = useState<string>(
-    JSON.parse(sessionStorage.getItem('councilRef') ?? '')
+    sessionStorage.getItem('councilRef') ?? ''
   )
 
   const [campusRef, setCampusRef] = useState<string>(
-    JSON.parse(sessionStorage.getItem('campusRef') ?? '')
+    sessionStorage.getItem('campusRef') ?? ''
   )
   const [memberRef, setMemberRef] = useState<string>(
-    JSON.parse(sessionStorage.getItem('memberRef') ?? '')
+    sessionStorage.getItem('memberRef') ?? ''
   )
 
   const setDenRef = (denominationRef: string) => {
@@ -98,6 +89,31 @@ export const RefContextProvider = ({ children }: { children: ReactNode }) => {
     sessionStorage.setItem('memberRef', JSON.stringify(memberRef))
   }
 
+  const clickCard = useCallback((ref: string, type: string) => {
+    switch (type.toLowerCase()) {
+      case 'denomination':
+        setDenRef(ref)
+        break
+      case 'continent':
+        setContRef(ref)
+        break
+      case 'country':
+        setCountRef(ref)
+        break
+      case 'council':
+        setCouncRef(ref)
+        break
+      case 'campus':
+        setCampRef(ref)
+        break
+      case 'member':
+        setMemRef(ref)
+        break
+      default:
+        break
+    }
+  }, [])
+
   const value = useMemo(
     () => ({
       denominationRef,
@@ -106,12 +122,7 @@ export const RefContextProvider = ({ children }: { children: ReactNode }) => {
       councilRef,
       campusRef,
       memberRef,
-      setDenominationRef: setDenRef,
-      setContinentRef: setContRef,
-      setCountryRef: setCountRef,
-      setCouncilRef: setCouncRef,
-      setCampusRef: setCampRef,
-      setMemberRef: setMemRef,
+      clickCard,
     }),
     [
       denominationRef,
@@ -120,6 +131,7 @@ export const RefContextProvider = ({ children }: { children: ReactNode }) => {
       councilRef,
       campusRef,
       memberRef,
+      clickCard,
     ]
   )
 

@@ -7,12 +7,19 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import DirectoryBook from 'assets/icons/DirectoryBook'
+import { useUser } from 'contexts/UserContext'
 import { useNavigate } from 'react-router-dom'
 
 const Directory = () => {
   const navigate = useNavigate()
+  const { user } = useUser()
 
   const directoryMenuItems = [
+    {
+      title: 'Members',
+      onClick: () => navigate('/directory/members'),
+      roles: ['all'],
+    },
     {
       title: 'Bishops',
       onClick: () => navigate('/directory/members/bishops'),
@@ -29,7 +36,7 @@ const Directory = () => {
       roles: ['all'],
     },
     {
-      title: 'Assisting Missioaries',
+      title: 'Assisting Missionaries',
       onClick: () => navigate('/directory/members/assisting-missionaries'),
       roles: ['all'],
     },
@@ -54,10 +61,10 @@ const Directory = () => {
     <Container>
       <Heading>DIRECTORY</Heading>
       <Text fontSize="xl" fontWeight="semi-bold">
-        First Love Church
+        {user.selectedProfile.name} {user.selectedProfile.level}
       </Text>
       <Text fontSize="xl" fontWeight="semi-bold" mb={12}>
-        Denominational Admin
+        {user.selectedProfile.level} {user.selectedProfile.role}
       </Text>
       <VStack marginTop={10} spacing={4} align="stretch">
         <Center>
@@ -65,6 +72,7 @@ const Directory = () => {
         </Center>
         {directoryMenuItems.map((item) => (
           <Button
+            key={item.title}
             paddingY="25px"
             size="lg"
             variant="outline"
