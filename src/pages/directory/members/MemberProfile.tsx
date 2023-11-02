@@ -64,7 +64,13 @@ const MemberProfile = () => {
                   (window.location.href = `tel:${member.phoneNumber}`)
                 }
               />
-              <ProfileIcon icon={<GiMailbox />} label="Email" />
+              <ProfileIcon
+                icon={<GiMailbox />}
+                label="Email"
+                onClick={() =>
+                  (window.location.href = `mailto:${member.email}`)
+                }
+              />
             </HStack>
           </Center>
 
