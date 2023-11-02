@@ -47,7 +47,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         ...doc.data(),
       }))
 
-      setCurrentUser(members[0] as unknown as Member)
+      const fromSessionStorage = JSON.parse(
+        sessionStorage.getItem('user') ?? '{}'
+      )
+
+      setCurrentUser({
+        ...fromSessionStorage,
+        ...members[0],
+      } as unknown as Member)
 
       return members[0]
     }

@@ -51,7 +51,8 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<Member>({} as Member)
+  const fromSessionStorage = JSON.parse(sessionStorage.getItem('user') ?? '{}')
+  const [user, setUser] = useState<Member>(fromSessionStorage as Member)
   const [loading, setLoading] = useState(true)
 
   const signup = (email: string, password: string) => {
@@ -77,12 +78,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const updatePassword = (password: string) => {
     return updatePasswordAuth(user, password)
   }
+  const setUserAndSessionStorage = (user: Member) => {
+    setUser(user)
+    sessionStorage.setItem('user', JSON.stringify(user))
+  }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser({
+      setUserAndSessionStorage({
+        ...JSON.parse(sessionStorage.getItem('user') ?? '{}'),
         ...user,
       } as Member)
+
       setLoading(false)
     })
 
@@ -91,7 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const value = {
     user,
-    setUser,
+    setUser: setUserAndSessionStorage,
     signup,
     login,
     logout,

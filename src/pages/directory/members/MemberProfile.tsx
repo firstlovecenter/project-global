@@ -1,83 +1,93 @@
-import { Avatar, Center, Container, Heading } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  Button,
+  ButtonGroup,
+  Center,
+  Container,
+  Divider,
+  HStack,
+  Heading,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
 import { doc } from 'firebase/firestore'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
-import ProfileDetailCard from './ProfileDetailCard'
 import { Member } from 'types/types'
 import { useUser } from 'contexts/UserContext'
+import { FaPhone, FaWhatsapp } from 'react-icons/fa'
+import { GiMailbox } from 'react-icons/gi'
+import ProfileIcon from './components/ProfileIcon'
+import ProfileSectionLabel from './components/ProfileSectionLabel'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
-  console.log('🚀 ~ file: MemberProfile.tsx:12 ~ memberRef:', memberRef)
   const { user } = useUser()
 
-  const memRef = doc(useFirestore(), 'members', memberRef ?? user.uid)
+  const memRef = doc(useFirestore(), 'members', memberRef ?? user.id)
 
   const { status, data, error } = useFirestoreDocData(memRef)
   const member = data as unknown as Member
-  const details = []
-  details.push({
-    title: 'First Name',
-    detail: member.firstName,
-  })
-  member.middleName
-    ? details.push({
-        title: 'Middle Name',
-        detail: member.middleName,
-      })
-    : null
-  details.push({
-    title: 'Last Name',
-    detail: member.lastName,
-  })
-  details.push({
-    title: 'Email',
-    detail: member.email,
-  })
-  details.push({
-    title: 'Phone Number',
-    detail: member.phoneNumber,
-  })
-  details.push({
-    title: 'Whatsapp Number',
-    detail: member.whatsappNumber,
-  })
-  details.push({
-    title: 'Date of Birth',
-    detail: data.dateOfBirth.toDate().toLocaleString('en-gb', {
-      month: 'long',
-      day: 'numeric',
-    }),
-  })
-  details.push({
-    title: 'Gender',
-    detail: member.gender,
-  })
-  details.push({
-    title: 'Marital Status',
-    detail: member.maritalStatus,
-  })
-  details.push({
-    title: 'Occupation',
-    detail: member.occupation,
-  })
 
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={error}>
       <Container>
         <Heading size="lg">Member Profile</Heading>
-        <Center marginY={10}>
+        <Center marginTop={10}>
           <Avatar
-            src={data.pictureUrl}
-            name={data.firstName + ' ' + data.lastName}
+            src={member?.pictureUrl}
+            name={member?.firstName + ' ' + member?.lastName}
             size="2xl"
           />
         </Center>
+        <Box textAlign="center">
+          <Text color="brandGold.500" fontWeight="bold" fontSize="xl">
+            {member?.firstName + ' ' + member?.lastName}
+          </Text>
+          <Text>Active Roles</Text>
 
-        {details.map((detail) => (
-          <ProfileDetailCard title={detail.title} detail={detail.detail} />
-        ))}
+          <Center marginY={2}>
+            <HStack spacing={10}>
+              <ProfileIcon
+                icon={<FaWhatsapp />}
+                label="Whatsapp"
+                onClick={() =>
+                  (window.location.href = `https://wa.me/${member?.phoneNumber}`)
+                }
+              />
+              <ProfileIcon
+                icon={<FaPhone />}
+                label="Phone"
+                onClick={() =>
+                  (window.location.href = `tel:${member.phoneNumber}`)
+                }
+              />
+              <ProfileIcon icon={<GiMailbox />} label="Email" />
+            </HStack>
+          </Center>
+
+          <Divider />
+        </Box>
+
+        <ProfileSectionLabel label="Personal Documents" />
+        <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
+          <Button textAlign="start">Passport Bio Page</Button>
+          <Button>Immigration Docuemnts</Button>
+          <Button>Drivers License</Button>
+          <Button>Birth Certificate</Button>
+          <Button>Educational Certificates</Button>
+        </VStack>
+
+        <ProfileSectionLabel label="Oversight Info" />
+        <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
+          <Text>Accra Campus Bishop</Text>
+        </VStack>
+
+        <Button width="100%" variant="outline">
+          Construction:
+        </Button>
       </Container>
     </ApolloWrapper>
   )

@@ -8,5 +8,9 @@ export const plural = (church: string) => {
       return 'Councils'
     case 'Campus':
       return 'Campuses'
+    case 'campus':
+      return 'campuses'
+    default:
+      return church
   }
 }
