@@ -1,14 +1,7 @@
 import { Container, Divider, Heading } from '@chakra-ui/react'
-import MemberListCard from 'components/MemberListCard'
 import SearchBar from 'components/SearchBar'
 
 const BishopsList = () => {
-  const member = {
-    firstName: 'Isaac',
-    lastName: 'Agyeman',
-    picture: 'https://bit.ly/dan-abramov',
-  }
-  const church = { name: 'Africa West', typename: 'Family' }
   const array = [1, 2, 3, 4, 5]
 
   return (
@@ -19,10 +12,6 @@ const BishopsList = () => {
 
       {array.map(() => (
         <>
-          <MemberListCard
-            member={member}
-            subtitle={church.name + ' ' + church.typename}
-          />
           <Divider marginTop={5} />
         </>
       ))}

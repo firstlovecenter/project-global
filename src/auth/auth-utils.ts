@@ -2,7 +2,7 @@ import { ChurchLevel, Role } from 'types/types'
 
 export const permitAdmin = (role: ChurchLevel): Role[] => {
   switch (role) {
-    case 'campus':
+    case 'Campus':
       return [
         'adminGlobal',
         'adminContinent',
@@ -11,16 +11,16 @@ export const permitAdmin = (role: ChurchLevel): Role[] => {
         'adminCampus',
       ]
 
-    case 'council':
+    case 'Council':
       return ['adminGlobal', 'adminContinent', 'adminCountry', 'adminCouncil']
 
-    case 'country':
+    case 'Country':
       return ['adminGlobal', 'adminContinent', 'adminCountry']
 
-    case 'continent':
+    case 'Continent':
       return ['adminGlobal', 'adminContinent']
 
-    case 'global':
+    case 'Global':
       return ['adminGlobal']
 
     default:
@@ -30,7 +30,7 @@ export const permitAdmin = (role: ChurchLevel): Role[] => {
 
 export const permitLeader = (role: ChurchLevel): Role[] => {
   switch (role) {
-    case 'campus':
+    case 'Campus':
       return [
         'leaderGlobal',
         'leaderContinent',
@@ -39,7 +39,7 @@ export const permitLeader = (role: ChurchLevel): Role[] => {
         'leaderCampus',
       ]
 
-    case 'council':
+    case 'Council':
       return [
         'leaderGlobal',
         'leaderContinent',
@@ -47,13 +47,13 @@ export const permitLeader = (role: ChurchLevel): Role[] => {
         'leaderCouncil',
       ]
 
-    case 'country':
+    case 'Country':
       return ['leaderGlobal', 'leaderContinent', 'leaderCountry']
 
-    case 'continent':
+    case 'Continent':
       return ['leaderGlobal', 'leaderContinent']
 
-    case 'global':
+    case 'Global':
       return ['leaderGlobal']
 
     default:

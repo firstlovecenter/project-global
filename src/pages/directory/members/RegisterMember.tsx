@@ -18,7 +18,7 @@ import * as Yup from 'yup'
 
 const RegisterMember = () => {
   const { user } = useUser()
-  const { setMemberRef } = useRef()
+  const { clickCard } = useRef()
   const navigate = useNavigate()
   const initialValues = {
     pictureUrl: '',
@@ -81,7 +81,7 @@ const RegisterMember = () => {
 
       // await signup(values.email, 'rAnd0MLEtters0')
       // await resetPassword(values.email)
-      setMemberRef(parsePhoneNumber(values.whatsappNumber))
+      clickCard(parsePhoneNumber(values.whatsappNumber), 'member')
 
       navigate('/member/profile')
     } catch (e: unknown) {
