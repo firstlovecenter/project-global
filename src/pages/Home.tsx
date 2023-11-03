@@ -32,7 +32,11 @@ const Home = () => {
         >
           Directory
         </Button>
-        <Button size="lg" variant="outline">
+        <Button
+          size="lg"
+          variant="outline"
+          onClick={() => navigate('/churches')}
+        >
           Churches
         </Button>
         <Button size="lg" variant="outline">

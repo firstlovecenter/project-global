@@ -1,6 +1,7 @@
 import { LazyRouteTypes } from 'auth/auth-types'
 import { lazy } from 'react'
 import { memberRoutes } from './members/memberRoutes'
+import { churchesRoutes } from './churchesRoutes'
 
 const ContinentProfile = lazy(() => import('./continent/ContinentProfile'))
 const ContinentCountryList = lazy(
@@ -29,6 +30,7 @@ const BishopsList = lazy(() => import('./members/BishopsList'))
 
 export const directoryRoutes: LazyRouteTypes[] = [
   ...memberRoutes,
+  ...churchesRoutes,
   {
     path: '/directory',
     element: Directory,
