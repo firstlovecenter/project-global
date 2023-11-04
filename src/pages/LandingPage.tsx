@@ -41,7 +41,7 @@ const LandingPage = () => {
 
   const campusQueryRef = query(
     campusCollRef,
-    where('id', 'in', user.leadsCampuses)
+    where('id', 'in', user?.leadsCampuses ?? [])
   )
 
   const {

@@ -96,7 +96,12 @@ const LogIn = () => {
                   errors={errors}
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    marginRight="1rem"
+                    onClick={handleClick}
+                  >
                     {show ? 'Hide' : 'Show'}
                   </Button>
                 </InputRightElement>

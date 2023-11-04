@@ -11,7 +11,16 @@ import {
 import { parsePhoneNumber } from '@jaedag/admin-portal-types'
 import { useRef } from 'contexts/RefContext'
 import { useUser } from 'contexts/UserContext'
-import { collection, doc, getFirestore, setDoc } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  limit,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
@@ -64,18 +73,65 @@ const RegisterMember = () => {
 
   const toast = useToast()
   const onSubmit = async (values: typeof initialValues) => {
+    values.whatsappNumber = parsePhoneNumber(values.whatsappNumber)
+    values.phoneNumber = parsePhoneNumber(values.phoneNumber)
+
     const db = getFirestore()
+
     const memberRef = collection(db, 'members')
+
     try {
-      const customRef = doc(
-        memberRef,
-        '/' + parsePhoneNumber(values.whatsappNumber)
+      const memberWhatsappQuerySnapshot = await getDocs(
+        query(
+          collection(db, 'members'),
+          where('whatsappNumber', '==', values.whatsappNumber),
+          limit(1)
+        )
       )
+      const memberEmailQuerySnapshot = await getDocs(
+        query(
+          collection(db, 'members'),
+          where('email', '==', values.email),
+          limit(1)
+        )
+      )
+      const whatsappDuplicate = memberWhatsappQuerySnapshot.docs.map((doc) => ({
+        id: doc.ref.id,
+        ...doc.data(),
+      }))
+      const emailDuplicate = memberEmailQuerySnapshot.docs.map((doc) => ({
+        id: doc.ref.id,
+        ...doc.data(),
+      }))
+
+      if (whatsappDuplicate.length > 0) {
+        toast({
+          title: 'An error occurred.',
+          description: 'A member with this whatsapp number already exists',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+        return
+      }
+
+      if (emailDuplicate.length > 0) {
+        toast({
+          title: 'An error occurred.',
+          description: 'A member with this email already exists',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+        return
+      }
+
+      const customRef = doc(memberRef, '/' + values.whatsappNumber)
 
       await setDoc(customRef, {
         ...values,
-        whatsappNumber: parsePhoneNumber(values.whatsappNumber),
-        parsePhoneNumber: parsePhoneNumber(values.phoneNumber),
+        whatsappNumber: values.whatsappNumber,
+        parsePhoneNumber: values.phoneNumber,
         dateOfBirth: new Date(values.dateOfBirth),
       })
 

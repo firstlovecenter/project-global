@@ -10,6 +10,7 @@ import {
   where,
 } from 'firebase/firestore'
 import { ApolloWrapper, InitialLoading } from '@jaedag/admin-portal-react-core'
+import LogIn from 'auth/LogIn'
 
 interface UserContextType {
   user: Member
@@ -63,7 +64,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       getUserData(currentUser?.email)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentUser?.email])
 
   const isAuthorised = (permittedRoles: Role[]) => {
     if (permittedRoles?.includes('all')) {
@@ -88,8 +89,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const isUserLoading = !user.id
 
-  if (isUserLoading) {
+  if (isUserLoading && Object.keys(user).length !== 0) {
     return <InitialLoading text={'Retrieving your church information...'} />
+  }
+
+  if (isUserLoading) {
+    return <LogIn />
   }
 
   return (

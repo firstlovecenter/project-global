@@ -16,10 +16,10 @@ function App() {
 
   return (
     <FirestoreProvider sdk={firestoreInstance}>
-      <AuthProvider>
-        <UserProvider>
-          <RefContextProvider>
-            <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
+          <UserProvider>
+            <RefContextProvider>
               <Navigation />
               <Suspense fallback={<LoadingPage />}>
                 <Routes>
@@ -40,10 +40,10 @@ function App() {
                   <Route path="*" element={<PageNotFound />} />
                 </Routes>
               </Suspense>
-            </BrowserRouter>
-          </RefContextProvider>
-        </UserProvider>
-      </AuthProvider>
+            </RefContextProvider>
+          </UserProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </FirestoreProvider>
   )
 }
