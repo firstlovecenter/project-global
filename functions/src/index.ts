@@ -34,7 +34,7 @@ export const pushToArray = functions.firestore
       const userRef = admin.firestore().doc(`members/${memberId}`)
 
       return userRef.update({
-        leadsChurches: admin.firestore.FieldValue.arrayUnion({
+        roleChurches: admin.firestore.FieldValue.arrayUnion({
           id: campusId,
           name: campus?.name,
           level: 'campus',
