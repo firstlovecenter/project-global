@@ -23,15 +23,15 @@ export const helloWorld = onRequest((request, response) => {
 admin.initializeApp()
 
 export const pushToArray = functions.firestore
-  .document('users/{userId}/leadsCampuses/{campusId}')
+  .document('members/{memberId}/leadsCampuses/{campusId}')
   .onWrite(async (change, context) => {
-    const { userId, campusId } = context.params
+    const { memberId, campusId } = context.params
 
     try {
       const campusRef = admin.firestore().doc(`campuses/${campusId}`)
       const campus = (await campusRef.get()).data()
 
-      const userRef = admin.firestore().doc(`users/${userId}`)
+      const userRef = admin.firestore().doc(`members/${memberId}`)
 
       return userRef.update({
         leadsChurches: admin.firestore.FieldValue.arrayUnion({
