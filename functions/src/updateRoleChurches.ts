@@ -2,8 +2,9 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { Member, RoleChurch } from '../../src/types/types'
 
-export const updateMemberLeadsCampuses = functions.firestore
-  .document('members/{memberId}/leadsCampuses')
+export const updateMemberLeadsCampuses = functions
+  .region('europe-west1')
+  .firestore.document('members/{memberId}/leadsCampuses')
   .onWrite(async (change) => {
     const before = change.before.data() as Member
     const after = change.after.data() as Member

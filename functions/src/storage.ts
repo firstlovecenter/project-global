@@ -5,8 +5,9 @@ import { dirname, join } from 'path'
 import * as sharp from 'sharp'
 
 const gcs = new Storage()
-export const resizeAvatar = functions.storage
-  .object()
+export const resizeAvatar = functions
+  .region('europe-west1')
+  .storage.object()
   .onFinalize(async (object) => {
     const bucket = gcs.bucket(object.bucket)
 
