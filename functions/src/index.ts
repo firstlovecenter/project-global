@@ -10,5 +10,5 @@
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
-export { basicHTTP, api } from './http'
+export { api } from './http'
 export { createUserRecord } from './auth'
