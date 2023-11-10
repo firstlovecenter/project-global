@@ -1,5 +1,6 @@
 /* eslint-disable*/
 const concurrently = require('concurrently')
+const { concurrentOpts } = require('./common')
 
 const jobs = [
   {
@@ -18,12 +19,6 @@ const jobs = [
     prefixColor: 'blue',
   },
 ]
-
-const concurrentOpts = {
-  restartTries: 3,
-  prefix: '{time} {name} |',
-  timestampFormat: 'HH:mm:ss',
-}
 
 const { result } = concurrently(jobs, concurrentOpts)
 
