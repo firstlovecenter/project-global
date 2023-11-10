@@ -90,4 +90,4 @@ app.post('/create-user', async (request, response) => {
   }
 })
 
-export const api = functions.https.onRequest(app)
+export const api = functions.region('europe-west1').https.onRequest(app)
