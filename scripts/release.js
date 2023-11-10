@@ -1,5 +1,5 @@
-/* eslint-disable no-undef */
-import concurrently from 'concurrently'
+/* eslint-disable*/
+const concurrently = require('concurrently')
 
 const versionBump = []
 const release = []
