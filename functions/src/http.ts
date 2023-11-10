@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as express from 'express'
+import * as cors from 'cors'
 
 admin.initializeApp()
 
@@ -15,6 +16,7 @@ export const basicHTTP = functions.https.onRequest((request, response) => {
 })
 
 const app = express()
+app.use(cors({ origin: true }))
 
 app.get('cat', (request, response) => {
   response.send('CAT')

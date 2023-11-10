@@ -1,10 +1,16 @@
-import concurrently from 'concurrently'
+/* eslint-disable*/
+const concurrently = require('concurrently')
 
 const jobs = [
   {
     name: 'api',
     command: `cd functions && firebase emulators:start --only functions`,
     prefixColor: 'green',
+  },
+  {
+    name: 'api-build',
+    command: `cd functions && npm run build:watch`,
+    prefixColor: 'red',
   },
   {
     name: 'client',
