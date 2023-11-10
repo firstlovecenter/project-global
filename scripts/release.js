@@ -14,8 +14,7 @@ switch (process.argv[2]) {
     })
     release.push({
       name: 'release:patch',
-      command:
-        "changelog -p && git add CHANGELOG.md && git commit -m 'docs: updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags",
+      command: 'changelog -p && git add CHANGELOG.md ', //&& git commit -m 'docs: updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags",
       prefixColor: 'yellow',
     })
     break
