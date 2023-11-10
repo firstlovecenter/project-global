@@ -7,8 +7,8 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-export { basicHTTP, api } from './http'
-// export * from './updateRoleChurches'
-
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
+
+export { basicHTTP, api } from './http'
+export { createUserRecord } from './auth'

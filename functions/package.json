@@ -11,9 +11,6 @@
     "deploy": "npm run secrets-sync && firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
-  "engines": {
-    "node": "18"
-  },
   "main": "lib/index.js",
   "dependencies": {
     "cors": "^2.8.5",
