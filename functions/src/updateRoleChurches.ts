@@ -1,24 +1,56 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import { Member, RoleChurch } from '../../src/types/types'
 
-export const updateRoleChurchesFromLeadsCampuses = functions.firestore
-  .document('members/{memberId}/leadsCampuses/{campusId}')
-  .onWrite(async (change, context) => {
-    const { memberId, campusId } = context.params
+export const updateMemberLeadsCampuses = functions.firestore
+  .document('members/{memberId}/leadsCampuses')
+  .onWrite(async (change) => {
+    const before = change.before.data() as Member
+    const after = change.after.data() as Member
 
     try {
-      const campusRef = admin.firestore().doc(`campuses/${campusId}`)
-      const campus = (await campusRef.get()).data()
+      const campuses = after.leadsCampuses || []
+      const campusesSnapshot = await admin
+        .firestore()
+        .collection('campuses')
+        .where('id', 'in', campuses.length ? campuses : ['none'])
+        .get()
 
-      const userRef = admin.firestore().doc(`members/${memberId}`)
+      const campusesData = campusesSnapshot.docs.map((doc) => doc.data())
 
-      return userRef.update({
-        roleChurches: admin.firestore.FieldValue.arrayUnion({
-          id: campusId,
-          name: campus?.name,
-          level: 'campus',
+      const memberRef = admin.firestore().doc(`members/${after.id}`)
+      const memberSnapshot = await memberRef.get()
+      const memberData = memberSnapshot.data() as Member
+
+      const roleChurches = memberData?.roleChurches || []
+
+      // remove all before campuses
+      roleChurches.forEach((campus) => {
+        if (before.leadsCampuses?.includes(campus.id)) {
+          roleChurches.splice(roleChurches.indexOf(campus), 1)
+        }
+      })
+
+      // add all after campuses
+      campusesData?.forEach((campus) => {
+        roleChurches.push({
+          id: campus.id,
+          name: campus.name,
+          level: 'Campus',
           role: 'leader',
-        }),
+        })
+      })
+
+      return memberRef.update({
+        roleChurches: roleChurches.reduce(
+          (acc: RoleChurch[], current: RoleChurch) => {
+            if (!acc.find((obj) => obj.id === current.id)) {
+              acc.push(current)
+            }
+            return acc
+          },
+          []
+        ),
       })
     } catch (error) {
       console.error('Error updating user:', error)

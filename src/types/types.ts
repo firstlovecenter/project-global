@@ -29,7 +29,7 @@ export interface Member extends User {
   leadsDenominations?: string[]
 
   roles: Role[]
-  roleChurches: RoleChurches
+  roleChurches: RoleChurch[]
   selectedProfile: RoleChurch
 }
 
