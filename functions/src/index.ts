@@ -7,7 +7,7 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-export { basicHTTP } from './http'
+export { basicHTTP, api } from './http'
 // export * from './updateRoleChurches'
 
 // Start writing functions

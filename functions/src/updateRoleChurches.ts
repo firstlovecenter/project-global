@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 
-export const updateRoleChurchesFromLeadsCampuses23 = functions.firestore
+export const updateRoleChurchesFromLeadsCampuses = functions.firestore
   .document('members/{memberId}/leadsCampuses/{campusId}')
   .onWrite(async (change, context) => {
     const { memberId, campusId } = context.params

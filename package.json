@@ -11,10 +11,12 @@
     "url": "git://github.com/firstlovecenter/flow-giving.git"
   },
   "scripts": {
-    "dev": "doppler run vite",
+    "dev": "node scripts/start-dev.js",
     "build": "tsc && doppler run vite build",
+    "build:watch": "tsc --watch",
     "deploy-dev": "firebase deploy --project project-global-aa5ea",
     "deploy-prod": "firebase deploy --project project-global-prod",
+    "serve": "CLOUD_RUNTIME_CONFIG=\"$(doppler secrets download --no-file | jq '{doppler: .}')\" firebase emulators:start",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
@@ -60,7 +62,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
-    "@commitlint/config-conventional": "^17.6.3",
+    "@commitlint/config-conventional": "^17.8.1",
     "@jaedag/admin-portal-types": "^1.0.31",
     "@types/node": "^20.1.0",
     "@types/react": "^18.0.28",
@@ -68,6 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "@vitejs/plugin-react-swc": "^3.0.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",

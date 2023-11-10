@@ -25,7 +25,9 @@ const LandingPage = () => {
   const { user } = useUser()
   const { clickCard } = useRef()
   const navigate = useNavigate()
-
+  fetch('http://127.0.0.1:5001/project-global-aa5ea/us-central1/api', {
+    method: 'GET',
+  }).then((res) => console.log(res))
   const handleLogout = async () => {
     setError('')
 
