@@ -11,9 +11,10 @@ import {
 import { parsePhoneNumber } from '@jaedag/admin-portal-types'
 import { useRef } from 'contexts/RefContext'
 import { useUser } from 'contexts/UserContext'
-import { collection, doc, getFirestore, setDoc } from 'firebase/firestore'
+import { httpsCallable } from 'firebase/functions'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { useFunctions } from 'reactfire'
 import * as Yup from 'yup'
 
 const RegisterMember = () => {
@@ -63,18 +64,16 @@ const RegisterMember = () => {
   })
 
   const toast = useToast()
+  const functions = useFunctions()
+
   const onSubmit = async (values: typeof initialValues) => {
     values.whatsappNumber = parsePhoneNumber(values.whatsappNumber)
     values.phoneNumber = parsePhoneNumber(values.phoneNumber)
 
-    const db = getFirestore()
-
-    const memberRef = collection(db, 'members')
-
     try {
-      const customRef = doc(memberRef, '/' + values.whatsappNumber)
+      const signup = httpsCallable(functions, 'api/create-user')
 
-      await setDoc(customRef, {
+      signup({
         ...values,
         whatsappNumber: values.whatsappNumber,
         parsePhoneNumber: values.phoneNumber,

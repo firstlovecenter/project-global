@@ -32,7 +32,7 @@ app.post('/updateUser', async (request, response) => {
   }
 })
 
-app.post('/createUser', async (request, response) => {
+app.post('/create-user', async (request, response) => {
   const member = JSON.parse(request.body) as Member
 
   try {

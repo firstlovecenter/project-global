@@ -8,8 +8,9 @@
  */
 
 // Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+// https://firebase.google.com/docs/functions/typescr ipt
 
 export { api } from './http'
 export { createUserRecord } from './auth'
 export { updateMemberLeadsCampuses } from './updateRoleChurches'
+export { resizeAvatar } from './storage'
