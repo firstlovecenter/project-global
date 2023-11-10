@@ -4,6 +4,7 @@ const concurrentOpts = {
   timestampFormat: 'HH:mm:ss',
 }
 
-export default {
+// eslint-disable-next-line no-undef
+module.exports = {
   concurrentOpts,
 }

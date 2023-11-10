@@ -1,6 +1,6 @@
 /* eslint-disable*/
 const concurrently = require('concurrently')
-const { concurrentOpts } = require('./common').default
+const { concurrentOpts } = require('./common')
 
 const versionBump = []
 const release = []
