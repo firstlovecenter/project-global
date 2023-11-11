@@ -25,23 +25,18 @@ const LandingPage = () => {
   const { user } = useUser()
   const { clickCard } = useRef()
   const navigate = useNavigate()
-  fetch(
-    'http://127.0.0.1:5001/project-global-aa5ea/us-central1/api/createUser',
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        id: 'rg9GCItdAdRRhctbd6DX',
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        whatsappNumber: user.whatsappNumber,
-        photoURL: user.photoURL,
-        selectedProfile: user.selectedProfile,
-        leadsCampuses: ['accra'],
-      }),
-    }
-  ).then(console.log)
+
+  const url = new URL(
+    'http://127.0.0.1:5001/project-global-aa5ea/europe-west1/search/campus'
+  )
+  url.searchParams.append('searchKey', 'acc')
+  url.searchParams.append('uid', user.uid)
+
+  fetch(url, {
+    method: 'GET',
+  })
+    .then(console.log)
+    .catch(console.error)
 
   const handleLogout = async () => {
     setError('')

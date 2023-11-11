@@ -22,10 +22,15 @@ export interface Member {
   occupation: string
 
   leadsCampuses?: string[]
+  adminCampuses?: string[]
   leadsCouncils?: string[]
+  adminCouncils?: string[]
   leadsCountries?: string[]
+  adminCountries?: string[]
   leadsContinents?: string[]
+  adminContinents?: string[]
   leadsDenominations?: string[]
+  adminDenominations?: string[]
 
   roles: Role[]
   roleChurches: RoleChurch[]
@@ -44,11 +49,17 @@ export type RoleChurches = {
 }
 
 export type ChurchLevel =
-  | 'Global'
+  | 'Denomination'
   | 'Continent'
   | 'Country'
   | 'Council'
   | 'Campus'
+export type ChurchLevelLowercase =
+  | 'denomination'
+  | 'continent'
+  | 'country'
+  | 'council'
+  | 'campus'
 
 export type Role =
   | 'adminGlobal'
