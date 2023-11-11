@@ -10,29 +10,6 @@ admin.initializeApp()
 const app = express()
 app.use(cors({ origin: true }), json())
 
-app.post('/updateUser', async (request, response) => {
-  const { uid } = request.body
-
-  const userRef = admin.firestore().doc(`members/${uid}`)
-
-  try {
-    await userRef.set({
-      leadsCampuses: ['accra'],
-      uid,
-      firstName: 'John-Dag',
-      lastName: 'Addy',
-      email: 'jaedagy@gmail.com',
-      phoneNumber: '233594760323',
-      photoURL: 'https://lh3.goo',
-      createdAt: new Date(),
-    })
-    response.send('User updated')
-  } catch (error) {
-    console.error('Error updating user:', error)
-    response.status(500).send(error)
-  }
-})
-
 app.post('/create-user', async (request, response) => {
   const member = request.body as Member
 
@@ -88,10 +65,34 @@ app.post('/create-user', async (request, response) => {
     }
     await memberRef.set(memberData)
     response.send(memberData)
+    return
   } catch (error: unknown) {
     console.log('There was an error creating the user')
     response.status(500).send(error)
   }
 })
 
-export const api = functions.region('europe-west1').https.onRequest(app)
+app.post('/update-user', async (request, response) => {
+  const { uid } = request.body
+
+  const userRef = admin.firestore().doc(`members/${uid}`)
+
+  try {
+    await userRef.set({
+      uid,
+      leadsCampuses: ['accra'],
+      firstName: 'John-Dag',
+      lastName: 'Addy',
+      email: 'jaedagy@gmail.com',
+      phoneNumber: '233594760323',
+      photoURL: 'https://lh3.goo',
+      createdAt: new Date(),
+    })
+    response.send('User updated')
+  } catch (error) {
+    console.error('Error updating user:', error)
+    response.status(500).send(error)
+  }
+})
+
+export const directory = functions.region('europe-west1').https.onRequest(app)

@@ -72,7 +72,7 @@ const RegisterMember = () => {
     values.phoneNumber = parsePhoneNumber(values.phoneNumber)
 
     try {
-      const signup = httpsCallable(functions, 'api/create-user')
+      const signup = httpsCallable(functions, 'directory/create-user')
 
       signup({
         ...values,
