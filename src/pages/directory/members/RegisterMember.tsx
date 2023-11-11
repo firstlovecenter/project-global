@@ -9,6 +9,7 @@ import {
   Select,
 } from '@jaedag/admin-portal-react-core'
 import { parsePhoneNumber } from '@jaedag/admin-portal-types'
+import SearchCampus from 'components/forms/SearchCampus'
 import { useRef } from 'contexts/RefContext'
 import { useUser } from 'contexts/UserContext'
 import { httpsCallable } from 'firebase/functions'
@@ -193,6 +194,14 @@ const RegisterMember = () => {
           type="date"
         />
         <Input name="campus" label="Campus" control={control} errors={errors} />
+        <SearchCampus
+          name="campus"
+          label="Campus"
+          control={control}
+          errors={errors}
+          setValue={setValue}
+          placeholder="Search for a campus"
+        />
 
         <Center>
           <Button type="submit" marginTop={5} isLoading={isSubmitting}>

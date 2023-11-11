@@ -11,60 +11,59 @@ import './react-autosuggest.css'
 import { useUser } from 'contexts/UserContext'
 import { RoleBasedSearch } from './form-types'
 import { DEBOUNCE_TIMER, initialise } from './forms-utils'
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore'
-import { useFirestore } from 'reactfire'
+import { SEARCH_FUNCTION_BASE_URL } from 'global-utils'
+import { Church } from '@jaedag/admin-portal-types'
 
-const SearchFellowship = (props: RoleBasedSearch) => {
+const SearchCampus = (props: RoleBasedSearch) => {
   const { name, setValue, label, placeholder, initialValue, errors } = props
 
   const { user } = useUser()
   const [suggestions, setSuggestions] = useState([])
-  const [searchString, setSearchString] = useState(initialValue ?? '')
+  const [searchString, setSearchString] = useState(initialValue || '')
 
-  const error = ''
+  const campusSearch = async ({
+    uid,
+    searchKey,
+  }: {
+    uid: string
+    searchKey: string
+  }) => {
+    try {
+      const fetchUrl = new URL(SEARCH_FUNCTION_BASE_URL + '/campus')
+      fetchUrl.searchParams.append('uid', uid)
+      fetchUrl.searchParams.append('searchKey', searchKey)
 
-  const db = getFirestore()
-  const campusCollRef = collection(db, 'campuses')
+      const response = await fetch(fetchUrl, {
+        method: 'GET',
+      })
 
-  const campusSearch = async ({ id, key }: { id: string; key: string }) => {
-    const querySnapshot = await getDocs(
-      query(campusCollRef, where('name', '==', key))
-    )
+      const data = await response.json()
 
-    const campuses = querySnapshot.docs.map((doc) => ({
-      id: doc.ref.id,
-      ...doc.data(),
-    }))
+      setSuggestions(data)
+    } catch (error) {
+      console.log(error)
+    }
 
     return []
   }
 
-  const whichSearch = (searchString: string) => {
-    campusSearch({
-      id: user.id,
-      key: searchString?.trim(),
-    })
-  }
-
   useEffect(() => {
     setSearchString(initialise(searchString, initialValue))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialValue])
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      whichSearch(searchString)
+      campusSearch({
+        uid: user.id,
+        searchKey: searchString?.trim(),
+      })
     }, DEBOUNCE_TIMER)
 
     return () => {
       clearTimeout(timerId)
     }
-  }, [searchString])
+  }, [searchString, user.id])
 
   return (
     <FormControl>
@@ -100,7 +99,7 @@ const SearchFellowship = (props: RoleBasedSearch) => {
           setSearchString(suggestion.name)
           setValue(name, suggestion)
         }}
-        getSuggestionValue={(suggestion: any) => suggestion.name}
+        getSuggestionValue={(suggestion: Church) => suggestion.name}
         highlightFirstSuggestion={true}
         renderSuggestion={(suggestion, { isHighlighted }) => (
           <Card
@@ -122,4 +121,4 @@ const SearchFellowship = (props: RoleBasedSearch) => {
   )
 }
 
-export default SearchFellowship
+export default SearchCampus

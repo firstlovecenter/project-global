@@ -26,18 +26,6 @@ const LandingPage = () => {
   const { clickCard } = useRef()
   const navigate = useNavigate()
 
-  const url = new URL(
-    'http://127.0.0.1:5001/project-global-aa5ea/europe-west1/search/campus'
-  )
-  url.searchParams.append('searchKey', 'acc')
-  url.searchParams.append('uid', user.uid)
-
-  fetch(url, {
-    method: 'GET',
-  })
-    .then(console.log)
-    .catch(console.error)
-
   const handleLogout = async () => {
     setError('')
 
