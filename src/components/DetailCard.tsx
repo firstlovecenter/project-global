@@ -1,6 +1,5 @@
 import { Box, Flex, Image, Divider, Text } from '@chakra-ui/react'
-import { plural } from 'global-utils'
-import React from 'react'
+import { pluralize } from 'globalUtils'
 import { useNavigate } from 'react-router-dom'
 
 type SubLevelWithCount = {
@@ -63,7 +62,7 @@ const DetailCard = ({
                     {subLevel.count}
                   </Text>
                   <Text textAlign="center">
-                    {plural(subLevel.subLevelType)}
+                    {pluralize(subLevel.subLevelType, 2)}
                   </Text>
                 </Box>
                 {index !== subLevelWithCount.length - 1 && (

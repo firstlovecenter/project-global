@@ -1,5 +1,5 @@
 import { Flex, Button, Text } from '@chakra-ui/react'
-import { plural } from 'global-utils'
+import { pluralize } from 'globalUtils'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,7 +21,7 @@ function ChurchListHeader({
         {higherLevelName} {higherLevelType}
       </Text>
       <Text fontSize="xl" fontWeight="bold">
-        {plural(subLevelType)}
+        {pluralize(subLevelType, 2)}
       </Text>
       <Flex justify={'flex-end'}>
         <Button

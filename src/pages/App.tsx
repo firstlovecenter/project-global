@@ -10,7 +10,7 @@ import { RefContextProvider } from 'contexts/RefContext'
 import { FirestoreProvider, FunctionsProvider, useFirebaseApp } from 'reactfire'
 import { getFirestore } from 'firebase/firestore'
 import { UserProvider } from 'contexts/UserContext'
-import { functions } from 'firebase'
+import { functions } from 'firebase/firebase'
 
 function App() {
   const firestoreInstance = getFirestore(useFirebaseApp())

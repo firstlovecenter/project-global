@@ -14,7 +14,7 @@ import './react-autosuggest.css'
 import { useUser } from 'contexts/UserContext'
 import { RoleBasedSearch } from './form-types'
 import { initialise } from './forms-utils'
-import { SEARCH_FUNCTION_BASE_URL } from 'global-utils'
+import { SEARCH_FUNCTION_BASE_URL } from 'firebase/cloudFunctionsConfig'
 import { Church } from '@jaedag/admin-portal-types'
 
 const SearchCampus = (props: RoleBasedSearch) => {
