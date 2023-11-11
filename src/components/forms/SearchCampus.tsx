@@ -8,6 +8,7 @@ import {
   Input,
   InputProps,
   Spinner,
+  useToast,
 } from '@chakra-ui/react'
 import './react-autosuggest.css'
 import { useUser } from 'contexts/UserContext'
@@ -22,6 +23,7 @@ const SearchCampus = (props: RoleBasedSearch) => {
   const [suggestions, setSuggestions] = useState([])
   const [searchString, setSearchString] = useState(initialValue || '')
   const [loading, setLoading] = useState(false)
+  const toast = useToast()
 
   const campusSearch = async ({
     uid,
@@ -44,7 +46,13 @@ const SearchCampus = (props: RoleBasedSearch) => {
 
       setSuggestions(data)
     } catch (error) {
-      console.log(error)
+      toast({
+        title: 'Error searching for campus',
+        description: 'There was an error searching for campus ' + error,
+        status: 'error',
+        duration: 6000,
+        isClosable: true,
+      })
     } finally {
       setLoading(false)
     }
@@ -62,6 +70,7 @@ const SearchCampus = (props: RoleBasedSearch) => {
       uid: user.id,
       searchKey: searchString,
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchString, user.id])
 
   return (

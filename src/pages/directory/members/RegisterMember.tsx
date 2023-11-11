@@ -193,7 +193,6 @@ const RegisterMember = () => {
           errors={errors}
           type="date"
         />
-        <Input name="campus" label="Campus" control={control} errors={errors} />
         <SearchCampus
           name="campus"
           label="Campus"
