@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import * as express from 'express'
 import * as cors from 'cors'
 import { json } from 'body-parser'
-import { Member } from './types'
+import { Member } from './types/types'
 
 admin.initializeApp()
 

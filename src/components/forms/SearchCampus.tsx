@@ -2,24 +2,26 @@ import { useEffect, useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import {
   Card,
+  Center,
   FormControl,
   FormErrorMessage,
   Input,
   InputProps,
+  Spinner,
 } from '@chakra-ui/react'
 import './react-autosuggest.css'
 import { useUser } from 'contexts/UserContext'
 import { RoleBasedSearch } from './form-types'
-import { DEBOUNCE_TIMER, initialise } from './forms-utils'
+import { initialise } from './forms-utils'
 import { SEARCH_FUNCTION_BASE_URL } from 'global-utils'
 import { Church } from '@jaedag/admin-portal-types'
 
 const SearchCampus = (props: RoleBasedSearch) => {
   const { name, setValue, label, placeholder, initialValue, errors } = props
-
   const { user } = useUser()
   const [suggestions, setSuggestions] = useState([])
   const [searchString, setSearchString] = useState(initialValue || '')
+  const [loading, setLoading] = useState(false)
 
   const campusSearch = async ({
     uid,
@@ -29,6 +31,7 @@ const SearchCampus = (props: RoleBasedSearch) => {
     searchKey: string
   }) => {
     try {
+      setLoading(true)
       const fetchUrl = new URL(SEARCH_FUNCTION_BASE_URL + '/campus')
       fetchUrl.searchParams.append('uid', uid)
       fetchUrl.searchParams.append('searchKey', searchKey)
@@ -42,6 +45,8 @@ const SearchCampus = (props: RoleBasedSearch) => {
       setSuggestions(data)
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
 
     return []
@@ -53,16 +58,10 @@ const SearchCampus = (props: RoleBasedSearch) => {
   }, [initialValue])
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      campusSearch({
-        uid: user.id,
-        searchKey: searchString?.trim(),
-      })
-    }, DEBOUNCE_TIMER)
-
-    return () => {
-      clearTimeout(timerId)
-    }
+    campusSearch({
+      uid: user.id,
+      searchKey: searchString,
+    })
   }, [searchString, user.id])
 
   return (
@@ -114,8 +113,23 @@ const SearchCampus = (props: RoleBasedSearch) => {
           </Card>
         )}
       />
+
       {errors[name] && (
         <FormErrorMessage>{errors[name]?.message as string}</FormErrorMessage>
+      )}
+
+      {loading && !suggestions.length && (
+        <Card
+          padding={3}
+          zIndex={'overlay'}
+          backgroundColor={'gray.700'}
+          color={'gray.200'}
+          width="100%"
+        >
+          <Center>
+            <Spinner color="gray.200" />
+          </Center>
+        </Card>
       )}
     </FormControl>
   )

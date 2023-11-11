@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import { Member, RoleChurch } from './types'
+import { Member, RoleChurch } from './types/types'
 
 export const updateMemberLeadsCampuses = functions
   .region('europe-west1')

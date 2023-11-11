@@ -3,8 +3,8 @@ import * as admin from 'firebase-admin'
 import * as express from 'express'
 import * as cors from 'cors'
 import { json } from 'body-parser'
-import { Member } from './types'
-import { getMemberHighestRole, validateRequest } from './utils'
+import { Member } from './types/types'
+import { getMemberHighestRole, validateRequest } from './utils/utils'
 
 const app = express()
 app.use(cors({ origin: true }), json())
@@ -13,7 +13,7 @@ app.get('/campus', async (request, response) => {
   type SearchParams = { uid: string; searchKey: string }
   const { uid, searchKey } = request.query as SearchParams
 
-  const invalidReq = validateRequest(request.query, ['uid', 'searchKey'])
+  const invalidReq = validateRequest(request.query, ['uid'])
 
   if (invalidReq) {
     response.status(400).send(invalidReq)
@@ -31,8 +31,8 @@ app.get('/campus', async (request, response) => {
       .firestore()
       .collection('campuses')
       .where(`${highestRole?.level}`, 'in', highestRole.ids)
-      .where('id', '>=', searchKey.toLowerCase())
-      .where('id', '<=', searchKey.toLowerCase() + '\uf8ff')
+      .where('id', '>=', searchKey?.toLowerCase())
+      .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
       .get()
 
     const churches = churchSnapshot.docs.map((doc) => doc.data())

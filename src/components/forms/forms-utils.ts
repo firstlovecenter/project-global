@@ -2,7 +2,7 @@ export const initialise = (searchString: string, initialValue?: string) => {
   const showingSame = initialValue === searchString
 
   if (!initialValue) {
-    return 'a'
+    return ''
   }
 
   if (!showingSame) {

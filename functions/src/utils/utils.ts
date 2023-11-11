@@ -1,4 +1,4 @@
-import { ChurchLevelLowercase, Member } from './types'
+import { ChurchLevelLowercase, Member } from '../types/types'
 
 export const getMemberHighestRole = (member: Member) => {
   type HighestRoleType = {
