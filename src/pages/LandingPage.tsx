@@ -78,7 +78,7 @@ const LandingPage = () => {
           Choose A Profile
         </Text>
 
-        <VStack spacing={2} align="stretch">
+        <VStack spacing={2} align="stretch" width="80%">
           {data.roles?.map((role, index) => (
             <MenuButton
               key={index}

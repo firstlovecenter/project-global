@@ -11,6 +11,7 @@
 // https://firebase.google.com/docs/functions/typescr ipt
 
 export { directory } from './directory-users'
+export { updateDocIdOnNameChange } from './directory-churches'
 export { createUserRecord } from './auth'
 export { updateMemberLeadsCampuses } from './updateRoleChurches'
 export { resizeAvatar } from './storage'
