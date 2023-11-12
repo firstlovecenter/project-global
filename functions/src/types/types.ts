@@ -62,12 +62,12 @@ export type ChurchLevelLowercase =
   | 'campus'
 
 export type Role =
-  | 'adminGlobal'
+  | 'adminPlanet'
   | 'adminContinent'
   | 'adminCountry'
   | 'adminCouncil'
   | 'adminCampus'
-  | 'leaderGlobal'
+  | 'leaderPlanet'
   | 'leaderContinent'
   | 'leaderCountry'
   | 'leaderCouncil'

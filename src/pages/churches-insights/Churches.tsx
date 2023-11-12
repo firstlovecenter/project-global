@@ -10,12 +10,15 @@ import {
 import { useUser } from 'contexts/UserContext'
 import { useNavigate } from 'react-router-dom'
 import InfoCard from './components/InfoCard'
+import { getSubFamilyChurch, getSubGeoChurch, pluralize } from 'globalUtils'
 
 const Churches = () => {
   const { user } = useUser()
   const navigate = useNavigate()
 
   const selectedProfile = user.selectedProfile
+  const subGeoChurch = pluralize(getSubGeoChurch(selectedProfile.level))
+  const subFamChurch = pluralize(getSubFamilyChurch(selectedProfile.level))
 
   return (
     <Container>
@@ -49,8 +52,12 @@ const Churches = () => {
       </VStack>
 
       <VStack paddingX={10} marginTop={10} spacing={2} align="stretch">
-        <Button paddingY={6}>Countries in Africa</Button>
-        <Button paddingY={6}>Families in Africa</Button>
+        {!!subGeoChurch && (
+          <Button paddingY={6}>{subGeoChurch} in Africa</Button>
+        )}
+        {!!subFamChurch && (
+          <Button paddingY={6}>{subFamChurch} in Africa</Button>
+        )}
       </VStack>
     </Container>
   )

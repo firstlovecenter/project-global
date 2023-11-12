@@ -45,7 +45,7 @@ export type RoleChurches = {
 }
 
 export type ChurchLevel =
-  | 'Global'
+  | 'Planet'
   | 'Continent'
   | 'Country'
   | 'City'
@@ -55,7 +55,7 @@ export type ChurchLevel =
   | 'Campus'
 
 export type Role =
-  | 'adminGlobal'
+  | 'adminPlanet'
   | 'adminContinent'
   | 'adminCountry'
   | 'adminCity'
@@ -63,7 +63,7 @@ export type Role =
   | 'adminFamily'
   | 'adminCouncil'
   | 'adminCampus'
-  | 'leaderGlobal'
+  | 'leaderPlanet'
   | 'leaderContinent'
   | 'leaderCountry'
   | 'leaderCity'

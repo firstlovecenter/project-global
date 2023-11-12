@@ -15,9 +15,9 @@ export const pluralize = (word?: string, count?: number) => {
   return count === 1 ? word : `${word}s`
 }
 
-export const subGeoChurch = (church: ChurchLevel) => {
+export const getSubGeoChurch = (church: ChurchLevel) => {
   switch (church) {
-    case 'Global':
+    case 'Planet':
       return 'Continent'
     case 'Continent':
       return 'Country'
@@ -31,7 +31,7 @@ export const subGeoChurch = (church: ChurchLevel) => {
   }
 }
 
-export const subFamilyChurch = (church: ChurchLevel) => {
+export const getSubFamilyChurch = (church: ChurchLevel) => {
   switch (church) {
     case 'Denomination':
       return 'Family'
