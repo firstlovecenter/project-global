@@ -100,3 +100,7 @@ export const validateRequest = (request: any, requiredFields: string[]) => {
 
   return null
 }
+
+export const removeSpaces = (str: string) => {
+  return str.replace(/\s/g, '')
+}
