@@ -5,11 +5,26 @@ export const pluralize = (word?: string, count?: number) => {
     return ''
   }
 
-  if (word === 'campus') {
-    return count === 1 ? word : 'campuses'
+  if (count === 1) {
+    return word
   }
-  if (word === 'country') {
-    return count === 1 ? word : 'countries'
+
+  /**
+   * Object containing plural forms for certain words.
+   * @type {Object<string, string>}
+   */
+
+  const pluralForms: { [key: string]: string } = {
+    campus: 'campuses',
+    Campus: 'Campuses',
+    country: 'countries',
+    Country: 'Countries',
+    family: 'families',
+    Family: 'Families',
+  }
+
+  if (word in pluralForms) {
+    return pluralForms[word]
   }
 
   return count === 1 ? word : `${word}s`
@@ -17,7 +32,7 @@ export const pluralize = (word?: string, count?: number) => {
 
 export const getSubGeoChurch = (church: ChurchLevel) => {
   switch (church) {
-    case 'Planet':
+    case 'Denomination':
       return 'Continent'
     case 'Continent':
       return 'Country'

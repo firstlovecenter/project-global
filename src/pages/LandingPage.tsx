@@ -1,5 +1,5 @@
 import { Container, Text } from '@chakra-ui/layout'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useAuth } from 'contexts/AuthContext'
 import {
   Alert,
@@ -11,13 +11,10 @@ import {
   Spacer,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { ApolloWrapper, MenuButton } from '@jaedag/admin-portal-react-core'
+import { MenuButton } from '@jaedag/admin-portal-react-core'
 import { FaChurch } from 'react-icons/fa'
 import { useUser } from 'contexts/UserContext'
-import { collection, query, where } from 'firebase/firestore'
-import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { useRef } from 'contexts/RefContext'
-import { RoleChurch } from 'types/types'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
@@ -37,39 +34,8 @@ const LandingPage = () => {
     }
   }
 
-  const campusCollRef = collection(useFirestore(), 'campuses')
-
-  const campusQueryRef = query(
-    campusCollRef,
-    where('id', 'in', user?.leadsCampuses ?? [])
-  )
-
-  const {
-    status,
-    data: campuses,
-    error: campusError,
-  } = useFirestoreCollectionData(campusQueryRef, {
-    idField: 'id',
-  })
-
-  const leadsCampuses: RoleChurch[] =
-    campuses?.map((campus) => ({
-      id: campus.id,
-      name: campus.name,
-      level: 'Campus',
-      role: 'Leader',
-    })) ?? []
-
-  const data = {
-    roles: [...leadsCampuses],
-  }
-
   return (
-    <ApolloWrapper
-      loading={status === 'loading'}
-      data={campuses}
-      error={campusError}
-    >
+    <>
       <Container centerContent>
         <Text fontSize="3xl" fontWeight="semi-bold" marginTop={14}>
           Welcome {user.firstName} {user.lastName}
@@ -79,7 +45,7 @@ const LandingPage = () => {
         </Text>
 
         <VStack spacing={2} align="stretch" width="80%">
-          {data.roles?.map((role, index) => (
+          {user.roleChurches?.map((role, index) => (
             <MenuButton
               key={index}
               icon={FaChurch}
@@ -116,7 +82,7 @@ const LandingPage = () => {
           </Button>
         </VStack>
       </Container>
-    </ApolloWrapper>
+    </>
   )
 }
 
