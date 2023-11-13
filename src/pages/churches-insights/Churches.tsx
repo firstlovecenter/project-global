@@ -53,7 +53,9 @@ const Churches = () => {
 
       <VStack paddingX={10} marginTop={10} spacing={2} align="stretch">
         {!!subGeoChurch && (
-          <Button paddingY={6}>{subGeoChurch} in Africa</Button>
+          <Button paddingY={6} onClick={() => navigate('/continents-list')}>
+            {subGeoChurch} in Africa
+          </Button>
         )}
         {!!subFamChurch && (
           <Button paddingY={6}>{subFamChurch} in Africa</Button>

@@ -1,11 +1,22 @@
 import { useAuth } from 'contexts/AuthContext'
 import LogIn from './LogIn'
 import { PageNotFound } from '@jaedag/admin-portal-react-core'
+import { Member, Role } from 'types/types'
+import { isAuthorised, Role as FakeRole } from '@jaedag/admin-portal-types'
 
 interface ProtectedRouteProps {
   children: JSX.Element
   roles: string[]
   placeholder?: boolean
+}
+
+const getRoles = (user: Member): Role[] => {
+  const roles: string[] = []
+  user.roleChurches?.forEach((church) => {
+    roles.push(`${church.role}${church.level}`)
+  })
+
+  return roles as Role[]
 }
 
 const PrivateRoute: (props: ProtectedRouteProps) => JSX.Element = (props) => {
@@ -18,6 +29,15 @@ const PrivateRoute: (props: ProtectedRouteProps) => JSX.Element = (props) => {
 
   if (!user) {
     return <LogIn />
+  }
+
+  if (
+    isAuthorised(
+      roles as unknown as FakeRole[],
+      getRoles(user) as unknown as FakeRole[]
+    )
+  ) {
+    return children
   }
 
   if (roles.includes('all')) {
