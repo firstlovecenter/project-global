@@ -8,22 +8,31 @@ import React, {
 } from 'react'
 
 interface RefContextType {
-  denominationRef?: string
-  continentRef?: string
-  countryRef?: string
-  councilRef?: string
-  campusRef?: string
-  memberRef?: string
+  planetRef: string
+  continentRef: string
+  countryRef: string
+  cityRef: string
+
+  denominationRef: string
+  familyRef: string
+  councilRef: string
+  campusRef: string
+
+  memberRef: string
   clickCard: (ref: string, type: string) => void
 }
 
 const RefContext = createContext<RefContextType>({
-  denominationRef: undefined,
-  continentRef: undefined,
-  countryRef: undefined,
-  councilRef: undefined,
-  campusRef: undefined,
-  memberRef: undefined,
+  planetRef: '',
+  continentRef: '',
+  countryRef: '',
+  cityRef: '',
+  denominationRef: '',
+  familyRef: '',
+  councilRef: '',
+  campusRef: '',
+  memberRef: '',
+
   clickCard: () => null,
 })
 
@@ -37,8 +46,8 @@ export const useRef = () => {
 }
 
 export const RefContextProvider = ({ children }: { children: ReactNode }) => {
-  const [denominationRef, setDenominationRef] = useState<string>(
-    sessionStorage.getItem('denominationRef') ?? ''
+  const [planetRef, setPlanetRef] = useState<string>(
+    sessionStorage.getItem('planetRef') ?? ''
   )
 
   const [continentRef, setContinentRef] = useState<string>(
@@ -48,7 +57,15 @@ export const RefContextProvider = ({ children }: { children: ReactNode }) => {
   const [countryRef, setCountryRef] = useState<string>(
     sessionStorage.getItem('countryRef') ?? ''
   )
-
+  const [cityRef, setCityRef] = useState<string>(
+    sessionStorage.getItem('cityRef') ?? ''
+  )
+  const [denominationRef, setDenominationRef] = useState<string>(
+    sessionStorage.getItem('denominationRef') ?? ''
+  )
+  const [familyRef, setFamilyRef] = useState<string>(
+    sessionStorage.getItem('familyRef') ?? ''
+  )
   const [councilRef, setCouncilRef] = useState<string>(
     sessionStorage.getItem('councilRef') ?? ''
   )
@@ -60,45 +77,66 @@ export const RefContextProvider = ({ children }: { children: ReactNode }) => {
     sessionStorage.getItem('memberRef') ?? ''
   )
 
-  const setDenRef = (denominationRef: string) => {
-    setDenominationRef(denominationRef)
-    sessionStorage.setItem('denominationRef', JSON.stringify(denominationRef))
+  const setPlaRef = (planetRef: string) => {
+    setPlanetRef(planetRef)
+    sessionStorage.setItem('planetRef', planetRef)
   }
 
   const setContRef = (continentRef: string) => {
     setContinentRef(continentRef)
-    sessionStorage.setItem('continentRef', JSON.stringify(continentRef))
+    sessionStorage.setItem('continentRef', continentRef)
   }
 
   const setCountRef = (countryRef: string) => {
     setCountryRef(countryRef)
-    sessionStorage.setItem('countryRef', JSON.stringify(countryRef))
+    sessionStorage.setItem('countryRef', countryRef)
+  }
+  const setCitRef = (cityRef: string) => {
+    setCityRef(cityRef)
+    sessionStorage.setItem('cityRef', cityRef)
   }
 
+  const setDenRef = (denominationRef: string) => {
+    setDenominationRef(denominationRef)
+    sessionStorage.setItem('denominationRef', denominationRef)
+  }
+  const setFamRef = (familyRef: string) => {
+    setFamilyRef(familyRef)
+    sessionStorage.setItem('familyRef', familyRef)
+  }
   const setCouncRef = (councilRef: string) => {
     setCouncilRef(councilRef)
-    sessionStorage.setItem('councilRef', JSON.stringify(councilRef))
+    sessionStorage.setItem('councilRef', councilRef)
   }
 
   const setCampRef = (campusRef: string) => {
     setCampusRef(campusRef)
-    sessionStorage.setItem('campusRef', JSON.stringify(campusRef))
+    sessionStorage.setItem('campusRef', campusRef)
   }
   const setMemRef = (memberRef: string) => {
     setMemberRef(memberRef)
-    sessionStorage.setItem('memberRef', JSON.stringify(memberRef))
+    sessionStorage.setItem('memberRef', memberRef)
   }
 
   const clickCard = useCallback((ref: string, type: string) => {
     switch (type.toLowerCase()) {
-      case 'denomination':
-        setDenRef(ref)
+      case 'planet':
+        setPlaRef(ref)
         break
       case 'continent':
         setContRef(ref)
         break
       case 'country':
         setCountRef(ref)
+        break
+      case 'city':
+        setCitRef(ref)
+        break
+      case 'denomination':
+        setDenRef(ref)
+        break
+      case 'family':
+        setFamRef(ref)
         break
       case 'council':
         setCouncRef(ref)
@@ -116,18 +154,24 @@ export const RefContextProvider = ({ children }: { children: ReactNode }) => {
 
   const value = useMemo(
     () => ({
-      denominationRef,
+      planetRef,
       continentRef,
       countryRef,
+      cityRef,
+      denominationRef,
+      familyRef,
       councilRef,
       campusRef,
       memberRef,
       clickCard,
     }),
     [
-      denominationRef,
+      planetRef,
       continentRef,
       countryRef,
+      cityRef,
+      denominationRef,
+      familyRef,
       councilRef,
       campusRef,
       memberRef,
