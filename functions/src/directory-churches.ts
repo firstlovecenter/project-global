@@ -2,8 +2,9 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { removeSpaces } from './utils/utils'
 
-export const updateDocIdOnNameChange = functions.firestore
-  .document('{collectionId}/{documentId}')
+export const updateDocIdOnNameChange = functions
+  .region('europe-west1')
+  .firestore.document('{collectionId}/{documentId}')
   .onUpdate(async (change, context) => {
     const before = change.before.data()
     const after = change.after.data()

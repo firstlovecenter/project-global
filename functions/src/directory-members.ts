@@ -10,7 +10,7 @@ admin.initializeApp()
 const app = express()
 app.use(cors({ origin: true }), json())
 
-app.post('/create-user', async (request, response) => {
+app.post('/create-member', async (request, response) => {
   const member = request.body as Member
 
   try {
@@ -67,20 +67,19 @@ app.post('/create-user', async (request, response) => {
     response.send(memberData)
     return
   } catch (error: unknown) {
-    console.log('There was an error creating the user')
+    console.log('There was an error creating the member')
     response.status(500).send(error)
   }
 })
 
-app.post('/update-user', async (request, response) => {
+app.post('/update-member', async (request, response) => {
   const { uid } = request.body
 
   const userRef = admin.firestore().doc(`members/${uid}`)
 
   try {
     await userRef.set({
-      uid,
-      leadsCampuses: ['accra'],
+      id: uid,
       firstName: 'John-Dag',
       lastName: 'Addy',
       email: 'jaedagy@gmail.com',
@@ -88,11 +87,13 @@ app.post('/update-user', async (request, response) => {
       photoURL: 'https://lh3.goo',
       createdAt: new Date(),
     })
-    response.send('User updated')
+    response.send('Member updated')
   } catch (error) {
     console.error('Error updating user:', error)
     response.status(500).send(error)
   }
 })
 
-export const directory = functions.region('europe-west1').https.onRequest(app)
+export const directoryApi = functions
+  .region('europe-west1')
+  .https.onRequest(app)

@@ -10,7 +10,7 @@
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescr ipt
 
-export { directory } from './directory-users'
+export { directoryApi } from './directory-members'
 export { updateDocIdOnNameChange } from './directory-churches'
 export { createUserRecord } from './auth'
 export { updateMemberLeadsCampuses } from './updateRoleChurches'
