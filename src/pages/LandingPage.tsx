@@ -11,16 +11,18 @@ import {
   Spacer,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { MenuButton } from '@jaedag/admin-portal-react-core'
+import { ApolloWrapper, MenuButton } from '@jaedag/admin-portal-react-core'
 import { FaChurch } from 'react-icons/fa'
 import { useUser } from 'contexts/UserContext'
 import { useRef } from 'contexts/RefContext'
+import { doc } from 'firebase/firestore'
+import { useFirestore, useFirestoreDocData } from 'reactfire'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
   const { logout, setUser } = useAuth()
   const { user } = useUser()
-  const { clickCard } = useRef()
+  const { memberRef, clickCard } = useRef()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -34,6 +36,13 @@ const LandingPage = () => {
     }
   }
 
+  const memRef = doc(
+    useFirestore(),
+    'members_role_churches',
+    memberRef ?? user.id
+  )
+  const { status, data, error: memError } = useFirestoreDocData(memRef)
+
   return (
     <>
       <Container centerContent>
@@ -44,43 +53,49 @@ const LandingPage = () => {
           Choose A Profile
         </Text>
 
-        <VStack spacing={2} align="stretch" width="80%">
-          {user.roleChurches?.map((role, index) => (
-            <MenuButton
-              key={index}
-              icon={FaChurch}
-              textAlign="start"
-              title={`${role.name}`}
-              subtitle={` ${role.level} ${role.role}`}
-              onClick={() => {
-                setUser({
-                  ...user,
-                  selectedProfile: role,
-                })
-                clickCard(role.id, role.level)
-                navigate('/home')
-              }}
-              color="brandGold.500"
-              subColor="white"
-            />
-          ))}
-          <Button size="lg" onClick={() => navigate('/member/register')}>
-            Register A Member
-          </Button>
-          <Spacer />
-          <Spacer />
-          {error && (
-            <Alert status="error">
-              <AlertIcon />
-              <AlertTitle>Error!</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+        <ApolloWrapper
+          data={data}
+          loading={status === 'loading'}
+          error={memError}
+        >
+          <VStack spacing={2} align="stretch" width="80%">
+            {user.roleChurches?.map((role, index) => (
+              <MenuButton
+                key={index}
+                icon={FaChurch}
+                textAlign="start"
+                title={`${role.name}`}
+                subtitle={` ${role.level} ${role.role}`}
+                onClick={() => {
+                  setUser({
+                    ...user,
+                    selectedProfile: role,
+                  })
+                  clickCard(role.id, role.level)
+                  navigate('/home')
+                }}
+                color="brandGold.500"
+                subColor="white"
+              />
+            ))}
+            <Button size="lg" onClick={() => navigate('/member/register')}>
+              Register A Member
+            </Button>
+            <Spacer />
+            <Spacer />
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                <AlertTitle>Error!</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
-          <Button size="lg" onClick={handleLogout}>
-            Logout
-          </Button>
-        </VStack>
+            <Button size="lg" onClick={handleLogout}>
+              Logout
+            </Button>
+          </VStack>
+        </ApolloWrapper>
       </Container>
     </>
   )
