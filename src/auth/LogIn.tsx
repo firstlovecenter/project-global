@@ -26,7 +26,7 @@ const LogIn = () => {
   const [show, setShow] = useState(false)
   const [error, setError] = useState('')
   const handleClick = () => setShow(!show)
-  const { login, user } = useAuth()
+  const { login } = useAuth()
   const navigate = useNavigate()
 
   const initialValues = {
@@ -74,7 +74,6 @@ const LogIn = () => {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            <Text>{JSON.stringify(user?.email)}</Text>
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <Input

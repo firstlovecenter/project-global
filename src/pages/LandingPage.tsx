@@ -15,8 +15,8 @@ import { ApolloWrapper, MenuButton } from '@jaedag/admin-portal-react-core'
 import { FaChurch } from 'react-icons/fa'
 import { useUser } from 'contexts/UserContext'
 import { useRef } from 'contexts/RefContext'
-import { doc } from 'firebase/firestore'
-import { useFirestore, useFirestoreDocData } from 'reactfire'
+import { collection } from 'firebase/firestore'
+import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
@@ -36,68 +36,73 @@ const LandingPage = () => {
     }
   }
 
-  const memRef = doc(
+  // query subcollection at /members/rg9GCItdAdRRhctbd6DX/roleChurches
+  const roleChurchesRef = collection(
     useFirestore(),
-    'members_role_churches',
-    memberRef ?? user.id
+    'members',
+    memberRef || user.id,
+    'roleChurches'
   )
-  const { status, data, error: memError } = useFirestoreDocData(memRef)
+
+  const {
+    status,
+    data,
+    error: memError,
+  } = useFirestoreCollectionData(roleChurchesRef)
 
   return (
-    <>
-      <Container centerContent>
-        <Text fontSize="3xl" fontWeight="semi-bold" marginTop={14}>
-          Welcome {user.firstName} {user.lastName}
-        </Text>
-        <Text fontSize="xl" fontWeight="semi-bold" marginBottom={12}>
-          Choose A Profile
-        </Text>
+    <Container centerContent>
+      <Text fontSize="3xl" fontWeight="semi-bold" marginTop={14}>
+        Welcome {user.firstName} {user.lastName}
+      </Text>
+      <Text fontSize="xl" fontWeight="semi-bold" marginBottom={12}>
+        Choose A Profile
+      </Text>
 
-        <ApolloWrapper
-          data={data}
-          loading={status === 'loading'}
-          error={memError}
-        >
-          <VStack spacing={2} align="stretch" width="80%">
-            {user.roleChurches?.map((role, index) => (
-              <MenuButton
-                key={index}
-                icon={FaChurch}
-                textAlign="start"
-                title={`${role.name}`}
-                subtitle={` ${role.level} ${role.role}`}
-                onClick={() => {
-                  setUser({
-                    ...user,
-                    selectedProfile: role,
-                  })
-                  clickCard(role.id, role.level)
-                  navigate('/home')
-                }}
-                color="brandGold.500"
-                subColor="white"
-              />
-            ))}
-            <Button size="lg" onClick={() => navigate('/member/register')}>
-              Register A Member
-            </Button>
-            <Spacer />
-            <Spacer />
-            {error && (
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle>Error!</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
+      <ApolloWrapper
+        data={data}
+        loading={status === 'loading'}
+        error={memError}
+      >
+        <VStack spacing={2} align="stretch" width="80%">
+          {user.roleChurches?.map((role, index) => (
+            <MenuButton
+              key={index}
+              icon={FaChurch}
+              textAlign="start"
+              title={`${role.name}`}
+              subtitle={` ${role.level} ${role.role}`}
+              onClick={() => {
+                setUser({
+                  ...user,
+                  selectedProfile: role,
+                })
+                clickCard(role.id, role.level)
+                navigate('/home')
+              }}
+              color="brandGold.500"
+              subColor="white"
+            />
+          ))}
+          <Button size="lg" onClick={() => navigate('/member/register')}>
+            Register A Member
+          </Button>
+          <Spacer />
+          <Spacer />
+          {error && (
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle>Error!</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
 
-            <Button size="lg" onClick={handleLogout}>
-              Logout
-            </Button>
-          </VStack>
-        </ApolloWrapper>
-      </Container>
-    </>
+          <Button size="lg" onClick={handleLogout}>
+            Logout
+          </Button>
+        </VStack>
+      </ApolloWrapper>
+    </Container>
   )
 }
 

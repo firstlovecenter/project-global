@@ -23,7 +23,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 const ForgotPassword = () => {
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
-  const { resetPassword, user } = useAuth()
+  const { resetPassword } = useAuth()
   const navigate = useNavigate()
 
   const initialValues = {
@@ -58,7 +58,7 @@ const ForgotPassword = () => {
     <Container>
       <Center height="80vh">
         <Container>
-          <Card>
+          <Card backgroundColor="whiteAlpha">
             <CardBody>
               <Heading textAlign={'center'} marginBottom={4}>
                 Password Reset
@@ -78,7 +78,6 @@ const ForgotPassword = () => {
                   <AlertDescription>{message}</AlertDescription>
                 </Alert>
               )}
-              <Text>{JSON.stringify(user?.email)}</Text>
 
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Input
