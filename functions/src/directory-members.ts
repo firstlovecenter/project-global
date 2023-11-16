@@ -94,6 +94,4 @@ app.post('/update-member', async (request, response) => {
   }
 })
 
-export const directoryApi = functions
-  .region('europe-west1')
-  .https.onRequest(app)
+export const directory = functions.region('europe-west1').https.onRequest(app)

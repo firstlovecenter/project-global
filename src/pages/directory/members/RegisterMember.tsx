@@ -111,6 +111,7 @@ const RegisterMember = () => {
     defaultValues: initialValues,
   })
 
+  console.log('🚀 ~ file: RegisterMember.tsx:107 ~ errors:', errors)
   return (
     <Container>
       <Heading>Register Member</Heading>

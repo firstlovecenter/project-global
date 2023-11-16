@@ -21,6 +21,7 @@ const SearchCampus = (props: RoleBasedSearch) => {
   const { name, setValue, label, placeholder, initialValue, errors } = props
   const { user } = useUser()
   const [suggestions, setSuggestions] = useState([])
+  const [noSearch, setNoSearch] = useState(false)
   const [searchString, setSearchString] = useState(initialValue || '')
   const [loading, setLoading] = useState(false)
   const toast = useToast()
@@ -66,10 +67,19 @@ const SearchCampus = (props: RoleBasedSearch) => {
   }, [initialValue])
 
   useEffect(() => {
-    campusSearch({
-      uid: user.id,
-      searchKey: searchString,
-    })
+    // Function to perform the campus search
+    const performCampusSearch = async () => {
+      if (!noSearch) {
+        await campusSearch({
+          uid: user.id,
+          searchKey: searchString,
+        })
+      }
+    }
+
+    // Call the function
+    performCampusSearch()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchString, user.id])
 
@@ -104,8 +114,9 @@ const SearchCampus = (props: RoleBasedSearch) => {
           if (method === 'enter') {
             event.preventDefault()
           }
+          setNoSearch(true)
           setSearchString(suggestion.name)
-          setValue(name, suggestion)
+          setValue(name, suggestion.name)
         }}
         getSuggestionValue={(suggestion: Church) => suggestion.name}
         highlightFirstSuggestion={true}
@@ -113,6 +124,7 @@ const SearchCampus = (props: RoleBasedSearch) => {
           <Card
             padding={3}
             paddingLeft={4}
+            position="absolute"
             zIndex={isHighlighted ? 'popover' : 'base'}
             backgroundColor={isHighlighted ? 'blue.200' : 'gray.700'}
             color={isHighlighted ? 'blue.800' : 'gray.200'}
@@ -130,8 +142,8 @@ const SearchCampus = (props: RoleBasedSearch) => {
       {loading && !suggestions.length && (
         <Card
           padding={3}
-          zIndex={'overlay'}
-          backgroundColor={'gray.700'}
+          zIndex={'popover'}
+          backgroundColor={'whiteAlpha.300'}
           color={'gray.200'}
           width="100%"
         >

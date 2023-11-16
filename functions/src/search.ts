@@ -3,8 +3,7 @@ import * as admin from 'firebase-admin'
 import * as express from 'express'
 import * as cors from 'cors'
 import { json } from 'body-parser'
-import { Member } from './types/types'
-import { getMemberHighestRole, validateRequest } from './utils/utils'
+import { validateRequest } from './utils/utils'
 
 const app = express()
 app.use(cors({ origin: true }), json())
@@ -21,23 +20,33 @@ app.get('/campus', async (request, response) => {
   }
 
   try {
-    const memberRef = admin.firestore().doc(`members/${uid}`)
-    const memberSnapshot = await memberRef.get()
-    const memberData = memberSnapshot.data() as Member
-
-    const highestRole = getMemberHighestRole(memberData)
-
-    const churchSnapshot = await admin
+    const leaderQuery = admin
       .firestore()
       .collection('campuses')
-      .where(`${highestRole?.level}`, 'in', highestRole.ids)
+      .where('leader', '==', uid)
       .where('id', '>=', searchKey?.toLowerCase())
       .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
       .get()
 
-    const churches = churchSnapshot.docs.map((doc) => doc.data())
+    const adminQuery = admin
+      .firestore()
+      .collection('campuses')
+      .where('admin', '==', uid)
+      .where('id', '>=', searchKey?.toLowerCase())
+      .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
+      .get()
 
-    response.send(churches)
+    const [leaderSnapshot, adminSnapshot] = await Promise.all([
+      leaderQuery,
+      adminQuery,
+    ])
+
+    const leaderCampuses = leaderSnapshot.docs.map((doc) => doc.data())
+    const adminCampuses = adminSnapshot.docs.map((doc) => doc.data())
+
+    const campuses = [...leaderCampuses, ...adminCampuses]
+
+    response.send(campuses)
   } catch (error) {
     console.error('Error searching campuses:', error)
     response.status(500).send(error)
