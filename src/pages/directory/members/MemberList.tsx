@@ -1,5 +1,5 @@
 import { Box, Container, Divider, Heading } from '@chakra-ui/react'
-import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
+import { ApolloWrapper, capitalise } from '@jaedag/admin-portal-react-core'
 import MemberListCard from 'components/MemberListCard'
 import SearchBar from 'components/SearchBar'
 import { useUser } from 'contexts/UserContext'
@@ -22,8 +22,6 @@ const MemberList = () => {
 
   const members = data as Member[]
 
-  const church = { name: 'Africa West', typename: 'Family' }
-
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={error}>
       <Container>
@@ -35,7 +33,7 @@ const MemberList = () => {
           <Box marginTop={5} key={member.id}>
             <MemberListCard
               member={member}
-              subtitle={church.name + ' ' + church.typename}
+              subtitle={capitalise(member.campus) + ' Campus'}
             />
             <Divider marginTop={2} />
           </Box>

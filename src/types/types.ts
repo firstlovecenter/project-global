@@ -14,7 +14,7 @@ export interface Member extends User {
   pictureUrl: string
   whatsappNumber: string
   phoneNumber: string
-  campus: Church
+  campus: string
 
   dateOfBirth: string
   title: TitleOptions
