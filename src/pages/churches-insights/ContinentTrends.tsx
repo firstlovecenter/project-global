@@ -33,7 +33,6 @@ const ContinentTrends = () => {
     data: trendData,
     error: trendError,
   } = useFirestoreDocData(trendsRef)
-  console.log('🚀 ~ file: ContinentTrends.tsx:28 ~ trendData:', trendData)
 
   const continent = data as Church
 
