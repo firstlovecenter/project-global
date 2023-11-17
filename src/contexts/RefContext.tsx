@@ -7,6 +7,17 @@ import React, {
   useState,
 } from 'react'
 
+type RefType =
+  | 'planet'
+  | 'continent'
+  | 'country'
+  | 'city'
+  | 'denomination'
+  | 'family'
+  | 'council'
+  | 'campus'
+  | 'member'
+
 interface RefContextType {
   planetRef: string
   continentRef: string
@@ -19,7 +30,7 @@ interface RefContextType {
   campusRef: string
 
   memberRef: string
-  clickCard: (ref: string, type: string) => void
+  clickCard: (ref: string, type: RefType) => void
 }
 
 const RefContext = createContext<RefContextType>({
@@ -118,7 +129,7 @@ export const RefContextProvider = ({ children }: { children: ReactNode }) => {
     sessionStorage.setItem('memberRef', memberRef)
   }
 
-  const clickCard = useCallback((ref: string, type: string) => {
+  const clickCard = useCallback((ref: string, type: RefType) => {
     switch (type.toLowerCase()) {
       case 'planet':
         setPlaRef(ref)

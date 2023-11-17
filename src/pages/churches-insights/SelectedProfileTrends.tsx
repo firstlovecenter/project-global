@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import InfoCard from './components/InfoCard'
 import { getSubFamilyChurch, getSubGeoChurch, pluralize } from 'globalUtils'
 
-const Churches = () => {
+const SelectedProfileTrends = () => {
   const { user } = useUser()
   const navigate = useNavigate()
 
@@ -65,4 +65,4 @@ const Churches = () => {
   )
 }
 
-export default Churches
+export default SelectedProfileTrends

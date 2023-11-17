@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 
 const ContinentsList = () => {
-  const { denominationRef } = useRef()
+  const { denominationRef, clickCard } = useRef()
 
   const db = getFirestore()
   const navigate = useNavigate()
@@ -28,12 +28,15 @@ const ContinentsList = () => {
         </Center>
 
         <VStack spacing={2} align="stretch">
-          {continents.map((continent) => (
+          {continents?.map((continent) => (
             <Button
               key={continent.id}
               variant="outline"
               paddingY={7}
-              onClick={() => navigate('#')}
+              onClick={() => {
+                clickCard(continent.id, 'continent')
+                navigate('/trends/continent')
+              }}
             >
               {continent.name}
             </Button>
