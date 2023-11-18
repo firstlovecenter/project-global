@@ -12,6 +12,10 @@ import { parsePhoneNumber } from '@jaedag/admin-portal-types'
 import SearchCampus from 'components/forms/SearchCampus'
 import { useRef } from 'contexts/RefContext'
 import { useUser } from 'contexts/UserContext'
+import {
+  CLD_FUNCTIONS_BASE_URL,
+  DIRECTORY_FUNCTION_BASE_URL,
+} from 'firebase/cloudFunctionsConfig'
 import { httpsCallable } from 'firebase/functions'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -72,14 +76,26 @@ const RegisterMember = () => {
     values.phoneNumber = parsePhoneNumber(values.phoneNumber)
 
     try {
-      const signup = httpsCallable(functions, 'directory/create-member')
-
-      signup({
-        ...values,
-        whatsappNumber: values.whatsappNumber,
-        parsePhoneNumber: values.phoneNumber,
-        dateOfBirth: new Date(values.dateOfBirth),
+      // const signup = httpsCallable(functions, 'directory/create-member')
+      fetch(DIRECTORY_FUNCTION_BASE_URL + '/create-member', {
+        method: 'POST',
+        body: JSON.stringify({
+          ...values,
+          whatsappNumber: values.whatsappNumber,
+          parsePhoneNumber: values.phoneNumber,
+          dateOfBirth: new Date(values.dateOfBirth),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
+
+      // signup({
+      //   ...values,
+      //   whatsappNumber: values.whatsappNumber,
+      //   parsePhoneNumber: values.phoneNumber,
+      //   dateOfBirth: new Date(values.dateOfBirth),
+      // })
 
       // await signup(values.email, 'rAnd0MLEtters0')
       // await resetPassword(values.email)

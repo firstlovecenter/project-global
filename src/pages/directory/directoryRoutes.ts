@@ -2,7 +2,7 @@ import { LazyRouteTypes } from 'auth/auth-types'
 import { lazy } from 'react'
 import { memberRoutes } from './members/memberRoutes'
 import { churchesRoutes } from './churchesRoutes'
-import { churchInsightsRoutes } from 'pages/churches-insights/churchInsightsRoutes'
+import { churchInsightsRoutes } from 'pages/trends/churchInsightsRoutes'
 
 const ContinentProfile = lazy(() => import('./continent/ContinentProfile'))
 const ContinentCountryList = lazy(

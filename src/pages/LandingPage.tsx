@@ -17,6 +17,7 @@ import { useUser } from 'contexts/UserContext'
 import { useRef } from 'contexts/RefContext'
 import { collection } from 'firebase/firestore'
 import { useFirestore, useFirestoreCollectionData } from 'reactfire'
+import { RoleChurch } from 'types/types'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
@@ -49,6 +50,7 @@ const LandingPage = () => {
     data,
     error: memError,
   } = useFirestoreCollectionData(roleChurchesRef)
+  const roleChurches = data as RoleChurch[]
 
   return (
     <Container centerContent>
@@ -65,7 +67,7 @@ const LandingPage = () => {
         error={memError}
       >
         <VStack spacing={2} align="stretch" width="80%">
-          {user.roleChurches?.map((role, index) => (
+          {roleChurches?.map((role, index) => (
             <MenuButton
               key={index}
               icon={FaChurch}
