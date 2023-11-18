@@ -78,6 +78,7 @@ const MemberProfile = () => {
 
         <ProfileSectionLabel label="Personal Documents" />
         <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
+          <Button>Update Title</Button>
           <Button textAlign="start">Passport Bio Page</Button>
           <Button>Immigration Docuemnts</Button>
           <Button>Drivers License</Button>
