@@ -8,14 +8,14 @@ const MemberList = lazy(() => import('./MemberList'))
 
 export const memberRoutes: LazyRouteTypes[] = [
   {
-    path: '/member/register',
+    path: '/directory/register-member',
     element: RegisterMember,
-    roles: ['all', ...permitAdmin('Campus')],
+    roles: ['all', ...permitAdmin('campus')],
   },
   {
     path: '/member/profile',
     element: MemberProfile,
-    roles: ['all', ...permitAdmin('Campus')],
+    roles: ['all', ...permitAdmin('campus')],
   },
   {
     path: '/directory/members',

@@ -86,9 +86,7 @@ const LandingPage = () => {
               subColor="white"
             />
           ))}
-          <Button size="lg" onClick={() => navigate('/member/register')}>
-            Register A Member
-          </Button>
+
           <Spacer />
           <Spacer />
           {error && (

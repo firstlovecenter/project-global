@@ -70,6 +70,10 @@ const Directory = () => {
         <Center>
           <DirectoryBook />
         </Center>
+        <Button size="lg" onClick={() => navigate('/member/register')}>
+          Register A Member
+        </Button>
+
         {directoryMenuItems.map((item) => (
           <Button
             key={item.title}

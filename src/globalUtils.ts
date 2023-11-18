@@ -1,3 +1,4 @@
+import { capitalise } from '@jaedag/admin-portal-react-core'
 import { ChurchLevel } from 'types/types'
 
 export const pluralize = (word?: string, count?: number) => {
@@ -31,7 +32,7 @@ export const pluralize = (word?: string, count?: number) => {
 }
 
 export const getSubGeoChurch = (church: ChurchLevel) => {
-  switch (church) {
+  switch (capitalise(church)) {
     case 'Denomination':
       return 'Continent'
     case 'Continent':
@@ -47,7 +48,7 @@ export const getSubGeoChurch = (church: ChurchLevel) => {
 }
 
 export const getSubFamilyChurch = (church: ChurchLevel) => {
-  switch (church) {
+  switch (capitalise(church)) {
     case 'Denomination':
       return 'Family'
     case 'Family':
