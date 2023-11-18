@@ -56,7 +56,20 @@ app.post('/create-member', async (request, response) => {
       return
     }
 
-    const memberRef = admin.firestore().collection('members').doc(member.email)
+    const res = await Promise.all([
+      admin.auth().createUser({
+        email: member.email,
+        emailVerified: false,
+        phoneNumber: `+${member.phoneNumber}`,
+        password: 'dEfaultP@ssword',
+        displayName: `${member.firstName} ${member.lastName}`,
+        photoURL: member.pictureUrl,
+        disabled: false,
+      }),
+      admin.firestore().collection('members').doc(member.email),
+    ])
+
+    const memberRef = res[1]
 
     const memberData = {
       ...member,
