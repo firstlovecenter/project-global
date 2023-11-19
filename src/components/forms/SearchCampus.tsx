@@ -116,7 +116,7 @@ const SearchCampus = (props: RoleBasedSearch) => {
           }
           setNoSearch(true)
           setSearchString(suggestion.name)
-          setValue(name, suggestion.name)
+          setValue(name, suggestion.id)
         }}
         getSuggestionValue={(suggestion: Church) => suggestion.name}
         highlightFirstSuggestion={true}

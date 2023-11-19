@@ -12,14 +12,9 @@ import { parsePhoneNumber } from '@jaedag/admin-portal-types'
 import SearchCampus from 'components/forms/SearchCampus'
 import { useRef } from 'contexts/RefContext'
 import { useUser } from 'contexts/UserContext'
-import {
-  CLD_FUNCTIONS_BASE_URL,
-  DIRECTORY_FUNCTION_BASE_URL,
-} from 'firebase/cloudFunctionsConfig'
-import { httpsCallable } from 'firebase/functions'
+import { DIRECTORY_FUNCTION_BASE_URL } from 'firebase/cloudFunctionsConfig'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useFunctions } from 'reactfire'
 import * as Yup from 'yup'
 
 const RegisterMember = () => {
@@ -56,7 +51,7 @@ const RegisterMember = () => {
     whatsappNumber: Yup.string()
       .required('Whatsapp Number is required')
       .matches(
-        PHONE_NUM_REGEX,
+        /^\+[1-9]\d{1,14}$/,
         `Phone Number must start with + and country code (eg. '+233')`
       ),
     gender: Yup.string().required(),
@@ -69,43 +64,41 @@ const RegisterMember = () => {
   })
 
   const toast = useToast()
-  const functions = useFunctions()
 
   const onSubmit = async (values: typeof initialValues) => {
     values.whatsappNumber = parsePhoneNumber(values.whatsappNumber)
     values.phoneNumber = parsePhoneNumber(values.phoneNumber)
 
     try {
-      // const signup = httpsCallable(functions, 'directory/create-member')
-      fetch(DIRECTORY_FUNCTION_BASE_URL + '/create-member', {
-        method: 'POST',
-        body: JSON.stringify({
-          ...values,
-          whatsappNumber: values.whatsappNumber,
-          parsePhoneNumber: values.phoneNumber,
-          dateOfBirth: new Date(values.dateOfBirth),
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await fetch(
+        DIRECTORY_FUNCTION_BASE_URL + '/create-member',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            ...values,
+            whatsappNumber: values.whatsappNumber,
+            parsePhoneNumber: values.phoneNumber,
+            dateOfBirth: new Date(values.dateOfBirth),
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
 
-      // signup({
-      //   ...values,
-      //   whatsappNumber: values.whatsappNumber,
-      //   parsePhoneNumber: values.phoneNumber,
-      //   dateOfBirth: new Date(values.dateOfBirth),
-      // })
+      if (!response.ok) {
+        const errorMessage = await response.text()
+        console.error(response.statusText)
+        throw new Error(errorMessage)
+      }
 
-      // await signup(values.email, 'rAnd0MLEtters0')
-      // await resetPassword(values.email)
-      clickCard(parsePhoneNumber(values.whatsappNumber), 'member')
+      clickCard(values.email, 'member')
 
       navigate('/member/profile')
     } catch (e: unknown) {
       if (e instanceof Error) {
         toast({
-          title: 'An error occurred.',
+          title: 'An error occurred creating member',
           description: e.message,
           status: 'error',
           duration: 9000,
@@ -119,6 +112,7 @@ const RegisterMember = () => {
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<typeof initialValues>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -127,7 +121,10 @@ const RegisterMember = () => {
     defaultValues: initialValues,
   })
 
-  console.log('🚀 ~ file: RegisterMember.tsx:107 ~ errors:', errors)
+  {
+    console.log(watch('campus'))
+  }
+
   return (
     <Container>
       <Heading>Register Member</Heading>

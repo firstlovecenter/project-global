@@ -2,7 +2,7 @@ import { LazyRouteTypes } from 'auth/auth-types'
 import { permitAdmin } from 'auth/auth-utils'
 import { lazy } from 'react'
 
-const RegisterMember = lazy(() => import('./RegisterMember'))
+const RegisterMember = lazy(() => import('./profile/RegisterMember'))
 const MemberProfile = lazy(() => import('./MemberProfile'))
 const MemberList = lazy(() => import('./MemberList'))
 

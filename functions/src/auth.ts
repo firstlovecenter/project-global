@@ -6,13 +6,6 @@ const db = admin.firestore()
 export const createUserRecord = functions
   .region('europe-west1')
   .auth.user()
-  .onCreate(async (user) => {
-    const userRef = db.doc(`users/${user.uid}`)
-
-    return userRef.set({
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      createdAt: new Date(),
-    })
+  .beforeSignIn((user) => {
+    console.log('🚀 ~ file: auth.ts:10 ~ user:', user)
   })

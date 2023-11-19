@@ -10,11 +10,15 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
+import { ApolloWrapper, capitalise } from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
-import { doc } from 'firebase/firestore'
-import { useFirestore, useFirestoreDocData } from 'reactfire'
-import { Member } from 'types/types'
+import { collection, doc } from 'firebase/firestore'
+import {
+  useFirestore,
+  useFirestoreCollectionData,
+  useFirestoreDocData,
+} from 'reactfire'
+import { Member, RoleChurch } from 'types/types'
 import { useUser } from 'contexts/UserContext'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
@@ -29,9 +33,28 @@ const MemberProfile = () => {
 
   const { status, data, error } = useFirestoreDocData(memRef)
   const member = data as unknown as Member
+  console.log('🚀 ~ file: MemberProfile.tsx:36 ~ member:', member)
+
+  const roleChurchesRef = collection(
+    useFirestore(),
+    'members',
+    memberRef || user.id,
+    'roleChurches'
+  )
+
+  const {
+    status: roleChurchesStatus,
+    data: roleChurchesData,
+    error: roleChurchesError,
+  } = useFirestoreCollectionData(roleChurchesRef)
+  const roleChurches = (roleChurchesData || []) as RoleChurch[]
 
   return (
-    <ApolloWrapper data={data} loading={status === 'loading'} error={error}>
+    <ApolloWrapper
+      data={data && roleChurchesData}
+      loading={status === 'loading' || roleChurchesStatus === 'loading'}
+      error={error || roleChurchesError}
+    >
       <Container>
         <Heading size="lg">Member Profile</Heading>
         <Center marginTop={10}>
@@ -86,10 +109,18 @@ const MemberProfile = () => {
           <Button>Educational Certificates</Button>
         </VStack>
 
-        <ProfileSectionLabel label="Oversight Info" />
-        <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
-          <Text>Accra Campus Bishop</Text>
-        </VStack>
+        {!!roleChurches.length && (
+          <>
+            <ProfileSectionLabel label="Oversight Info" />
+            <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
+              {roleChurches?.map((role) => (
+                <Text key={role.id} textAlign="start">
+                  {role.name} {role.level} {capitalise(role.role)}
+                </Text>
+              ))}
+            </VStack>
+          </>
+        )}
 
         <Button width="100%" variant="outline">
           Construction:

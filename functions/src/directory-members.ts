@@ -58,6 +58,7 @@ app.post('/create-member', async (request, response) => {
 
     const res = await Promise.all([
       admin.auth().createUser({
+        uid: member.email,
         email: member.email,
         emailVerified: false,
         phoneNumber: `+${member.phoneNumber}`,
@@ -76,11 +77,12 @@ app.post('/create-member', async (request, response) => {
       id: member.email,
       createdAt: new Date(),
     }
+
     await memberRef.set(memberData)
     response.send(memberData)
     return
   } catch (error: unknown) {
-    console.log('There was an error creating the member')
+    console.log('There was an error creating the member', error)
     response.status(500).send(error)
   }
 })

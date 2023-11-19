@@ -16,14 +16,14 @@ const MemberListCard = (props: MemberListCardProps) => {
   return (
     <HStack
       onClick={() => {
-        clickCard(member.id, 'Member')
+        clickCard(member.id, 'member')
         navigate('/member/profile')
       }}
     >
       <Avatar
         size="lg"
         name={member.firstName + '  ' + member.lastName}
-        src="https://bit.ly/dan-abramov"
+        src={member.pictureUrl}
       />
       <Box paddingLeft={5}>
         <Text fontSize="xl" color="brandGold.500" fontWeight="bold">
