@@ -2,13 +2,16 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as express from 'express'
 import * as cors from 'cors'
+import axios from 'axios'
 import { json } from 'body-parser'
 import { Member } from './types/types'
+import { notifyBaseURL } from './constants'
 
 admin.initializeApp()
 
 const app = express()
 app.use(cors({ origin: true }), json())
+const secrets = functions.config()
 
 app.post('/create-member', async (request, response) => {
   const member = request.body as Member
@@ -78,7 +81,32 @@ app.post('/create-member', async (request, response) => {
       createdAt: new Date(),
     }
 
-    await memberRef.set(memberData)
+    const passwordResetRes = await admin
+      .auth()
+      .generatePasswordResetLink(member.email)
+
+    await Promise.all([
+      axios({
+        method: 'post',
+        baseURL: notifyBaseURL,
+        url: '/send-email',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-secret-key': secrets.FLC_NOTIFY_KEY,
+        },
+        data: {
+          template: 'den-app-welcome-email',
+          to: member.email,
+          from: 'FL Den Admin <no-reply@firstlovecenter.org>',
+          't:variables': JSON.stringify({
+            firstName: member.firstName,
+            email: member.email,
+            passwordResetURL: passwordResetRes,
+          }),
+        },
+      }),
+      memberRef.set(memberData),
+    ])
     response.send(memberData)
     return
   } catch (error: unknown) {
