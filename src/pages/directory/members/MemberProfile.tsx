@@ -33,7 +33,6 @@ const MemberProfile = () => {
 
   const { status, data, error } = useFirestoreDocData(memRef)
   const member = data as unknown as Member
-  console.log('🚀 ~ file: MemberProfile.tsx:36 ~ member:', member)
 
   const roleChurchesRef = collection(
     useFirestore(),
@@ -57,6 +56,9 @@ const MemberProfile = () => {
     >
       <Container>
         <Heading size="lg">Member Profile</Heading>
+        <Text fontWeight="bold" fontSize="lg" color="brandGold.500">
+          EDIT
+        </Text>
         <Center marginTop={10}>
           <Avatar
             src={member?.pictureUrl}
