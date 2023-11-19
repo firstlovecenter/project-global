@@ -32,6 +32,7 @@ const RegisterMember = () => {
     gender: 'Male',
     maritalStatus: 'Single',
     occupation: '',
+    employeeStatus: 'non-staff',
     dateOfBirth: '',
     campus: '',
   }
@@ -57,6 +58,7 @@ const RegisterMember = () => {
     gender: Yup.string().required(),
     maritalStatus: Yup.string().required(),
     occupation: Yup.string().required(),
+    employeeStatus: Yup.string().required(),
     dateOfBirth: Yup.date()
       .max(new Date(), "You can't be born after today")
       .required('Date of Birth is a required field'),
@@ -199,6 +201,16 @@ const RegisterMember = () => {
           label="Occupation"
           control={control}
           errors={errors}
+        />
+        <Select
+          name="employeeStatus"
+          label="Employee Status"
+          control={control}
+          errors={errors}
+          options={[
+            { key: 'Full Time Staff', value: 'staff' },
+            { key: 'Lay/Non Staff', value: 'non-staff' },
+          ]}
         />
         <Input
           name="dateOfBirth"
