@@ -2,13 +2,13 @@ import { ChurchLevel, Role } from 'types/types'
 
 export const permitLeader = (roles: ChurchLevel): Role[] => {
   switch (roles) {
-    case 'Denomination':
+    case 'denomination':
       return ['leaderDenomination']
-    case 'Continent':
+    case 'continent':
       return ['leaderContinent', 'leaderDenomination']
-    case 'Country':
+    case 'country':
       return ['leaderCountry', 'leaderContinent', 'leaderDenomination']
-    case 'City':
+    case 'city':
       return [
         'leaderCity',
         'leaderCountry',
@@ -16,12 +16,12 @@ export const permitLeader = (roles: ChurchLevel): Role[] => {
         'leaderDenomination',
       ]
 
-    case 'Family':
+    case 'family':
       return ['leaderFamily', 'leaderDenomination']
-    case 'Council':
+    case 'council':
       return ['leaderCouncil', 'leaderFamily', 'leaderDenomination']
 
-    case 'Campus':
+    case 'campus':
       return [
         'leaderCampus',
         'leaderCouncil',
@@ -36,13 +36,13 @@ export const permitLeader = (roles: ChurchLevel): Role[] => {
 
 export const permitAdmin = (roles: ChurchLevel): Role[] => {
   switch (roles) {
-    case 'Denomination':
+    case 'denomination':
       return ['adminDenomination']
-    case 'Continent':
+    case 'continent':
       return ['adminContinent', 'adminDenomination']
-    case 'Country':
+    case 'country':
       return ['adminCountry', 'adminContinent', 'adminDenomination']
-    case 'City':
+    case 'city':
       return [
         'adminCity',
         'adminCountry',
@@ -50,12 +50,12 @@ export const permitAdmin = (roles: ChurchLevel): Role[] => {
         'adminDenomination',
       ]
 
-    case 'Family':
+    case 'family':
       return ['adminFamily', 'adminDenomination']
-    case 'Council':
+    case 'council':
       return ['adminCouncil', 'adminFamily', 'adminDenomination']
 
-    case 'Campus':
+    case 'campus':
       return ['adminCampus', 'adminCouncil', 'adminFamily', 'adminDenomination']
 
     default:

@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
+    "esModuleInterop": true,
+    "target": "es2017",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
     "sourceMap": true,
+    "outDir": "lib",
     "strict": true,
-    "target": "es2017"
+    "allowJs": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es2017", "esnext.asynciterable"]
   },
   "compileOnSave": true,
   "include": ["src"]

@@ -2,7 +2,7 @@ import { ChurchLevel, Role } from 'types/types'
 
 export const permitAdmin = (role: ChurchLevel): Role[] => {
   switch (role) {
-    case 'Campus':
+    case 'campus':
       return [
         'adminPlanet',
         'adminContinent',
@@ -11,16 +11,16 @@ export const permitAdmin = (role: ChurchLevel): Role[] => {
         'adminCampus',
       ]
 
-    case 'Council':
+    case 'council':
       return ['adminPlanet', 'adminContinent', 'adminCountry', 'adminCouncil']
 
-    case 'Country':
+    case 'country':
       return ['adminPlanet', 'adminContinent', 'adminCountry']
 
-    case 'Continent':
+    case 'continent':
       return ['adminPlanet', 'adminContinent']
 
-    case 'Planet':
+    case 'planet':
       return ['adminPlanet']
 
     default:
@@ -30,7 +30,7 @@ export const permitAdmin = (role: ChurchLevel): Role[] => {
 
 export const permitLeader = (role: ChurchLevel): Role[] => {
   switch (role) {
-    case 'Campus':
+    case 'campus':
       return [
         'leaderPlanet',
         'leaderContinent',
@@ -39,7 +39,7 @@ export const permitLeader = (role: ChurchLevel): Role[] => {
         'leaderCampus',
       ]
 
-    case 'Council':
+    case 'council':
       return [
         'leaderPlanet',
         'leaderContinent',
@@ -47,13 +47,13 @@ export const permitLeader = (role: ChurchLevel): Role[] => {
         'leaderCouncil',
       ]
 
-    case 'Country':
+    case 'country':
       return ['leaderPlanet', 'leaderContinent', 'leaderCountry']
 
-    case 'Continent':
+    case 'continent':
       return ['leaderPlanet', 'leaderContinent']
 
-    case 'Planet':
+    case 'planet':
       return ['leaderPlanet']
 
     default:

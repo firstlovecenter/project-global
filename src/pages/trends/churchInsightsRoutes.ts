@@ -10,11 +10,11 @@ export const churchInsightsRoutes: LazyRouteTypes[] = [
     path: '/continents-list',
     element: ContinentsList,
     placeholder: true,
-    roles: permitMe('Denomination'),
+    roles: permitMe('denomination'),
   },
   {
     path: '/trends/continent',
     element: ContinentTrends,
-    roles: permitMe('Continent'),
+    roles: permitMe('continent'),
   },
 ]

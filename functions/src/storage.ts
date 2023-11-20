@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions'
 import { Storage } from '@google-cloud/storage'
 import { tmpdir } from 'os'
 import { dirname, join } from 'path'
-import * as sharp from 'sharp'
+import sharp from 'sharp'
 
 const gcs = new Storage()
 export const resizeAvatar = functions

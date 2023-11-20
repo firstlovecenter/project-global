@@ -8,7 +8,7 @@
  */
 
 // Start writing functions
-// https://firebase.google.com/docs/functions/typescr ipt
+// https://firebase.google.com/docs/functions/typescript
 
 export { directory } from './directory-members'
 export { updateDocIdOnNameChange } from './directory-churches'

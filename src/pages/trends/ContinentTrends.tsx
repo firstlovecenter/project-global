@@ -36,8 +36,8 @@ const ContinentTrends = () => {
 
   const continent = data as Church
 
-  const subGeoChurch = pluralize(getSubGeoChurch('Continent'))
-  const subFamilyChurch = pluralize(getSubFamilyChurch('Continent'))
+  const subGeoChurch = pluralize(getSubGeoChurch('continent'))
+  const subFamilyChurch = pluralize(getSubFamilyChurch('continent'))
 
   return (
     <ApolloWrapper
