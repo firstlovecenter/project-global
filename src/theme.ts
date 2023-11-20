@@ -86,7 +86,7 @@ const theme = extendTheme({
   styles: {
     global: () => ({
       body: {
-        height: '100%',
+        minHeight: '100vh',
         paddingBottom: '50px',
         background: 'linear-gradient(to top right, #224157, #34637a)',
       },
