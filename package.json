@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/firstlovecenter/flow-giving.git"
+    "url": "https://github.com/firstlovecenter/project-global.git"
   },
   "scripts": {
     "dev": "node scripts/start-dev.js",
@@ -20,6 +20,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
+    "gen": "changelog -p",
     "release:major": "node scripts/release.js major",
     "release:minor": "node scripts/release.js minor",
     "release:patch": "node scripts/release.js patch"
