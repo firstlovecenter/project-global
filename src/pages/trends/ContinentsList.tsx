@@ -1,10 +1,10 @@
 import { Button, Center, Container, Heading, VStack } from '@chakra-ui/react'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
-import { collection, doc, getFirestore, query, where } from 'firebase/firestore'
+import { collection, getFirestore, query, where } from 'firebase/firestore'
 import { GiEarthAfricaEurope } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
-import { useFirestore, useFirestoreCollectionData } from 'reactfire'
+import { useFirestoreCollectionData } from 'reactfire'
 
 const ContinentsList = () => {
   const { denominationRef, clickCard } = useRef()
@@ -12,9 +12,11 @@ const ContinentsList = () => {
   const db = getFirestore()
   const navigate = useNavigate()
 
-  const denRef = doc(useFirestore(), 'denominations', denominationRef)
   const continentsRef = collection(db, 'continents')
-  const q = query(continentsRef, where('denomination', '==', denRef))
+  const q = query(
+    continentsRef,
+    where('denominationRef', '==', denominationRef)
+  )
   const { status, data, error } = useFirestoreCollectionData(q)
   const continents = data
 

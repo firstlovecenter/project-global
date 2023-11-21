@@ -27,7 +27,7 @@ const CreateContinent = () => {
     try {
       const continentRef = values.name.toLowerCase().replace(' ', '-')
       const response = await fetch(
-        DIRECTORY_FUNCTION_BASE_URL + '/create-continent',
+        DIRECTORY_FUNCTION_BASE_URL + '/church/continent',
         {
           method: 'POST',
           body: JSON.stringify({
@@ -67,11 +67,13 @@ const CreateContinent = () => {
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<typeof initialValues>({
     resolver: yupResolver(validationSchema),
     defaultValues: initialValues,
   })
+  console.log(watch('leaderRef'))
 
   return (
     <Container>
@@ -81,7 +83,7 @@ const CreateContinent = () => {
         <Input name="name" label="Name" control={control} errors={errors} />
 
         <SearchMember
-          name="leader"
+          name="leaderRef"
           label="Choose a leader"
           control={control}
           errors={errors}

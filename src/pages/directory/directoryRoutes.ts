@@ -16,7 +16,6 @@ const CouncilProfile = lazy(() => import('./council/CouncilProfile'))
 const CouncilCampusList = lazy(() => import('./council/CouncilCampusList'))
 const CampusProfile = lazy(() => import('./campus/CampusProfile'))
 
-const CreateContinent = lazy(() => import('./continent/CreateContinent'))
 const CreateCountry = lazy(() => import('./country/CreateCountry'))
 const CreateCouncil = lazy(() => import('./council/CreateCouncil'))
 const CreateCampus = lazy(() => import('./campus/CreateCampus'))
@@ -63,12 +62,6 @@ export const directoryRoutes: LazyRouteTypes[] = [
   {
     path: '/directory/continent/countries',
     element: ContinentCountryList,
-    placeholder: true,
-    roles: ['all'],
-  },
-  {
-    path: '/directory/continent/create',
-    element: CreateContinent,
     placeholder: true,
     roles: ['all'],
   },
