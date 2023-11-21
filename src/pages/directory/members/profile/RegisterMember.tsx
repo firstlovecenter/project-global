@@ -111,7 +111,6 @@ const RegisterMember = () => {
     handleSubmit,
     control,
     setValue,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<typeof initialValues>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -119,10 +118,6 @@ const RegisterMember = () => {
     resolver: yupResolver(validationSchema),
     defaultValues: initialValues,
   })
-
-  {
-    console.log(watch('campus'))
-  }
 
   return (
     <Container>

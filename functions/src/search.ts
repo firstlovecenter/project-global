@@ -53,4 +53,36 @@ app.get('/campus', async (request, response) => {
   }
 })
 
+app.get('/member', async (request, response) => {
+  type SearchParams = { uid: string; searchKey: string }
+  const { searchKey } = request.query as SearchParams
+
+  const invalidReq = validateRequest(request.query, ['uid'])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  try {
+    const firstNameQuery = admin
+      .firestore()
+      .collection('members')
+      .orderBy('lowercaseName')
+      .startAt(searchKey?.toLowerCase())
+      .endAt(searchKey?.toLowerCase() + '\uf8ff')
+      .get()
+
+    const nameSnapshot = await firstNameQuery
+
+    const members = nameSnapshot.docs.map((doc) => doc.data())
+
+    response.send(members)
+    return
+  } catch (error) {
+    console.error('Error searching members:', error)
+    response.status(500).send(error)
+  }
+})
+
 export const search = functions.region('europe-west1').https.onRequest(app)
