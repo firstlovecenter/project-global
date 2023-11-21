@@ -4,7 +4,9 @@ import { memberRoutes } from './members/memberRoutes'
 import { churchesRoutes } from './churchesRoutes'
 import { churchInsightsRoutes } from 'pages/trends/churchInsightsRoutes'
 
-const ContinentProfile = lazy(() => import('./continent/ContinentProfile'))
+const ContinentProfile = lazy(
+  () => import('./continent/profile/ContinentProfile')
+)
 const ContinentCountryList = lazy(
   () => import('./continent/ContinentCountryList')
 )

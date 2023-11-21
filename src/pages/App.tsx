@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Navigation from '../components/Navigation'
 import { AuthProvider } from 'contexts/AuthContext'
-import PrivateRoute from 'auth/PrivateRoute'
+import PrivateRoute from 'auth/ProtectedRoute'
 import { authRoutes } from 'auth/authRoutes'
 import { LoadingPage, PageNotFound } from '@jaedag/admin-portal-react-core'
 import { Suspense } from 'react'

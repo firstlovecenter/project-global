@@ -22,8 +22,8 @@ import { Member, RoleChurch } from 'types/types'
 import { useUser } from 'contexts/UserContext'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
-import ProfileIcon from './components/ProfileIcon'
-import ProfileSectionLabel from './components/ProfileSectionLabel'
+import ProfileIcon from '../components/ProfileIcon'
+import ProfileSectionLabel from '../components/ProfileSectionLabel'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()

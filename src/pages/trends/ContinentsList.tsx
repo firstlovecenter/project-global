@@ -28,6 +28,9 @@ const ContinentsList = () => {
         </Center>
 
         <VStack spacing={2} align="stretch">
+          <Button onClick={() => navigate('/directory/create-continent')}>
+            Register A Continent
+          </Button>
           {continents?.map((continent) => (
             <Button
               key={continent.id}

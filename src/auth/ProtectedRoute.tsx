@@ -19,7 +19,7 @@ const getRoles = (user: Member): Role[] => {
   return roles as Role[]
 }
 
-const PrivateRoute: (props: ProtectedRouteProps) => JSX.Element = (props) => {
+const ProtectedRoute: (props: ProtectedRouteProps) => JSX.Element = (props) => {
   const { children, roles, placeholder } = props
   const { user } = useAuth()
 
@@ -47,4 +47,4 @@ const PrivateRoute: (props: ProtectedRouteProps) => JSX.Element = (props) => {
   return <PageNotFound />
 }
 
-export default PrivateRoute
+export default ProtectedRoute
