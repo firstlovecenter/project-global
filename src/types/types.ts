@@ -72,11 +72,10 @@ export type Role =
   | 'leaderCouncil'
   | 'leaderCampus'
   | 'all'
-
 export interface Church {
   id: string
   level: ChurchLevel
   name: string
-  leader: Member
-  admin: Member
+  leaderRef: Member
+  adminRef: Member
 }

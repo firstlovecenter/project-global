@@ -13,6 +13,6 @@
 export { directory } from './directory'
 export { updateDocIdOnNameChange } from './directory-churches'
 export { updateUserClaims } from './auth'
-export { updateMemberLeadsCampuses } from './updateRoleChurches'
+export { updateMemberLeads } from './updateRoleChurches'
 export { resizeAvatar } from './storage'
 export { search } from './search'

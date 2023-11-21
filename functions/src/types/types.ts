@@ -3,8 +3,9 @@ import {
   GenderOptions,
   MaritalStatusOptions,
 } from '@jaedag/admin-portal-types'
+import { User } from 'firebase/auth'
 
-export interface Member {
+export interface Member extends User {
   id: string
   firstName: string
   middleName: string
@@ -13,7 +14,7 @@ export interface Member {
   pictureUrl: string
   whatsappNumber: string
   phoneNumber: string
-  campus: Church
+  campus: string
 
   dateOfBirth: string
   title: TitleOptions
@@ -22,15 +23,10 @@ export interface Member {
   occupation: string
 
   leadsCampuses?: string[]
-  adminCampuses?: string[]
   leadsCouncils?: string[]
-  adminCouncils?: string[]
   leadsCountries?: string[]
-  adminCountries?: string[]
   leadsContinents?: string[]
-  adminContinents?: string[]
   leadsDenominations?: string[]
-  adminDenominations?: string[]
 
   roles: Role[]
   roleChurches: RoleChurch[]
@@ -49,15 +45,12 @@ export type RoleChurches = {
 }
 
 export type ChurchLevel =
-  | 'Denomination'
-  | 'Continent'
-  | 'Country'
-  | 'Council'
-  | 'Campus'
-export type ChurchLevelLowercase =
-  | 'denomination'
+  | 'planet'
   | 'continent'
   | 'country'
+  | 'city'
+  | 'denomination'
+  | 'family'
   | 'council'
   | 'campus'
 
@@ -65,19 +58,24 @@ export type Role =
   | 'adminPlanet'
   | 'adminContinent'
   | 'adminCountry'
+  | 'adminCity'
+  | 'adminDenomination'
+  | 'adminFamily'
   | 'adminCouncil'
   | 'adminCampus'
   | 'leaderPlanet'
   | 'leaderContinent'
   | 'leaderCountry'
+  | 'leaderCity'
+  | 'leaderDenomination'
+  | 'leaderFamily'
   | 'leaderCouncil'
   | 'leaderCampus'
   | 'all'
-
 export interface Church {
   id: string
   level: ChurchLevel
   name: string
-  leader: Member
-  admin: Member
+  leaderRef: Member
+  adminRef: Member
 }
