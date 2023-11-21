@@ -4,6 +4,13 @@ const { concurrentOpts } = require('./common')
 
 const versionBump = []
 const release = []
+const deploy = [
+  {
+    name: 'deploy-prod',
+    command: `npm run build && firebase deploy --project project-global-aa5ea`,
+    prefixColor: 'green',
+  },
+]
 
 switch (process.argv[2]) {
   case 'patch':
@@ -14,9 +21,10 @@ switch (process.argv[2]) {
     })
     release.push({
       name: 'release:patch',
-      command: 'changelog -p && git add CHANGELOG.md ', //&& git commit -m 'docs: updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags",
+      command: `changelog -p && git add CHANGELOG.md && git commit -m 'docs: updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags`,
       prefixColor: 'yellow',
     })
+
     break
   case 'minor':
     versionBump.push({
@@ -56,3 +64,4 @@ result
     // eslint-disable-next-line no-console
     console.error(e.message)
   })
+  .then(() => concurrently(deploy, concurrentOpts))
