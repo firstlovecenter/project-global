@@ -20,7 +20,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
-    "gen": "standard-version --release-as patch",
+    "gen": "standard-version --release-as patch ",
     "release:major": "node scripts/release.js major",
     "release:minor": "node scripts/release.js minor",
     "release:patch": "node scripts/release.js patch"
@@ -78,7 +78,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
     "firebase-tools": "^12.8.0",
-    "generate-changelog": "^1.8.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
