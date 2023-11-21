@@ -65,6 +65,7 @@ export const updateUserRoles = async ({
     })
 
     if (before) {
+      // TODO implement a for loop to delete all the old roles
       batch.set(oldLeaderRef, oldLeaderRoleChurches)
     }
 
