@@ -1,6 +1,5 @@
 import { Container, Text, Box } from '@chakra-ui/react'
 import React from 'react'
-import CreateUpdateLevel from '../CreateUpdateLevel'
 
 function CreateCampus() {
   return (
@@ -13,7 +12,6 @@ function CreateCampus() {
           First Love Church, Ghana - Council 1
         </Text>
       </Box>
-      <CreateUpdateLevel />
     </Container>
   )
 }

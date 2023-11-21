@@ -1,6 +1,5 @@
 import { Container, Box, Text } from '@chakra-ui/react'
 import React from 'react'
-import CreateUpdateLevel from '../CreateUpdateLevel'
 
 function CreateCountry() {
   return (
@@ -13,7 +12,6 @@ function CreateCountry() {
           First Love Church - Africa
         </Text>
       </Box>
-      <CreateUpdateLevel />
     </Container>
   )
 }
