@@ -22,6 +22,7 @@ const getRoles = (user: Member): Role[] => {
 const ProtectedRoute: (props: ProtectedRouteProps) => JSX.Element = (props) => {
   const { children, roles, placeholder } = props
   const { user } = useAuth()
+  console.log('🚀 ~ file: ProtectedRoute.tsx:25 ~ user:', user)
 
   if (placeholder) {
     return children
