@@ -1,26 +1,72 @@
-import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import { removeSpaces } from './utils/utils'
+import { Church, ChurchLevel, RoleChurch } from './types/types'
 
-export const updateDocIdOnNameChange = functions
-  .region('europe-west1')
-  .firestore.document('{collectionId}/{documentId}')
-  .onUpdate(async (change, context) => {
-    const before = change.before.data()
-    const after = change.after.data()
-    const newName = after.name
-    const documentId = context.params.documentId
-    const collectionRef = admin
-      .firestore()
-      .doc(`${context.params.collectionId}/${documentId}`)
+type UpdateUserRoleArgs = {
+  before?: Church
+  after: Church
+  level: ChurchLevel
+  role: 'leader' | 'admin'
+}
 
-    if (
-      removeSpaces(newName.toLowerCase()) !==
-      removeSpaces(before.name.toLowerCase())
-    ) {
-      const lowercaseName = removeSpaces(newName.toLowerCase())
-      return collectionRef.update({ id: lowercaseName })
-    }
+export const updateUserRoles = async ({
+  before,
+  after,
+  level,
+  role,
+}: UpdateUserRoleArgs) => {
+  const refVar = role === 'leader' ? 'leaderRef' : 'adminRef'
+  const afterRef = after[refVar]
+  const beforeRef = before?.[refVar]
 
-    return null
+  const leaderRoleChurchesRef = await admin
+    .firestore()
+    .collection(`members/${afterRef}/roleChurches`)
+    .get()
+
+  const leaderRoleChurches = leaderRoleChurchesRef.docs.map(
+    (doc) => doc.data() as RoleChurch
+  )
+
+  const afterRoleChurch = {
+    id: after.id,
+    name: after.name,
+    level,
+    role,
+  } as RoleChurch
+
+  leaderRoleChurches.push(afterRoleChurch)
+
+  const newLeaderRef = admin
+    .firestore()
+    .doc(
+      `members/${afterRef}/roleChurches/${afterRoleChurch.id}_continent_${role}`
+    )
+
+  const oldLeaderRoleChurchesRef = await admin
+    .firestore()
+    .collection(`members/${beforeRef}/roleChurches`)
+    .get()
+  const oldLeaderData = oldLeaderRoleChurchesRef.docs.map(
+    (doc) => doc.data() as RoleChurch
+  )
+
+  const oldLeaderRoleChurches = oldLeaderData?.filter(
+    (roleChurch) => roleChurch.id !== after.id
+  )
+
+  const oldLeaderRef = admin
+    .firestore()
+    .doc(`members/${beforeRef}/roleChurches/${before?.id}_continent_${role}`)
+
+  const batch = admin.firestore().batch()
+  batch.update(newLeaderRef, {
+    roleChurches: leaderRoleChurches,
   })
+
+  if (before) {
+    batch.update(oldLeaderRef, {
+      roleChurches: oldLeaderRoleChurches,
+    })
+  }
+  await batch.commit()
+}

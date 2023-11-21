@@ -2,11 +2,10 @@
 const concurrently = require('concurrently')
 const { concurrentOpts } = require('./common')
 
-const versionBump = []
 const release = []
 const deploy = [
   {
-    name: 'deploy-prod',
+    name: 'deploy-dev',
     command: `npm run build && firebase deploy --project project-global-aa5ea`,
     prefixColor: 'green',
   },
@@ -14,24 +13,13 @@ const deploy = [
 
 switch (process.argv[2]) {
   case 'patch':
-    versionBump.push({
-      name: 'bump-frontend',
-      command: `npm version patch && git add package.json package-lock.json`,
-      prefixColor: 'red',
-    })
     release.push({
       name: 'release:patch',
       command: `npm version patch && git push origin && git push origin --tags`,
       prefixColor: 'yellow',
     })
-
     break
   case 'minor':
-    versionBump.push({
-      name: 'bump-frontend',
-      command: ` npm version minor && git add package.json package-lock.json`,
-      prefixColor: 'red',
-    })
     release.push({
       name: 'release:minor',
       command: 'npm version minor && git push origin && git push origin --tags',
@@ -39,11 +27,6 @@ switch (process.argv[2]) {
     })
     break
   case 'major':
-    versionBump.push({
-      name: 'bump-frontend',
-      command: ` npm version major && git add package.json package-lock.json`,
-      prefixColor: 'red',
-    })
     release.push({
       name: 'release:major',
       command: 'npm version major && git push origin && git push origin --tags',
@@ -54,12 +37,11 @@ switch (process.argv[2]) {
     break
 }
 
-const { result } = concurrently(versionBump, concurrentOpts)
+const { result } = concurrently(release, concurrentOpts)
 
 result
-  .then(() => concurrently(release, concurrentOpts))
+  .then(() => concurrently(deploy, concurrentOpts))
   .catch((e) => {
     // eslint-disable-next-line no-console
     console.error(e.message)
   })
-  .then(() => concurrently(deploy, concurrentOpts))

@@ -76,6 +76,6 @@ export interface Church {
   id: string
   level: ChurchLevel
   name: string
-  leaderRef: Member
-  adminRef: Member
+  leaderRef: string
+  adminRef: string
 }

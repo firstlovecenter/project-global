@@ -12,7 +12,7 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es2017", "esnext.asynciterable"]
+    "lib": ["dom", "es2017", "esnext.asynciterable"]
   },
   "compileOnSave": true,
   "include": ["src"]

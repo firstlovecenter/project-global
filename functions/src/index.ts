@@ -11,7 +11,6 @@
 // https://firebase.google.com/docs/functions/typescript
 
 export { directory } from './directory'
-export { updateDocIdOnNameChange } from './directory-churches'
 export { updateUserClaims } from './auth'
 export { updateMemberLeads } from './updateRoleChurches'
 export { resizeAvatar } from './storage'
