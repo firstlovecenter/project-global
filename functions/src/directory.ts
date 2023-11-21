@@ -145,7 +145,12 @@ app.put('/member', async (request, response) => {
 
 app.post('/church/continent', async (request, response) => {
   const continent = request.body as Church
-  const invalidReq = validateRequest(request.query, ['id', 'name', 'leaderRef'])
+  const invalidReq = validateRequest(request.body, [
+    'id',
+    'name',
+    'leaderRef',
+    'denominationRef',
+  ])
 
   if (invalidReq) {
     response.status(400).send(invalidReq)
