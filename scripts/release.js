@@ -16,12 +16,12 @@ switch (process.argv[2]) {
   case 'patch':
     versionBump.push({
       name: 'bump-frontend',
-      command: ` npm version patch && git add package.json package-lock.json`,
+      command: `npm version patch && git add package.json package-lock.json`,
       prefixColor: 'red',
     })
     release.push({
       name: 'release:patch',
-      command: `standard-version --release-as patch && git add CHANGELOG.md && git commit -m 'docs: updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags`,
+      command: `npm version patch && git push origin && git push origin --tags`,
       prefixColor: 'yellow',
     })
 
@@ -34,8 +34,7 @@ switch (process.argv[2]) {
     })
     release.push({
       name: 'release:minor',
-      command:
-        "standard-version --release-as minor && git add CHANGELOG.md && git commit -m 'docs: updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags",
+      command: 'npm version minor && git push origin && git push origin --tags',
       prefixColor: 'yellow',
     })
     break
@@ -47,8 +46,7 @@ switch (process.argv[2]) {
     })
     release.push({
       name: 'release:major',
-      command:
-        "standard-version --release-as major && git add CHANGELOG.md && git commit -m 'docs: updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags",
+      command: 'npm version major && git push origin && git push origin --tags',
       prefixColor: 'yellow',
     })
     break
