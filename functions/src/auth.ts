@@ -1,8 +1,19 @@
-// import * as functions from 'firebase-functions'
+import * as functions from 'firebase-functions'
+import * as admin from 'firebase-admin'
 
-// export const createUserRecord = functions
-//   .region('europe-west1')
-//   .auth.user()
-//   .beforeSignIn((user) => {
-//     console.log('🚀 ~ file: auth.ts:10 ~ user:', user)
-//   })
+export const updateUserClaims = functions
+  .region('europe-west1')
+  .firestore.document('members/{memberId}')
+  .onUpdate(async (change, context) => {
+    const before = change.before.data()
+    const after = change.after.data()
+
+    if (before.roles !== after.roles) {
+      const { roles } = after
+      const uid = context.params.memberId
+
+      await admin.auth().setCustomUserClaims(uid, { roles })
+    }
+
+    return null
+  })

@@ -116,21 +116,26 @@ app.post('/create-member', async (request, response) => {
 })
 
 app.post('/update-member', async (request, response) => {
-  const { uid } = request.body
+  const member = request.body as Member
 
-  const userRef = admin.firestore().doc(`members/${uid}`)
+  const memberRef = admin.firestore().doc(`members/${member.id}`)
 
   try {
-    await userRef.set({
-      id: uid,
-      firstName: 'John-Dag',
-      lastName: 'Addy',
-      email: 'jaedagy@gmail.com',
-      phoneNumber: '233594760323',
-      photoURL: 'https://lh3.goo',
-      createdAt: new Date(),
-    })
-    response.send('Member updated')
+    await Promise.all([
+      memberRef.set({
+        ...member,
+        updatedAt: new Date(),
+      }),
+      admin.auth().updateUser(member.id, {
+        displayName: `${member.firstName} ${member.lastName}`,
+        photoURL: member.pictureUrl,
+        email: member.email,
+        phoneNumber: `+${member.phoneNumber}`,
+      }),
+    ])
+
+    response.send(member)
+    return
   } catch (error) {
     console.error('Error updating user:', error)
     response.status(500).send(error)

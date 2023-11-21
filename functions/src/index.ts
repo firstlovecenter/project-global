@@ -12,7 +12,7 @@
 
 export { directory } from './directory-members'
 export { updateDocIdOnNameChange } from './directory-churches'
-// export { createUserRecord } from './auth'
+export { updateUserClaims } from './auth'
 export { updateMemberLeadsCampuses } from './updateRoleChurches'
 export { resizeAvatar } from './storage'
 export { search } from './search'
