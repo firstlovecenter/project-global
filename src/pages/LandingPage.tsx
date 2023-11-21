@@ -1,5 +1,5 @@
 import { Container, Text } from '@chakra-ui/layout'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from 'contexts/AuthContext'
 import {
   Alert,
@@ -51,6 +51,17 @@ const LandingPage = () => {
     error: memError,
   } = useFirestoreCollectionData(roleChurchesRef)
   const roleChurches = data as RoleChurch[]
+
+  // TODO: Refactor this to use redux
+  useEffect(() => {
+    if (roleChurches?.length >= 1) {
+      setUser({
+        ...user,
+        roleChurches,
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roleChurches])
 
   return (
     <Container centerContent>
