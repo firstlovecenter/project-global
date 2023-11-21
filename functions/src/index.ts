@@ -10,7 +10,7 @@
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
-export { directory } from './directory-members'
+export { directory } from './directory'
 export { updateDocIdOnNameChange } from './directory-churches'
 export { updateUserClaims } from './auth'
 export { updateMemberLeadsCampuses } from './updateRoleChurches'

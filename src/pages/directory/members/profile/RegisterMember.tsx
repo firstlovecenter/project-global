@@ -72,21 +72,18 @@ const RegisterMember = () => {
     values.phoneNumber = parsePhoneNumber(values.phoneNumber)
 
     try {
-      const response = await fetch(
-        DIRECTORY_FUNCTION_BASE_URL + '/create-member',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            ...values,
-            whatsappNumber: values.whatsappNumber,
-            parsePhoneNumber: values.phoneNumber,
-            dateOfBirth: new Date(values.dateOfBirth),
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      const response = await fetch(DIRECTORY_FUNCTION_BASE_URL + '/member', {
+        method: 'POST',
+        body: JSON.stringify({
+          ...values,
+          whatsappNumber: values.whatsappNumber,
+          parsePhoneNumber: values.phoneNumber,
+          dateOfBirth: new Date(values.dateOfBirth),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
       if (!response.ok) {
         const errorMessage = await response.text()
