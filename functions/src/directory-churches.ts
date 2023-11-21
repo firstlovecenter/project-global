@@ -18,55 +18,58 @@ export const updateUserRoles = async ({
   const afterRef = after[refVar]
   const beforeRef = before?.[refVar]
 
-  const leaderRoleChurchesRef = await admin
-    .firestore()
-    .collection(`members/${afterRef}/roleChurches`)
-    .get()
+  try {
+    const leaderRoleChurchesRef = await admin
+      .firestore()
+      .collection(`members/${afterRef}/roleChurches`)
+      .get()
 
-  const leaderRoleChurches = leaderRoleChurchesRef.docs.map(
-    (doc) => doc.data() as RoleChurch
-  )
+    const leaderRoleChurches = leaderRoleChurchesRef.docs.map(
+      (doc) => doc.data() as RoleChurch
+    )
+    const afterRoleChurch = {
+      id: after.id,
+      name: after.name,
+      level,
+      role,
+    } as RoleChurch
 
-  const afterRoleChurch = {
-    id: after.id,
-    name: after.name,
-    level,
-    role,
-  } as RoleChurch
+    leaderRoleChurches.push(afterRoleChurch)
 
-  leaderRoleChurches.push(afterRoleChurch)
-
-  const newLeaderRef = admin
-    .firestore()
-    .doc(
-      `members/${afterRef}/roleChurches/${afterRoleChurch.id}_continent_${role}`
+    const oldLeaderRoleChurchesRef = await admin
+      .firestore()
+      .collection(`members/${beforeRef}/roleChurches`)
+      .get()
+    const oldLeaderData = oldLeaderRoleChurchesRef.docs.map(
+      (doc) => doc.data() as RoleChurch
     )
 
-  const oldLeaderRoleChurchesRef = await admin
-    .firestore()
-    .collection(`members/${beforeRef}/roleChurches`)
-    .get()
-  const oldLeaderData = oldLeaderRoleChurchesRef.docs.map(
-    (doc) => doc.data() as RoleChurch
-  )
+    const oldLeaderRoleChurches = oldLeaderData?.filter(
+      (roleChurch) => roleChurch.id !== after.id
+    )
 
-  const oldLeaderRoleChurches = oldLeaderData?.filter(
-    (roleChurch) => roleChurch.id !== after.id
-  )
+    const oldLeaderRef = admin
+      .firestore()
+      .doc(`members/${beforeRef}/roleChurches/${before?.id}_continent_${role}`)
 
-  const oldLeaderRef = admin
-    .firestore()
-    .doc(`members/${beforeRef}/roleChurches/${before?.id}_continent_${role}`)
+    const batch = admin.firestore().batch()
 
-  const batch = admin.firestore().batch()
-  batch.update(newLeaderRef, {
-    roleChurches: leaderRoleChurches,
-  })
+    leaderRoleChurches.forEach((roleChurch) => {
+      const newLeaderRef = admin
+        .firestore()
+        .doc(
+          `members/${afterRef}/roleChurches/${roleChurch.id}_continent_${roleChurch.role}`
+        )
 
-  if (before) {
-    batch.update(oldLeaderRef, {
-      roleChurches: oldLeaderRoleChurches,
+      batch.set(newLeaderRef, roleChurch)
     })
+
+    if (before) {
+      batch.set(oldLeaderRef, oldLeaderRoleChurches)
+    }
+
+    await batch.commit()
+  } catch (error) {
+    console.log(error)
   }
-  await batch.commit()
 }

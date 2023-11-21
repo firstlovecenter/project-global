@@ -15,7 +15,7 @@ switch (process.argv[2]) {
   case 'patch':
     release.push({
       name: 'release:patch',
-      command: `npm version patch && git push origin && git push origin --tags`,
+      command: `git push origin`,
       prefixColor: 'yellow',
     })
     break

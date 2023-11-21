@@ -11,11 +11,21 @@ export const updateMemberLeadsOrAdmins = functions
       const after = change.after.data() as Church
 
       if (before?.leaderRef !== after?.leaderRef) {
-        updateUserRoles({ before, after, level: 'continent', role: 'leader' })
+        await updateUserRoles({
+          before,
+          after,
+          level: 'continent',
+          role: 'leader',
+        })
       }
 
       if (before?.adminRef !== after?.adminRef) {
-        updateUserRoles({ before, after, level: 'continent', role: 'admin' })
+        await updateUserRoles({
+          before,
+          after,
+          level: 'continent',
+          role: 'admin',
+        })
       }
 
       return
