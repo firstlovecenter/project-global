@@ -1,7 +1,7 @@
 {
   "name": "project-global",
   "private": true,
-  "version": "0.0.10",
+  "version": "0.0.11",
   "author": {
     "name": "John-Dag Addy",
     "email": "johndagaddy@firstlovecenter.com"
@@ -20,7 +20,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
-    "gen": "changelog -p",
+    "gen": "standard-version --release-as patch",
     "release:major": "node scripts/release.js major",
     "release:minor": "node scripts/release.js minor",
     "release:patch": "node scripts/release.js patch"
@@ -83,6 +83,7 @@
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "prettier-eslint-cli": "^7.1.0",
+    "standard-version": "^9.5.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
     "vite-plugin-svgr": "^2.4.0",
