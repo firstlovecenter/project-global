@@ -169,4 +169,56 @@ app.post('/church/continent', async (request, response) => {
   }
 })
 
+app.post('/church/country', async (request, response) => {
+  const country = request.body as Church
+  const invalidReq = validateRequest(request.body, [
+    'id',
+    'name',
+    'leaderRef',
+    'continentRef',
+  ])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  const countryRef = admin.firestore().doc(`countries/${country.id}`)
+
+  try {
+    await countryRef.set(country)
+    response.send(country)
+    return
+  } catch (error) {
+    console.error('Error creating country:', error)
+    response.status(500).send(error)
+  }
+})
+
+app.post('/church/city', async (request, response) => {
+  const city = request.body as Church
+  const invalidReq = validateRequest(request.body, [
+    'id',
+    'name',
+    'leaderRef',
+    'countryRef',
+  ])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  const cityRef = admin.firestore().doc(`cities/${city.id}`)
+
+  try {
+    await cityRef.set(city)
+    response.send(city)
+    return
+  } catch (error) {
+    console.error('Error creating city:', error)
+    response.status(500).send(error)
+  }
+})
+
 export const directory = functions.region('europe-west1').https.onRequest(app)

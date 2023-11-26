@@ -2,21 +2,19 @@ import { LazyRouteTypes } from 'auth/auth-types'
 import { lazy } from 'react'
 import { memberRoutes } from './members/memberRoutes'
 import { churchesRoutes } from './churchesRoutes'
-import { churchInsightsRoutes } from 'pages/trends/churchInsightsRoutes'
+import { churchInsightsRoutes } from 'pages/trends/trendsRoutes'
 
 const ContinentProfile = lazy(
   () => import('./continent/profile/ContinentProfile')
 )
-const ContinentCountryList = lazy(
-  () => import('./continent/ContinentCountryList')
-)
-const CountryProfile = lazy(() => import('./country/CountryProfile'))
-const CountryCouncilList = lazy(() => import('./country/CountryCouncilList'))
+
+const CountryProfile = lazy(() => import('./country/profile/CountryProfile'))
+const CityProfile = lazy(() => import('./city/profile/CityProfile'))
 const CouncilProfile = lazy(() => import('./council/CouncilProfile'))
 const CouncilCampusList = lazy(() => import('./council/CouncilCampusList'))
 const CampusProfile = lazy(() => import('./campus/CampusProfile'))
 
-const CreateCountry = lazy(() => import('./country/CreateCountry'))
+const CreateCountry = lazy(() => import('./country/profile/CreateCountry'))
 const CreateCouncil = lazy(() => import('./council/CreateCouncil'))
 const CreateCampus = lazy(() => import('./campus/CreateCampus'))
 
@@ -59,24 +57,14 @@ export const directoryRoutes: LazyRouteTypes[] = [
     placeholder: true,
     roles: ['all'],
   },
-  {
-    path: '/directory/continent/countries',
-    element: ContinentCountryList,
-    placeholder: true,
-    roles: ['all'],
-  },
+
   {
     path: '/directory/country-profile',
     element: CountryProfile,
     placeholder: true,
     roles: ['all'],
   },
-  {
-    path: '/directory/country/councils',
-    element: CountryCouncilList,
-    placeholder: true,
-    roles: ['all'],
-  },
+
   {
     path: '/directory/country/create',
     element: CreateCountry,

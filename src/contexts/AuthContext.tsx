@@ -52,6 +52,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const fromSessionStorage = JSON.parse(sessionStorage.getItem('user') ?? '{}')
+
   const [user, setUser] = useState<Member>(fromSessionStorage as Member)
   const [loading, setLoading] = useState(true)
 

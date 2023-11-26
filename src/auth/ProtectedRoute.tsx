@@ -1,6 +1,5 @@
 import { useAuth } from 'contexts/AuthContext'
 import LogIn from './LogIn'
-import { PageNotFound } from '@jaedag/admin-portal-react-core'
 import { Member, Role } from 'types/types'
 import { isAuthorised, Role as FakeRole } from '@jaedag/admin-portal-types'
 
@@ -44,7 +43,7 @@ const ProtectedRoute: (props: ProtectedRouteProps) => JSX.Element = (props) => {
     return children
   }
 
-  return <PageNotFound />
+  return <div>404</div>
 }
 
 export default ProtectedRoute

@@ -18,10 +18,12 @@ export const pluralize = (word?: string, count?: number) => {
   const pluralForms: { [key: string]: string } = {
     campus: 'campuses',
     Campus: 'Campuses',
-    country: 'countries',
-    Country: 'Countries',
     family: 'families',
     Family: 'Families',
+    country: 'countries',
+    Country: 'Countries',
+    city: 'cities',
+    City: 'Cities',
   }
 
   if (word in pluralForms) {

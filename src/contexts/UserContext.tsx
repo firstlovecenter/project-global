@@ -55,6 +55,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setCurrentUser({
         ...fromSessionStorage,
         ...members[0],
+        roleChurches: fromSessionStorage.roleChurches,
       } as unknown as Member)
 
       return members[0]
