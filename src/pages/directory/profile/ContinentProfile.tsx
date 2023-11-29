@@ -17,15 +17,15 @@ import { useFirestore, useFirestoreDocData } from 'reactfire'
 import { Church } from 'types/types'
 import InfoCard from './components/InfoCard'
 
-const CountryTrends = () => {
-  const { countryRef } = useRef()
+const ContinentProfile = () => {
+  const { continentRef } = useRef()
   const navigate = useNavigate()
 
-  const contRef = doc(useFirestore(), 'countries', countryRef)
+  const contRef = doc(useFirestore(), 'continents', continentRef)
   const trendsRef = doc(
     useFirestore(),
-    `countries/${countryRef}/trends`,
-    `countries_${countryRef}_trends`
+    `continents/${continentRef}/trends`,
+    `continents_${continentRef}_trends`
   )
   const { status, data, error } = useFirestoreDocData(contRef)
   const {
@@ -34,10 +34,10 @@ const CountryTrends = () => {
     error: trendError,
   } = useFirestoreDocData(trendsRef)
 
-  const country = data as Church
+  const continent = data as Church
 
-  const subGeoChurch = pluralize(getSubGeoChurch('country'))
-  const subFamilyChurch = pluralize(getSubFamilyChurch('country'))
+  const subGeoChurch = pluralize(getSubGeoChurch('continent'))
+  const subFamilyChurch = pluralize(getSubFamilyChurch('continent'))
 
   return (
     <ApolloWrapper
@@ -46,7 +46,7 @@ const CountryTrends = () => {
       error={error || trendError}
     >
       <Container>
-        <Heading>{country?.name} Country Insights</Heading>
+        <Heading>{continent?.name} Continent Insights</Heading>
 
         <HStack>
           <InfoCard title="Bishops" value={trendData?.bishops ?? 0} />
@@ -85,7 +85,7 @@ const CountryTrends = () => {
               paddingY={6}
               onClick={() => navigate(`/${subGeoChurch.toLowerCase()}-list`)}
             >
-              {subGeoChurch} in {country?.name}
+              {subGeoChurch} in {continent?.name}
             </Button>
           )}
           {!!subFamilyChurch && (
@@ -93,7 +93,7 @@ const CountryTrends = () => {
               paddingY={6}
               onClick={() => navigate(`/${subFamilyChurch.toLowerCase()}-list`)}
             >
-              {subFamilyChurch} in {country.name}
+              {subFamilyChurch} in {continent.name}
             </Button>
           )}
         </VStack>
@@ -102,4 +102,4 @@ const CountryTrends = () => {
   )
 }
 
-export default CountryTrends
+export default ContinentProfile

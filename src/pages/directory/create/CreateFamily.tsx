@@ -8,8 +8,8 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
-const CreateCountry = () => {
-  const { clickCard, continentRef } = useRef()
+const CreateFamily = () => {
+  const { clickCard, denominationRef } = useRef()
   const navigate = useNavigate()
   const initialValues = {
     name: '',
@@ -25,15 +25,15 @@ const CreateCountry = () => {
 
   const onSubmit = async (values: typeof initialValues) => {
     try {
-      const countryRef = values.name.toLowerCase().replace(' ', '-')
+      const familyRef = values.name.toLowerCase().replace(' ', '-')
       const response = await fetch(
-        DIRECTORY_FUNCTION_BASE_URL + '/church/country',
+        DIRECTORY_FUNCTION_BASE_URL + '/church/family',
         {
           method: 'POST',
           body: JSON.stringify({
             ...values,
-            id: countryRef,
-            continentRef,
+            id: familyRef,
+            denominationRef,
           }),
           headers: {
             'Content-Type': 'application/json',
@@ -47,13 +47,13 @@ const CreateCountry = () => {
         throw new Error(errorMessage)
       }
 
-      clickCard(countryRef, 'country')
+      clickCard(familyRef, 'family')
 
-      navigate('/country/profile')
+      navigate('/family/profile')
     } catch (e: unknown) {
       if (e instanceof Error) {
         toast({
-          title: 'An error occurred creating country',
+          title: 'An error occurred creating family',
           description: e.message,
           status: 'error',
           duration: 9000,
@@ -75,7 +75,7 @@ const CreateCountry = () => {
 
   return (
     <Container>
-      <Heading>Create A Country</Heading>
+      <Heading>Create A Family</Heading>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input name="name" label="Name" control={control} errors={errors} />
@@ -99,4 +99,4 @@ const CreateCountry = () => {
   )
 }
 
-export default CreateCountry
+export default CreateFamily

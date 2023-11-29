@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import InfoCard from './components/InfoCard'
 import { getSubFamilyChurch, getSubGeoChurch, pluralize } from 'globalUtils'
 
-const SelectedProfileTrends = () => {
+const SelectedProfile = () => {
   const { user } = useUser()
   const navigate = useNavigate()
 
@@ -53,16 +53,24 @@ const SelectedProfileTrends = () => {
 
       <VStack paddingX={10} marginTop={10} spacing={2} align="stretch">
         {!!subGeoChurch && (
-          <Button paddingY={6} onClick={() => navigate('/continents-list')}>
+          <Button
+            paddingY={6}
+            onClick={() => navigate(`/${subGeoChurch.toLowerCase()}-list`)}
+          >
             {subGeoChurch} in Africa
           </Button>
         )}
         {!!subFamChurch && (
-          <Button paddingY={6}>{subFamChurch} in Africa</Button>
+          <Button
+            paddingY={6}
+            onClick={() => navigate(`/${subFamChurch.toLowerCase()}-list`)}
+          >
+            {subFamChurch} in Africa
+          </Button>
         )}
       </VStack>
     </Container>
   )
 }
 
-export default SelectedProfileTrends
+export default SelectedProfile

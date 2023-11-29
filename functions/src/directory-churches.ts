@@ -50,7 +50,7 @@ export const updateUserRoles = async ({
 
     const oldLeaderRef = admin
       .firestore()
-      .doc(`members/${beforeRef}/roleChurches/${before?.id}_continent_${role}`)
+      .doc(`members/${beforeRef}/roleChurches/${before?.id}_${level}_${role}`)
 
     const batch = admin.firestore().batch()
 
@@ -58,7 +58,7 @@ export const updateUserRoles = async ({
       const newLeaderRef = admin
         .firestore()
         .doc(
-          `members/${afterRef}/roleChurches/${roleChurch.id}_continent_${roleChurch.role}`
+          `members/${afterRef}/roleChurches/${roleChurch.id}_${level}_${roleChurch.role}`
         )
 
       batch.set(newLeaderRef, roleChurch)

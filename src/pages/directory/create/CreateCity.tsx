@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
-const CreateCountry = () => {
+const CreateCity = () => {
   const { clickCard, countryRef } = useRef()
   const navigate = useNavigate()
   const initialValues = {
@@ -47,13 +47,13 @@ const CreateCountry = () => {
         throw new Error(errorMessage)
       }
 
-      clickCard(countryRef, 'country')
+      clickCard(cityRef, 'city')
 
-      navigate('/country/profile')
+      navigate('/directory/city-profile')
     } catch (e: unknown) {
       if (e instanceof Error) {
         toast({
-          title: 'An error occurred creating country',
+          title: 'An error occurred creating city',
           description: e.message,
           status: 'error',
           duration: 9000,
@@ -75,7 +75,7 @@ const CreateCountry = () => {
 
   return (
     <Container>
-      <Heading>Create A Country</Heading>
+      <Heading>Create A City</Heading>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input name="name" label="Name" control={control} errors={errors} />
@@ -99,4 +99,4 @@ const CreateCountry = () => {
   )
 }
 
-export default CreateCountry
+export default CreateCity

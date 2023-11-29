@@ -49,7 +49,7 @@ const CreateContinent = () => {
 
       clickCard(continentRef, 'continent')
 
-      navigate('/continent/profile')
+      navigate('/directory/continent-profile')
     } catch (e: unknown) {
       if (e instanceof Error) {
         toast({

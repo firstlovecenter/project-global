@@ -2,12 +2,11 @@ import { LazyRouteTypes } from 'auth/auth-types'
 import { permitAdmin } from 'permissions'
 import { lazy } from 'react'
 
-const Churches = lazy(() => import('../trends/SelectedProfileTrends'))
-const CreateContinent = lazy(
-  () => import('./continent/profile/CreateContinent')
-)
-const CreateCountry = lazy(() => import('./country/profile/CreateCountry'))
-const CreateCity = lazy(() => import('./city/profile/CreateCity'))
+const Churches = lazy(() => import('./profile/SelectedProfile'))
+const CreateContinent = lazy(() => import('./create/CreateContinent'))
+const CreateCountry = lazy(() => import('./create/CreateCountry'))
+const CreateCity = lazy(() => import('./create/CreateCity'))
+const CreateFamily = lazy(() => import('./create/CreateFamily'))
 
 export const churchesRoutes: LazyRouteTypes[] = [
   { path: '/churches', element: Churches, roles: ['all'] },
@@ -25,5 +24,10 @@ export const churchesRoutes: LazyRouteTypes[] = [
     path: '/directory/create-city',
     element: CreateCity,
     roles: permitAdmin('country'),
+  },
+  {
+    path: '/directory/create-family',
+    element: CreateFamily,
+    roles: permitAdmin('denomination'),
   },
 ]

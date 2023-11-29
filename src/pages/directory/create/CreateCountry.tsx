@@ -8,8 +8,8 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
-const CreateCity = () => {
-  const { clickCard, countryRef } = useRef()
+const CreateCountry = () => {
+  const { clickCard, continentRef } = useRef()
   const navigate = useNavigate()
   const initialValues = {
     name: '',
@@ -25,15 +25,15 @@ const CreateCity = () => {
 
   const onSubmit = async (values: typeof initialValues) => {
     try {
-      const cityRef = values.name.toLowerCase().replace(' ', '-')
+      const countryRef = values.name.toLowerCase().replace(' ', '-')
       const response = await fetch(
-        DIRECTORY_FUNCTION_BASE_URL + '/church/city',
+        DIRECTORY_FUNCTION_BASE_URL + '/church/country',
         {
           method: 'POST',
           body: JSON.stringify({
             ...values,
-            id: cityRef,
-            countryRef,
+            id: countryRef,
+            continentRef,
           }),
           headers: {
             'Content-Type': 'application/json',
@@ -47,13 +47,13 @@ const CreateCity = () => {
         throw new Error(errorMessage)
       }
 
-      clickCard(cityRef, 'city')
+      clickCard(countryRef, 'country')
 
-      navigate('/city/profile')
+      navigate('/directory/country-profile')
     } catch (e: unknown) {
       if (e instanceof Error) {
         toast({
-          title: 'An error occurred creating city',
+          title: 'An error occurred creating country',
           description: e.message,
           status: 'error',
           duration: 9000,
@@ -75,7 +75,7 @@ const CreateCity = () => {
 
   return (
     <Container>
-      <Heading>Create A City</Heading>
+      <Heading>Create A Country</Heading>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input name="name" label="Name" control={control} errors={errors} />
@@ -99,4 +99,4 @@ const CreateCity = () => {
   )
 }
 
-export default CreateCity
+export default CreateCountry

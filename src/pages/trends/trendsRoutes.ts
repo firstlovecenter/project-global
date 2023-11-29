@@ -3,17 +3,24 @@ import { permitMe } from 'permissions'
 import { lazy } from 'react'
 
 const ContinentsList = lazy(
-  () => import('../directory/denomination/DenominationContinentsList')
+  () => import('../directory/church-subchurch-lists/DenominationContinentsList')
 )
-const ContinentTrends = lazy(() => import('./ContinentTrends'))
+const ContinentTrends = lazy(
+  () => import('../directory/profile/ContinentProfile')
+)
 
 const CountriesList = lazy(
-  () => import('../directory/continent/ContinentCountriesList')
+  () => import('../directory/church-subchurch-lists/ContinentCountriesList')
 )
-const CountryTrends = lazy(() => import('./CountryTrends'))
+const CountryTrends = lazy(() => import('../directory/profile/CountryProfile'))
 
-const CitiesList = lazy(() => import('../directory/country/CountryCitiesList'))
-const CityTrends = lazy(() => import('./CityTrends'))
+const CitiesList = lazy(
+  () => import('../directory/church-subchurch-lists/CountryCitiesList')
+)
+const CityTrends = lazy(() => import('../directory/profile/CityProfile'))
+const FamiliesList = lazy(
+  () => import('../directory/church-subchurch-lists/DenominationFamiliesList')
+)
 
 export const churchInsightsRoutes: LazyRouteTypes[] = [
   {
@@ -48,5 +55,16 @@ export const churchInsightsRoutes: LazyRouteTypes[] = [
     path: '/trends/city',
     element: CityTrends,
     roles: permitMe('city'),
+  },
+  {
+    path: '/families-list',
+    element: FamiliesList,
+    placeholder: true,
+    roles: permitMe('denomination'),
+  },
+  {
+    path: '/trends/family',
+    element: CityTrends,
+    roles: permitMe('denomination'),
   },
 ]

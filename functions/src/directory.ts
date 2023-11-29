@@ -221,4 +221,30 @@ app.post('/church/city', async (request, response) => {
   }
 })
 
+app.post('/church/family', async (request, response) => {
+  const family = request.body as Church
+  const invalidReq = validateRequest(request.body, [
+    'id',
+    'name',
+    'leaderRef',
+    'denominationRef',
+  ])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  const familyRef = admin.firestore().doc(`families/${family.id}`)
+
+  try {
+    await familyRef.set(family)
+    response.send(family)
+    return
+  } catch (error) {
+    console.log('Error creating family:', error)
+    response.status(500).send(error)
+  }
+})
+
 export const directory = functions.region('europe-west1').https.onRequest(app)

@@ -17,15 +17,15 @@ import { useFirestore, useFirestoreDocData } from 'reactfire'
 import { Church } from 'types/types'
 import InfoCard from './components/InfoCard'
 
-const CityTrends = () => {
-  const { cityRef } = useRef()
+const CampusProfile = () => {
+  const { campusRef } = useRef()
   const navigate = useNavigate()
 
-  const contRef = doc(useFirestore(), 'cities', cityRef)
+  const contRef = doc(useFirestore(), 'campuses', campusRef)
   const trendsRef = doc(
     useFirestore(),
-    `cities/${cityRef}/trends`,
-    `cities_${cityRef}_trends`
+    `campuses/${campusRef}/trends`,
+    `campuses_${campusRef}_trends`
   )
   const { status, data, error } = useFirestoreDocData(contRef)
   const {
@@ -34,10 +34,10 @@ const CityTrends = () => {
     error: trendError,
   } = useFirestoreDocData(trendsRef)
 
-  const city = data as Church
+  const campus = data as Church
 
-  const subGeoChurch = pluralize(getSubGeoChurch('city'))
-  const subFamilyChurch = pluralize(getSubFamilyChurch('city'))
+  const subGeoChurch = pluralize(getSubGeoChurch('campus'))
+  const subFamilyChurch = pluralize(getSubFamilyChurch('campus'))
 
   return (
     <ApolloWrapper
@@ -46,7 +46,7 @@ const CityTrends = () => {
       error={error || trendError}
     >
       <Container>
-        <Heading>{city?.name} City Insights</Heading>
+        <Heading>{campus?.name} Campus Insights</Heading>
 
         <HStack>
           <InfoCard title="Bishops" value={trendData?.bishops ?? 0} />
@@ -85,7 +85,7 @@ const CityTrends = () => {
               paddingY={6}
               onClick={() => navigate(`/${subGeoChurch.toLowerCase()}-list`)}
             >
-              {subGeoChurch} in {city?.name}
+              {subGeoChurch} in {campus?.name}
             </Button>
           )}
           {!!subFamilyChurch && (
@@ -93,7 +93,7 @@ const CityTrends = () => {
               paddingY={6}
               onClick={() => navigate(`/${subFamilyChurch.toLowerCase()}-list`)}
             >
-              {subFamilyChurch} in {city.name}
+              {subFamilyChurch} in {campus.name}
             </Button>
           )}
         </VStack>
@@ -102,4 +102,4 @@ const CityTrends = () => {
   )
 }
 
-export default CityTrends
+export default CampusProfile
