@@ -12,6 +12,11 @@
 
 export { directory } from './directory'
 export { updateUserClaims } from './auth'
-export { updateMemberLeadsOrAdmins } from './updateRoleChurches'
+export {
+  updateMemberLeadsOrAdminsContinent,
+  updateMemberLeadsOrAdminsCountry,
+  updateMemberLeadsOrAdminsCity,
+  updateMemberLeadsOrAdminsCampus,
+} from './updateRoleChurches'
 export { resizeAvatar } from './storage'
 export { search } from './search'
