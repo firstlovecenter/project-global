@@ -83,7 +83,9 @@ const CityProfile = () => {
           {!!subGeoChurch && (
             <Button
               paddingY={6}
-              onClick={() => navigate(`/${subGeoChurch.toLowerCase()}-list`)}
+              onClick={() =>
+                navigate(`/city-${subGeoChurch.toLowerCase()}-list`)
+              }
             >
               {subGeoChurch} in {city?.name}
             </Button>
@@ -91,7 +93,9 @@ const CityProfile = () => {
           {!!subFamilyChurch && (
             <Button
               paddingY={6}
-              onClick={() => navigate(`/${subFamilyChurch.toLowerCase()}-list`)}
+              onClick={() =>
+                navigate(`/city-${subFamilyChurch.toLowerCase()}-list`)
+              }
             >
               {subFamilyChurch} in {city.name}
             </Button>

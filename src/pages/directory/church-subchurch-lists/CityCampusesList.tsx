@@ -7,40 +7,40 @@ import { useNavigate } from 'react-router-dom'
 import { useFirestoreCollectionData } from 'reactfire'
 
 const CitiesList = () => {
-  const { countryRef, clickCard } = useRef()
+  const { cityRef, clickCard } = useRef()
 
   const db = getFirestore()
   const navigate = useNavigate()
 
-  const citiesRef = collection(db, 'cities')
-  const q = query(citiesRef, where('countryRef', '==', countryRef))
+  const campusesRef = collection(db, 'campuses')
+  const q = query(campusesRef, where('cityRef', '==', cityRef))
   const { status, data, error } = useFirestoreCollectionData(q)
-  const cities = data
+  const campuses = data
 
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={error}>
       <Container>
-        <Heading>Cities</Heading>
+        <Heading>Campuses</Heading>
 
         <Center marginY={10}>
           <GiEarthAfricaEurope size={120} />
         </Center>
 
         <VStack spacing={2} align="stretch">
-          <Button onClick={() => navigate('/directory/create-city')}>
-            Register A City
+          <Button onClick={() => navigate('/directory/create-campus')}>
+            Register A Campus
           </Button>
-          {cities?.map((city) => (
+          {campuses?.map((campus) => (
             <Button
-              key={city.id}
+              key={campus.id}
               variant="outline"
               paddingY={7}
               onClick={() => {
-                clickCard(city.id, 'city')
-                navigate('/trends/city')
+                clickCard(campus.id, 'campus')
+                navigate('/trends/campus')
               }}
             >
-              {city.name}
+              {campus.name}
             </Button>
           ))}
         </VStack>

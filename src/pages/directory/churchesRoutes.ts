@@ -6,6 +6,7 @@ const Churches = lazy(() => import('./profile/SelectedProfile'))
 const CreateContinent = lazy(() => import('./create/CreateContinent'))
 const CreateCountry = lazy(() => import('./create/CreateCountry'))
 const CreateCity = lazy(() => import('./create/CreateCity'))
+const CreateCampus = lazy(() => import('./create/CreateCampus'))
 const CreateFamily = lazy(() => import('./create/CreateFamily'))
 
 export const churchesRoutes: LazyRouteTypes[] = [
@@ -24,6 +25,11 @@ export const churchesRoutes: LazyRouteTypes[] = [
     path: '/directory/create-city',
     element: CreateCity,
     roles: permitAdmin('country'),
+  },
+  {
+    path: '/directory/create-campus',
+    element: CreateCampus,
+    roles: permitAdmin('city'),
   },
   {
     path: '/directory/create-family',

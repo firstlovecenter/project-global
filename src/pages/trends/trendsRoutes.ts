@@ -29,7 +29,7 @@ const CouncilTrends = lazy(() => import('../directory/profile/CouncilProfile'))
 const CouncilCampusesList = lazy(
   () => import('../directory/church-subchurch-lists/CouncilCampusesList')
 )
-const CityCampuses = lazy(
+const CityCampusesList = lazy(
   () => import('../directory/church-subchurch-lists/CityCampusesList')
 )
 const CampusTrends = lazy(() => import('../directory/profile/CampusProfile'))
@@ -69,6 +69,16 @@ export const churchInsightsRoutes: LazyRouteTypes[] = [
     roles: permitMe('city'),
   },
   {
+    path: '/city-campuses-list',
+    element: CityCampusesList,
+    roles: permitMe('city'),
+  },
+  {
+    path: '/trends/campus',
+    element: CampusTrends,
+    roles: permitMe('campus'),
+  },
+  {
     path: '/families-list',
     element: FamiliesList,
     placeholder: true,
@@ -89,5 +99,10 @@ export const churchInsightsRoutes: LazyRouteTypes[] = [
     path: '/trends/council',
     element: CouncilTrends,
     roles: permitMe('family'),
+  },
+  {
+    path: '/council-campuses-list',
+    element: CouncilCampusesList,
+    roles: permitMe('city'),
   },
 ]
