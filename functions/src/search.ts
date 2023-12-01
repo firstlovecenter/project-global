@@ -53,6 +53,96 @@ app.get('/campus', async (request, response) => {
   }
 })
 
+app.get('/council', async (request, response) => {
+  type SearchParams = { uid: string; searchKey: string }
+  const { uid, searchKey } = request.query as SearchParams
+
+  const invalidReq = validateRequest(request.query, ['uid'])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  try {
+    const leaderQuery = admin
+      .firestore()
+      .collection('councils')
+      .where('leader', '==', uid)
+      .where('id', '>=', searchKey?.toLowerCase())
+      .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
+      .get()
+
+    const adminQuery = admin
+      .firestore()
+      .collection('councils')
+      .where('admin', '==', uid)
+      .where('id', '>=', searchKey?.toLowerCase())
+      .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
+      .get()
+
+    const [leaderSnapshot, adminSnapshot] = await Promise.all([
+      leaderQuery,
+      adminQuery,
+    ])
+
+    const leaderCouncils = leaderSnapshot.docs.map((doc) => doc.data())
+    const adminCouncils = adminSnapshot.docs.map((doc) => doc.data())
+
+    const councils = [...leaderCouncils, ...adminCouncils]
+
+    response.send(councils)
+  } catch (error) {
+    console.error('Error searching councils:', error)
+    response.status(500).send(error)
+  }
+})
+
+app.get('/city', async (request, response) => {
+  type SearchParams = { uid: string; searchKey: string }
+  const { uid, searchKey } = request.query as SearchParams
+
+  const invalidReq = validateRequest(request.query, ['uid'])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  try {
+    const leaderQuery = admin
+      .firestore()
+      .collection('cities')
+      .where('leader', '==', uid)
+      .where('id', '>=', searchKey?.toLowerCase())
+      .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
+      .get()
+
+    const adminQuery = admin
+      .firestore()
+      .collection('cities')
+      .where('admin', '==', uid)
+      .where('id', '>=', searchKey?.toLowerCase())
+      .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
+      .get()
+
+    const [leaderSnapshot, adminSnapshot] = await Promise.all([
+      leaderQuery,
+      adminQuery,
+    ])
+
+    const leaderCities = leaderSnapshot.docs.map((doc) => doc.data())
+    const adminCities = adminSnapshot.docs.map((doc) => doc.data())
+
+    const cities = [...leaderCities, ...adminCities]
+
+    response.send(cities)
+  } catch (error) {
+    console.error('Error searching cities:', error)
+    response.status(500).send(error)
+  }
+})
+
 app.get('/member', async (request, response) => {
   type SearchParams = { uid: string; searchKey: string }
   const { searchKey } = request.query as SearchParams

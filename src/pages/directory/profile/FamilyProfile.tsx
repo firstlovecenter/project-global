@@ -93,7 +93,7 @@ const FamilyProfile = () => {
               paddingY={6}
               onClick={() => navigate(`/${subFamilyChurch.toLowerCase()}-list`)}
             >
-              {subFamilyChurch} in {family.name}
+              {subFamilyChurch} in {family?.name}
             </Button>
           )}
         </VStack>

@@ -83,7 +83,9 @@ const CouncilProfile = () => {
           {!!subGeoChurch && (
             <Button
               paddingY={6}
-              onClick={() => navigate(`/${subGeoChurch.toLowerCase()}-list`)}
+              onClick={() =>
+                navigate(`/council-${subGeoChurch.toLowerCase()}-list`)
+              }
             >
               {subGeoChurch} in {council?.name}
             </Button>
@@ -92,10 +94,10 @@ const CouncilProfile = () => {
             <Button
               paddingY={6}
               onClick={() =>
-                navigate(`/${subCouncilChurch.toLowerCase()}-list`)
+                navigate(`/council-${subCouncilChurch.toLowerCase()}-list`)
               }
             >
-              {subCouncilChurch} in {council.name}
+              {subCouncilChurch} in {council?.name}
             </Button>
           )}
         </VStack>

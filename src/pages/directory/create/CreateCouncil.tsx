@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 const CreateCouncil = () => {
-  const { clickCard, denominationRef } = useRef()
+  const { clickCard, familyRef } = useRef()
   const navigate = useNavigate()
   const initialValues = {
     name: '',
@@ -33,7 +33,7 @@ const CreateCouncil = () => {
           body: JSON.stringify({
             ...values,
             id: councilRef,
-            denominationRef,
+            familyRef,
           }),
           headers: {
             'Content-Type': 'application/json',

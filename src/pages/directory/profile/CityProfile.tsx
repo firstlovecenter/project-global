@@ -97,7 +97,7 @@ const CityProfile = () => {
                 navigate(`/city-${subFamilyChurch.toLowerCase()}-list`)
               }
             >
-              {subFamilyChurch} in {city.name}
+              {subFamilyChurch} in {city?.name}
             </Button>
           )}
         </VStack>

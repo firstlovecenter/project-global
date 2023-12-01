@@ -247,4 +247,30 @@ app.post('/church/family', async (request, response) => {
   }
 })
 
+app.post('/church/council', async (request, response) => {
+  const council = request.body as Church
+  const invalidReq = validateRequest(request.body, [
+    'id',
+    'name',
+    'leaderRef',
+    'familyRef',
+  ])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  const councilRef = admin.firestore().doc(`councils/${council.id}`)
+
+  try {
+    await councilRef.set(council)
+    response.send(council)
+    return
+  } catch (error) {
+    console.log('Error creating council:', error)
+    response.status(500).send(error)
+  }
+})
+
 export const directory = functions.region('europe-west1').https.onRequest(app)
