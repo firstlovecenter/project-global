@@ -23,7 +23,7 @@ app.get('/campus', async (request, response) => {
     const leaderQuery = admin
       .firestore()
       .collection('campuses')
-      .where('leader', '==', uid)
+      .where('leaderRef', '==', uid)
       .where('id', '>=', searchKey?.toLowerCase())
       .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
       .get()
@@ -31,7 +31,7 @@ app.get('/campus', async (request, response) => {
     const adminQuery = admin
       .firestore()
       .collection('campuses')
-      .where('admin', '==', uid)
+      .where('adminRef', '==', uid)
       .where('id', '>=', searchKey?.toLowerCase())
       .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
       .get()
@@ -68,7 +68,7 @@ app.get('/council', async (request, response) => {
     const leaderQuery = admin
       .firestore()
       .collection('councils')
-      .where('leader', '==', uid)
+      .where('leaderRef', '==', uid)
       .where('id', '>=', searchKey?.toLowerCase())
       .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
       .get()
@@ -76,7 +76,7 @@ app.get('/council', async (request, response) => {
     const adminQuery = admin
       .firestore()
       .collection('councils')
-      .where('admin', '==', uid)
+      .where('adminRef', '==', uid)
       .where('id', '>=', searchKey?.toLowerCase())
       .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
       .get()
@@ -113,7 +113,7 @@ app.get('/city', async (request, response) => {
     const leaderQuery = admin
       .firestore()
       .collection('cities')
-      .where('leader', '==', uid)
+      .where('leaderRef', '==', uid)
       .where('id', '>=', searchKey?.toLowerCase())
       .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
       .get()
@@ -121,7 +121,7 @@ app.get('/city', async (request, response) => {
     const adminQuery = admin
       .firestore()
       .collection('cities')
-      .where('admin', '==', uid)
+      .where('adminRef', '==', uid)
       .where('id', '>=', searchKey?.toLowerCase())
       .where('id', '<=', searchKey?.toLowerCase() + '\uf8ff')
       .get()

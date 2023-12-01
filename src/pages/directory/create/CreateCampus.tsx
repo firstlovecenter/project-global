@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 const CreateCampus = () => {
-  const { clickCard, countryRef } = useRef()
+  const { clickCard } = useRef()
   const navigate = useNavigate()
   const initialValues = {
     name: '',
@@ -35,7 +35,6 @@ const CreateCampus = () => {
           body: JSON.stringify({
             ...values,
             id: campusRef,
-            countryRef,
           }),
           headers: {
             'Content-Type': 'application/json',

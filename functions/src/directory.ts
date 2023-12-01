@@ -273,4 +273,31 @@ app.post('/church/council', async (request, response) => {
   }
 })
 
+app.post('/church/campus', async (request, response) => {
+  const campus = request.body as Church
+  const invalidReq = validateRequest(request.body, [
+    'id',
+    'name',
+    'leaderRef',
+    'councilRef',
+    'cityRef',
+  ])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  const campusRef = admin.firestore().doc(`campuses/${campus.id}`)
+
+  try {
+    await campusRef.set(campus)
+    response.send(campus)
+    return
+  } catch (error) {
+    console.log('Error creating campus:', error)
+    response.status(500).send(error)
+  }
+})
+
 export const directory = functions.region('europe-west1').https.onRequest(app)
