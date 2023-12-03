@@ -5,7 +5,7 @@ const { concurrentOpts } = require('./common')
 const jobs = [
   {
     name: 'api',
-    command: `cd functions && firebase emulators:start --only functions`,
+    command: `cd functions && npm run serve`,
     prefixColor: 'green',
   },
   {
