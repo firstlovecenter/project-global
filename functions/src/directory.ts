@@ -12,7 +12,7 @@ admin.initializeApp()
 
 const app = express()
 app.use(cors({ origin: true }), json())
-const secrets = functions.config()
+const secrets = process.env
 
 app.post('/member', async (request, response) => {
   const member = request.body as Member
