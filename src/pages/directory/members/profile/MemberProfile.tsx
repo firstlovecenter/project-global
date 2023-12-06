@@ -10,11 +10,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import {
-  ApolloWrapper,
-  EditButton,
-  capitalise,
-} from '@jaedag/admin-portal-react-core'
+import { ApolloWrapper, capitalise } from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
 import { collection, doc } from 'firebase/firestore'
 import {
@@ -94,7 +90,6 @@ const MemberProfile = () => {
       <Container>
         <Heading size="lg">Member Profile</Heading>
 
-        <EditButton onClick={() => navigate('')} />
         <Center marginTop={10}>
           <Avatar
             src={member?.pictureUrl}

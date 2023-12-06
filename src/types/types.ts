@@ -21,6 +21,7 @@ export interface Member extends User {
   gender: GenderOptions
   maritalStatus: MaritalStatusOptions
   occupation: string
+  employeeStatus: string
 
   leadsCampuses?: string[]
   leadsCouncils?: string[]
