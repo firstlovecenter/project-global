@@ -102,11 +102,11 @@ app.post('/member', async (request, response) => {
           template: 'den-app-welcome-email',
           to: member.email,
           from: 'FL Den Admin <no-reply@firstlovecenter.org>',
-          't:variables': JSON.stringify({
+          't:variables': {
             firstName: member.firstName,
             email: member.email,
             passwordResetURL: passwordResetRes,
-          }),
+          },
         },
       }),
       memberRef.set(memberData),

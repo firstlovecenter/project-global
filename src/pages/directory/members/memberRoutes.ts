@@ -5,6 +5,7 @@ import { lazy } from 'react'
 const RegisterMember = lazy(() => import('./profile/RegisterMember'))
 const MemberProfile = lazy(() => import('./profile/MemberProfile'))
 const MemberList = lazy(() => import('./MemberList'))
+const MemberBioData = lazy(() => import('./profile/documents/MemberBioData'))
 
 export const memberRoutes: LazyRouteTypes[] = [
   {
@@ -20,6 +21,11 @@ export const memberRoutes: LazyRouteTypes[] = [
   {
     path: '/directory/members',
     element: MemberList,
+    roles: ['all'],
+  },
+  {
+    path: '/member/documents/bio-data',
+    element: MemberBioData,
     roles: ['all'],
   },
 ]

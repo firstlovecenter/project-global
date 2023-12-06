@@ -10,7 +10,11 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import { ApolloWrapper, capitalise } from '@jaedag/admin-portal-react-core'
+import {
+  ApolloWrapper,
+  EditButton,
+  capitalise,
+} from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
 import { collection, doc } from 'firebase/firestore'
 import {
@@ -24,10 +28,12 @@ import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
 import ProfileIcon from '../components/ProfileIcon'
 import ProfileSectionLabel from '../components/ProfileSectionLabel'
+import { useNavigate } from 'react-router-dom'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
   const { user } = useUser()
+  const navigate = useNavigate()
 
   const memRef = doc(useFirestore(), 'members', memberRef ?? user.id)
 
@@ -48,6 +54,37 @@ const MemberProfile = () => {
   } = useFirestoreCollectionData(roleChurchesRef)
   const roleChurches = (roleChurchesData || []) as RoleChurch[]
 
+  const documents = [
+    {
+      name: 'Bio Data',
+      link: '/member/documents/bio-data',
+    },
+    {
+      name: 'Possessions',
+      link: '/member/documents/possessions',
+    },
+    {
+      name: 'Pastoral Certificates',
+      link: '/member/documents/pastoral-certificates',
+    },
+    {
+      name: 'HR Documents',
+      link: '/member/documents/hr-documents',
+    },
+    {
+      name: 'Government ID and Certificates',
+      link: '/member/documents/government-id-and-certificates',
+    },
+    {
+      name: 'Educational Certificates',
+      link: '/member/documents/educational-certificates',
+    },
+    {
+      name: "Children's Birth Certificates",
+      link: '/member/documents/childrens-birth-certificates',
+    },
+  ]
+
   return (
     <ApolloWrapper
       data={data && roleChurchesData}
@@ -56,9 +93,8 @@ const MemberProfile = () => {
     >
       <Container>
         <Heading size="lg">Member Profile</Heading>
-        <Text fontWeight="bold" fontSize="lg" color="brandGold.500">
-          EDIT
-        </Text>
+
+        <EditButton onClick={() => navigate('')} />
         <Center marginTop={10}>
           <Avatar
             src={member?.pictureUrl}
@@ -103,12 +139,11 @@ const MemberProfile = () => {
 
         <ProfileSectionLabel label="Personal Documents" />
         <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
-          <Button>Update Title</Button>
-          <Button textAlign="start">Passport Bio Page</Button>
-          <Button>Immigration Docuemnts</Button>
-          <Button>Drivers License</Button>
-          <Button>Birth Certificate</Button>
-          <Button>Educational Certificates</Button>
+          {documents.map((doc) => (
+            <Button key={doc.name} onClick={() => navigate(doc.link)}>
+              {doc.name}
+            </Button>
+          ))}
         </VStack>
 
         {!!roleChurches.length && (

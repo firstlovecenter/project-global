@@ -33,6 +33,7 @@ function Navigation() {
         aria-label="Side Nav Toggle"
         size="lg"
         position="fixed"
+        boxShadow="dark-lg"
         bottom={4}
         right={6}
         zIndex={2}
