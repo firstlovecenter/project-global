@@ -12,9 +12,12 @@ admin.initializeApp()
 
 const app = express()
 app.use(cors({ origin: true }), json())
-const secrets = process.env
 
 app.post('/member', async (request, response) => {
+  // access from doppler JSON.parse(process.env.CLOUD_RUNTIME_CONFIG).doppler.FLC_NOTIFY_KEY
+  // const doppler = JSON.parse(process.env.CLOUD_RUNTIME_CONFIG).doppler
+  // const notifyKey = doppler.FLC_NOTIFY_KEY
+
   const member = request.body as Member
 
   try {
@@ -93,7 +96,7 @@ app.post('/member', async (request, response) => {
         url: '/send-email',
         headers: {
           'Content-Type': 'application/json',
-          'x-secret-key': secrets.FLC_NOTIFY_KEY,
+          'x-secret-key': process.env.FLC_NOTIFY_KEY,
         },
         data: {
           template: 'den-app-welcome-email',
@@ -300,4 +303,9 @@ app.post('/church/campus', async (request, response) => {
   }
 })
 
-export const directory = functions.region('europe-west1').https.onRequest(app)
+export const directory = functions
+  .region('europe-west1')
+  .runWith({
+    secrets: ['FLC_NOTIFY_KEY'],
+  })
+  .https.onRequest(app)
