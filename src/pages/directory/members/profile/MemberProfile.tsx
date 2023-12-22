@@ -18,23 +18,38 @@ import {
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from 'reactfire'
-import { Member, RoleChurch } from 'types/types'
+import { RoleChurch } from 'types/types'
 import { useUser } from 'contexts/UserContext'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
 import ProfileIcon from '../components/ProfileIcon'
 import ProfileSectionLabel from '../components/ProfileSectionLabel'
 import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { RootState } from 'redux-config/store'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
   const { user } = useUser()
   const navigate = useNavigate()
+  const member = useSelector((state: RootState) => state.member?.data)
+  const dispatch = useDispatch()
 
   const memRef = doc(useFirestore(), 'members', memberRef ?? user.id)
 
   const { status, data, error } = useFirestoreDocData(memRef)
-  const member = data as unknown as Member
+
+  useEffect(() => {
+    dispatch({
+      type: 'member/setMemberBio',
+      payload: {
+        ...data,
+        dateOfBirth: new Date(data?.dateOfBirth).toDateString(),
+        createdAt: new Date(data?.createdAt.toMillis()).toDateString(),
+      },
+    })
+  }, [data, dispatch])
 
   const roleChurchesRef = collection(
     useFirestore(),
@@ -89,7 +104,6 @@ const MemberProfile = () => {
     >
       <Container>
         <Heading size="lg">Member Profile</Heading>
-
         <Center marginTop={10}>
           <Avatar
             src={member?.pictureUrl}
@@ -116,14 +130,14 @@ const MemberProfile = () => {
                 icon={<FaPhone />}
                 label="Phone"
                 onClick={() =>
-                  (window.location.href = `tel:${member.phoneNumber}`)
+                  (window.location.href = `tel:${member?.phoneNumber}`)
                 }
               />
               <ProfileIcon
                 icon={<GiMailbox />}
                 label="Email"
                 onClick={() =>
-                  (window.location.href = `mailto:${member.email}`)
+                  (window.location.href = `mailto:${member?.email}`)
                 }
               />
             </HStack>
@@ -146,7 +160,7 @@ const MemberProfile = () => {
             <ProfileSectionLabel label="Oversight Info" />
             <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
               {roleChurches?.map((role) => (
-                <Text key={role.id} textAlign="start">
+                <Text key={role.id + role.level + role.role} textAlign="start">
                   {role.name} {role.level} {capitalise(role.role)}
                 </Text>
               ))}

@@ -4,9 +4,11 @@ import {
   MaritalStatusOptions,
 } from '@jaedag/admin-portal-types'
 import { User } from 'firebase/auth'
+import { Timestamp } from 'firebase/firestore'
 
 export interface Member extends User {
   id: string
+  createdAt: Timestamp
   firstName: string
   middleName: string
   lastName: string

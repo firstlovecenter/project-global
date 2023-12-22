@@ -1,1 +1,1 @@
-export { getMemberBio } from './members/memberActions'
+export { setMemberBio } from './members/memberSlice'

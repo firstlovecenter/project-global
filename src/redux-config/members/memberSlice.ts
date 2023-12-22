@@ -1,27 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialState = {
+  member: null,
+  loading: false,
+  error: null,
+}
+
 const memberSlice = createSlice({
   name: 'member',
-  initialState: {
-    member: null,
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
-    getMemberBio: (state) => {
-      state.loading = true
-    },
-    getMemberBioSuccess: (state, action) => {
-      state.loading = false
-      state.member = action.payload
-    },
-    getMemberBioFailure: (state, action) => {
-      state.loading = false
-      state.error = action.payload
-    },
+    setMemberBio: (state, action) => ({
+      ...state,
+      data: {
+        ...action.payload,
+        createdAt: action.payload?.createdAt.toString(),
+      },
+    }),
   },
 })
 
 export default memberSlice.reducer
-export const { getMemberBio, getMemberBioSuccess, getMemberBioFailure } =
-  memberSlice.actions
+export const { setMemberBio } = memberSlice.actions
