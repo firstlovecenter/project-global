@@ -10,19 +10,11 @@ import {
   Td,
   Tr,
 } from '@chakra-ui/react'
-import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
-import { getHumanReadableDate } from '@jaedag/admin-portal-types'
-import { useRef } from 'contexts/RefContext'
-import { doc } from 'firebase/firestore'
-import { useFirestore, useFirestoreDocData } from 'reactfire'
-import { Member } from 'types/types'
+import { useSelector } from 'react-redux'
+import { RootState } from 'redux-config/store'
 
 const MemberBioData = () => {
-  const { memberRef } = useRef()
-  const memRef = doc(useFirestore(), 'members', memberRef)
-
-  const { status, data, error } = useFirestoreDocData(memRef)
-  const member = data as unknown as Member
+  const member = useSelector((state: RootState) => state.member.data)
 
   const fields = [
     {
@@ -67,12 +59,12 @@ const MemberBioData = () => {
     },
     {
       key: 'Date of Birth',
-      value: getHumanReadableDate(member.dateOfBirth.toDate().toString()),
+      value: member.dateOfBirth as unknown as string,
     },
   ]
 
   return (
-    <ApolloWrapper data={data} loading={status === 'loading'} error={error}>
+    <>
       <Container>
         <Heading>Bio Data</Heading>
 
@@ -100,7 +92,7 @@ const MemberBioData = () => {
           </Tbody>
         </Table>
       </Container>
-    </ApolloWrapper>
+    </>
   )
 }
 

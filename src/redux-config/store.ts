@@ -4,7 +4,7 @@ import { Member } from 'types/types'
 
 export interface RootState {
   member: {
-    data: Member | null
+    data: Member
     loading: boolean
     error: string | null
   }
