@@ -67,7 +67,7 @@ const MemberBioData = () => {
     },
     {
       key: 'Date of Birth',
-      value: getHumanReadableDate(member.dateOfBirth),
+      value: getHumanReadableDate(member.dateOfBirth.toDate().toString()),
     },
   ]
 
