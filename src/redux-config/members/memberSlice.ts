@@ -14,7 +14,6 @@ const memberSlice = createSlice({
       ...state,
       data: {
         ...action.payload,
-        createdAt: action.payload?.createdAt.toString(),
       },
     }),
   },

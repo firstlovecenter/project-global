@@ -28,7 +28,6 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { RootState } from 'redux-config/store'
-import { getHumanReadableDate } from '@jaedag/admin-portal-types'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
@@ -46,8 +45,6 @@ const MemberProfile = () => {
       type: 'member/setMemberBio',
       payload: {
         ...data,
-        dateOfBirth: getHumanReadableDate(data?.dateOfBirth.toDate()),
-        createdAt: new Date(data?.createdAt.toMillis()).toDateString(),
       },
     })
   }, [data, dispatch])

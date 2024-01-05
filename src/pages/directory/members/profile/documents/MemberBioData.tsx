@@ -10,11 +10,14 @@ import {
   Td,
   Tr,
 } from '@chakra-ui/react'
+import { getHumanReadableDate } from '@jaedag/admin-portal-types'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { RootState } from 'redux-config/store'
 
 const MemberBioData = () => {
   const member = useSelector((state: RootState) => state.member.data)
+  const navigate = useNavigate()
 
   const fields = [
     {
@@ -59,7 +62,7 @@ const MemberBioData = () => {
     },
     {
       key: 'Date of Birth',
-      value: member.dateOfBirth as unknown as string,
+      value: getHumanReadableDate(member.dateOfBirth),
     },
   ]
 
@@ -77,7 +80,12 @@ const MemberBioData = () => {
             />
           </Center>
           <Center marginTop={5}>
-            <Button size="sm">Edit Bio Details</Button>
+            <Button
+              size="sm"
+              onClick={() => navigate('/member/documents/bio-data/edit')}
+            >
+              Edit Bio Details
+            </Button>
           </Center>
         </Box>
 

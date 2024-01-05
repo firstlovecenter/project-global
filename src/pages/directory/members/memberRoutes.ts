@@ -6,6 +6,9 @@ const RegisterMember = lazy(() => import('./profile/RegisterMember'))
 const MemberProfile = lazy(() => import('./profile/MemberProfile'))
 const MemberList = lazy(() => import('./MemberList'))
 const MemberBioData = lazy(() => import('./profile/documents/MemberBioData'))
+const EditMemberBioData = lazy(
+  () => import('./profile/documents/EditMemberBioData')
+)
 
 export const memberRoutes: LazyRouteTypes[] = [
   {
@@ -26,6 +29,11 @@ export const memberRoutes: LazyRouteTypes[] = [
   {
     path: '/member/documents/bio-data',
     element: MemberBioData,
+    roles: ['all'],
+  },
+  {
+    path: '/member/documents/bio-data/edit',
+    element: EditMemberBioData,
     roles: ['all'],
   },
 ]
