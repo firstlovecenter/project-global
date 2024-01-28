@@ -9,6 +9,7 @@ import { Timestamp } from 'firebase/firestore'
 export interface Member extends User {
   id: string
   createdAt: Timestamp
+  updatedAt: Timestamp
   firstName: string
   middleName: string
   lastName: string
