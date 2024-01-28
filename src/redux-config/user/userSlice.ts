@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  member: null,
+  user: null,
   loading: false,
   error: null,
 }
 
-const memberSlice = createSlice({
-  name: 'member',
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    setMemberBio: (state, action) => ({
+    setUser: (state, action) => ({
       ...state,
       data: {
         ...action.payload,
@@ -19,6 +19,6 @@ const memberSlice = createSlice({
   },
 })
 
-export default memberSlice.reducer
+export default userSlice.reducer
 
-export const { setMemberBio } = memberSlice.actions
+export const { setUser } = userSlice.actions

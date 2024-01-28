@@ -18,12 +18,15 @@ import { useRef } from 'contexts/RefContext'
 import { collection } from 'firebase/firestore'
 import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { RoleChurch } from 'types/types'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'redux-config/store'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
   const { logout, setUser } = useAuth()
   const { user } = useUser()
-  const { memberRef, clickCard } = useRef()
+
+  const { clickCard } = useRef()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -41,7 +44,7 @@ const LandingPage = () => {
   const roleChurchesRef = collection(
     useFirestore(),
     'members',
-    memberRef || user.id,
+    user.id,
     'roleChurches'
   )
 
@@ -52,21 +55,26 @@ const LandingPage = () => {
   } = useFirestoreCollectionData(roleChurchesRef)
   const roleChurches = data as RoleChurch[]
 
-  // TODO: Refactor this to use redux
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if (roleChurches?.length >= 1) {
-      setUser({
-        ...user,
-        roleChurches,
+      dispatch({
+        type: 'user/setUser',
+        payload: {
+          ...user,
+          roleChurches,
+        },
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roleChurches])
+  }, [data, dispatch, roleChurches, user])
+
+  const userFromStore = useSelector((state: RootState) => state.user.data)
 
   return (
     <Container centerContent>
       <Text fontSize="3xl" fontWeight="semi-bold" marginTop={14}>
-        Welcome {user.firstName} {user.lastName}
+        Welcome {userFromStore?.firstName} {userFromStore?.lastName}
       </Text>
       <Text fontSize="xl" fontWeight="semi-bold" marginBottom={12}>
         Choose A Profile
@@ -78,7 +86,7 @@ const LandingPage = () => {
         error={memError}
       >
         <VStack spacing={2} align="stretch" width="80%">
-          {roleChurches?.map((role, index) => (
+          {userFromStore?.roleChurches?.map((role, index) => (
             <MenuButton
               key={index}
               icon={FaChurch}
