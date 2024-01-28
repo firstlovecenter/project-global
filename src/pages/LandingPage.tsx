@@ -63,6 +63,7 @@ const LandingPage = () => {
         type: 'user/setUser',
         payload: {
           ...user,
+          updatedAt: user?.updatedAt.toDate().toISOString(),
           roleChurches,
         },
       })
