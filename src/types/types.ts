@@ -26,6 +26,9 @@ export interface Member extends User {
   occupation: string
   employeeStatus: string
 
+  housesOwned: number
+  carsOwned: number
+
   leadsCampuses?: string[]
   leadsCouncils?: string[]
   leadsCountries?: string[]

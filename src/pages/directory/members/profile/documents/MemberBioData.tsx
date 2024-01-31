@@ -1,5 +1,5 @@
+import ProfileAvatar from './components/ProfileAvatar'
 import {
-  Avatar,
   Box,
   Button,
   Center,
@@ -72,13 +72,7 @@ const MemberBioData = () => {
         <Heading>Bio Data</Heading>
 
         <Box marginY={10}>
-          <Center>
-            <Avatar
-              name={member.firstName + ' ' + member.lastName}
-              src={member.pictureUrl}
-              size="2xl"
-            />
-          </Center>
+          <ProfileAvatar member={member} />
           <Center marginTop={5}>
             <Button
               size="sm"
