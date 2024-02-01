@@ -45,9 +45,10 @@ const MemberProfile = () => {
       type: 'member/setMemberBio',
       payload: {
         ...data,
+        updatedAt: member?.updatedAt?.toDate().toISOString(),
       },
     })
-  }, [data, dispatch])
+  }, [data, dispatch, member?.updatedAt])
 
   const roleChurchesRef = collection(
     useFirestore(),
@@ -71,10 +72,6 @@ const MemberProfile = () => {
     {
       name: 'Possessions',
       link: '/member/documents/possessions',
-    },
-    {
-      name: 'Pastoral Certificates',
-      link: '/member/documents/pastoral-certificates',
     },
     {
       name: 'HR Documents',

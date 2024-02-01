@@ -12,7 +12,7 @@ import { useUser } from 'contexts/UserContext'
 import { DIRECTORY_FUNCTION_BASE_URL } from 'firebase/cloudFunctionsConfig'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RootState } from 'redux-config/store'
 
@@ -22,6 +22,7 @@ const EditMemberBioData = () => {
   const member = useSelector((state: RootState) => state.member.data)
   const navigate = useNavigate()
   const toast = useToast()
+  const dispatch = useDispatch()
 
   const initialValues = {
     firstName: member.firstName,
@@ -62,6 +63,13 @@ const EditMemberBioData = () => {
 
       clickCard(values.email, 'member')
 
+      dispatch({
+        type: 'member/setMemberBio',
+        payload: {
+          ...member,
+          ...values,
+        },
+      })
       navigate('/member/profile')
     } catch (e: unknown) {
       if (e instanceof Error) {

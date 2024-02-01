@@ -7,6 +7,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Text,
 } from '@chakra-ui/react'
 import { BeatLoader } from 'react-spinners'
 import { UseFormSetValue } from 'react-hook-form'
@@ -18,20 +19,22 @@ export interface FileUploadProps extends ReactHookFormComponentProps {
   uploadPreset: string
   tags?: 'facial-recognition'
   loading?: boolean
+  value?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setValue: UseFormSetValue<any>
 }
 
 const FileUpload = (props: FileUploadProps) => {
   const { user } = useUser()
-  const { label, name, uploadPreset, tags, setValue, errors, ...rest } = props
+  const { label, name, uploadPreset, tags, setValue, value, errors, ...rest } =
+    props
   const fileInputRef = useRef<HTMLInputElement>(null)
   const handleButtonClick = () => {
     fileInputRef.current?.click()
   }
 
   const [loading, setLoading] = useState(false)
-  const [, setFile] = useState('')
+  const [file, setFile] = useState('')
 
   const uploadFile: ChangeEventHandler<HTMLInputElement> = async (e) => {
     const files = e.target.files ?? []
@@ -58,7 +61,6 @@ const FileUpload = (props: FileUploadProps) => {
         body: data,
       }
     )
-    console.log('🚀 ~ file: FileUpload.tsx:81 ~ res:', await res)
     const file = await res.json()
 
     setFile(file.secure_url)
@@ -79,8 +81,10 @@ const FileUpload = (props: FileUploadProps) => {
         <Center height="100%">
           {props.loading || loading ? (
             <BeatLoader data-testid="loading-spinner" color="grey" />
-          ) : (
+          ) : file || value ? (
             <FaFileUpload />
+          ) : (
+            <Text color="GrayText">Not Uploaded</Text>
           )}
         </Center>
       </Container>
