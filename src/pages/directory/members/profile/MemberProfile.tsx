@@ -147,9 +147,18 @@ const MemberProfile = () => {
         <ProfileSectionLabel label="Personal Documents" />
         <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
           {documents.map((doc) => (
-            <Button key={doc.name} onClick={() => navigate(doc.link)}>
-              {doc.name}
-            </Button>
+            <Box
+              backgroundColor="brandGold.500"
+              color="brandTeal.500"
+              fontWeight="bold"
+              padding={2}
+              paddingX={6}
+              borderRadius={50}
+              key={doc.name}
+              onClick={() => navigate(doc.link)}
+            >
+              <Text textAlign="start">{doc.name.toUpperCase()}</Text>
+            </Box>
           ))}
         </VStack>
 

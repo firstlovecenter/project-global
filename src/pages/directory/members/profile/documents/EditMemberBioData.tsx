@@ -92,7 +92,7 @@ const EditMemberBioData = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <ImageUpload
           user={user}
-          cloudinaryAccount="church-insights"
+          cloudinaryAccount="firstlovecenter"
           uploadPreset="developer-tests"
           name="pictureUrl"
           initialValue={member.pictureUrl}

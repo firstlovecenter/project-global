@@ -15,6 +15,9 @@ const MemberPossessions = lazy(
 const EditMemberPossessions = lazy(
   () => import('./profile/documents/EditMemberPossessions')
 )
+const MemberHRDocuments = lazy(
+  () => import('./profile/documents/MemberHRDocuments')
+)
 
 export const memberRoutes: LazyRouteTypes[] = [
   {
@@ -51,6 +54,11 @@ export const memberRoutes: LazyRouteTypes[] = [
   {
     path: '/member/documents/possessions/edit',
     element: EditMemberPossessions,
+    roles: ['all'],
+  },
+  {
+    path: '/member/documents/hr-documents',
+    element: MemberHRDocuments,
     roles: ['all'],
   },
 ]

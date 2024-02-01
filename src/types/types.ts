@@ -29,6 +29,16 @@ export interface Member extends User {
   housesOwned: number
   carsOwned: number
 
+  //HR Documents
+  docResidentPermit: string
+  docSelfSufficient: string
+  docConfidentialityAgreement: string
+  docMemorandumOfUnderstanding: string
+  docLayMissionsMemorandumOfUnderstanding: string
+  docMissionaryStarterPackage: string
+  docConflictManagementAndResolution: string
+  docMissionarySendingAgreement: string
+
   leadsCampuses?: string[]
   leadsCouncils?: string[]
   leadsCountries?: string[]
