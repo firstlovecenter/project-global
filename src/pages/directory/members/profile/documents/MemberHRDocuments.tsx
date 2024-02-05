@@ -17,17 +17,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'redux-config/store'
 import ProfileAvatar from './components/ProfileAvatar'
 import FileUpload from './components/FileUpload'
-import { useForm } from 'react-hook-form'
+import { useForm, useFormState } from 'react-hook-form'
 import { FaCheckCircle } from 'react-icons/fa'
 import { DIRECTORY_FUNCTION_BASE_URL } from 'firebase/cloudFunctionsConfig'
 import { useRef } from 'react'
+
+type Field = {
+  key: string
+  value: string | undefined
+  variable:
+    | 'docResidentPermit'
+    | 'docSelfSufficient'
+    | 'docConfidentialityAgreement'
+    | 'docMemorandumOfUnderstanding'
+    | 'docLayMissionsMemorandumOfUnderstanding'
+    | 'docMissionaryStarterPackage'
+    | 'docConflictManagementAndResolution'
+    | 'docMissionarySendingAgreement'
+}
 
 const MemberHRDocuments = () => {
   const member = useSelector((state: RootState) => state.member.data)
   const dispatch = useDispatch()
   const toast = useToast()
 
-  const fields = [
+  const fields: Field[] = [
     {
       key: 'Resident Permit',
       value: member?.docResidentPermit,
@@ -76,10 +90,25 @@ const MemberHRDocuments = () => {
     handleSubmit,
     control,
     setValue,
-    formState: { errors, isSubmitting },
+    watch,
+    formState: { errors, isSubmitting, isValid },
   } = useForm({
-    defaultValues: {},
+    defaultValues: {
+      docResidentPermit: member?.docResidentPermit,
+      docSelfSufficient: member?.docSelfSufficient,
+      docConfidentialityAgreement: member?.docConfidentialityAgreement,
+      docMemorandumOfUnderstanding: member?.docMemorandumOfUnderstanding,
+      docLayMissionsMemorandumOfUnderstanding:
+        member?.docLayMissionsMemorandumOfUnderstanding,
+      docMissionaryStarterPackage: member?.docMissionaryStarterPackage,
+      docConflictManagementAndResolution:
+        member?.docConflictManagementAndResolution,
+      docMissionarySendingAgreement: member?.docMissionarySendingAgreement,
+    },
   })
+
+  const { defaultValues } = useFormState({ control })
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = async (values: any) => {
     try {
@@ -143,16 +172,6 @@ const MemberHRDocuments = () => {
 
         <Box marginY={10}>
           <ProfileAvatar member={member} />
-          <Center marginTop={5}>
-            <Button
-              isLoading={isSubmitting}
-              onClick={() => {
-                saveChangeRef.current?.click()
-              }}
-            >
-              Save Changes
-            </Button>
-          </Center>
         </Box>
 
         <Grid gap={3}>
@@ -184,13 +203,25 @@ const MemberHRDocuments = () => {
                       setValue={setValue}
                       name={field.variable}
                     />
-                    <Button
-                      type="submit"
-                      marginY={10}
-                      isLoading={false}
-                      ref={saveChangeRef}
-                      display="none"
-                    />
+
+                    {defaultValues &&
+                      defaultValues[field.variable] !==
+                        watch(field.variable) && (
+                        <Center>
+                          <Button
+                            type="submit"
+                            colorScheme="green"
+                            size="sm"
+                            disabled={!isValid}
+                            marginY={10}
+                            isLoading={isSubmitting}
+                            ref={saveChangeRef}
+                            // display="none"
+                          >
+                            Save Changes
+                          </Button>
+                        </Center>
+                      )}
                   </form>
                 </CardBody>
               </Card>

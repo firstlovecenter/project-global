@@ -3,6 +3,7 @@ import React from 'react'
 import { Member } from 'types/types'
 
 const ProfileAvatar = ({ member }: { member: Member }) => {
+  if (!member) return null
   return (
     <>
       <Center>

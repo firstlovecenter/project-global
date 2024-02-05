@@ -99,7 +99,7 @@ const FileUpload = (props: FileUploadProps) => {
           onChange={uploadFile}
           ref={fileInputRef}
         />
-        <Button colorScheme="green" size="xs" onClick={handleButtonClick}>
+        <Button colorScheme="blue" size="xs" onClick={handleButtonClick}>
           Upload File
         </Button>
       </Container>
