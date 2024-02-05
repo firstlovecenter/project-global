@@ -163,6 +163,18 @@ const MemberHRDocuments = () => {
                   <Text fontWeight="bold">{field.key}</Text>
                 </CardHeader>
                 <CardBody>
+                  {field.value && (
+                    <Center marginY={5}>
+                      <Button
+                        onClick={() => {
+                          window.open(field.value, '_blank')
+                        }}
+                      >
+                        View
+                      </Button>
+                    </Center>
+                  )}
+
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <FileUpload
                       uploadPreset={'developer-tests'}
