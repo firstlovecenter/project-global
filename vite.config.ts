@@ -14,7 +14,7 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
     server: {
-      host: '192.168.0.136',
+      host: 'localhost',
       open: true,
       port: 3000,
     },
