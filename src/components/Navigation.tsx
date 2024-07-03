@@ -112,6 +112,7 @@ function Navigation() {
                   subtitle={''}
                   onClick={() => {
                     navigate('/home')
+                    onClose()
                   }}
                   variant={'ghost'}
                   backgroundColor={'#313B50'}
