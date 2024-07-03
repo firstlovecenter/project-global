@@ -40,7 +40,7 @@ const Home = () => {
           Churches
         </Button>
         <Button size="lg" variant="outline">
-          Buiding Projects
+          Building Projects
         </Button>
       </VStack>
     </Container>
