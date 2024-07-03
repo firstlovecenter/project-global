@@ -10,7 +10,7 @@ const HomeLogo = () => {
       viewBox="0 0 134 134"
     >
       <path
-        stroke="#DDB995"
+        stroke="#fca311"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="3"
