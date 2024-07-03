@@ -142,7 +142,10 @@ const theme = extendTheme({
       body: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: {
+          base: 'flex-start',
+          md: 'center',
+        },
         // paddingBottom: '3rem',
         minHeight: '100vh',
         // background: 'linear-gradient(to top right, #39405a, #14213d)',
