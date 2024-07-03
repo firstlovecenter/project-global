@@ -58,7 +58,11 @@ const LogIn = () => {
   })
 
   return (
-    <Container padding={'0 1.5rem'} justifyContent={'center'}>
+    <Container
+      padding={'0 1.5rem'}
+      justifyContent={'center'}
+      marginTop={{ base: '1rem', md: '3rem' }}
+    >
       <Center>
         <Container padding={'0px'}>
           <Box height="80vh">
