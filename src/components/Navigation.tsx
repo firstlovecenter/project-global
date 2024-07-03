@@ -1,5 +1,7 @@
 import {
+  Box,
   Button,
+  Container,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -8,24 +10,50 @@ import {
   DrawerHeader,
   DrawerOverlay,
   IconButton,
+  VStack,
   useDisclosure,
 } from '@chakra-ui/react'
 import React from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
-import { useNavigate } from 'react-router-dom'
-import { ColorModeSwitcher } from '../components/ColorModeSwitcher'
+import { useLocation, useNavigate } from 'react-router-dom'
+import SplashLogoImage from '../assets/icons/FL_logo.png'
+import SelectCategory from './SelectCategory'
+import { FaBible, FaChurch } from 'react-icons/fa'
+import { RiBuilding2Line } from 'react-icons/ri'
+import { ActionButton } from './ActionButton'
+import SearchBar from './SearchBar'
+import ProfileHeader from './ProfileHeader'
 
 function Navigation() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef(null)
   const navigate = useNavigate()
 
-  const menuItems = [
+  const routeParam = useLocation().pathname
+
+  console.log(routeParam)
+
+  const DUMMY_CATEGORIES = [
     {
-      name: 'Home',
-      link: '/',
+      name: 'Directory',
+      path: '/directory',
+      icon: FaBible,
+    },
+    {
+      name: 'Churches',
+      path: '/churches',
+      icon: FaChurch,
+    },
+    {
+      name: 'Buildings & Projects',
+      path: '/buildings',
+      icon: RiBuilding2Line,
     },
   ]
+
+  if (routeParam === '/login') {
+    return null
+  }
 
   return (
     <>
@@ -41,6 +69,7 @@ function Navigation() {
         ref={btnRef}
         onClick={onOpen}
         icon={<GiHamburgerMenu />}
+        display={{ base: 'flex', md: 'none' }}
       />
       <Drawer
         isOpen={isOpen}
@@ -49,29 +78,56 @@ function Navigation() {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Menu</DrawerHeader>
+        <DrawerContent bg="#313B50">
+          <DrawerCloseButton
+            top={4}
+            right={6}
+            transform={'translateY(7px)'}
+            size={'sm'}
+            color={'#96A7AF'}
+          />
+          <DrawerHeader display={'flex'} alignItems={'center'} gap={2}>
+            <Box width={'50px'}>
+              <img src={SplashLogoImage} alt="Splash Logo" />
+            </Box>
+            <p style={{ color: '#96A7AF', fontWeight: 400 }}>Global</p>
+          </DrawerHeader>
 
           <DrawerBody>
-            {menuItems.map((item) => (
-              <Button
-                key={item.name}
-                paddingY={8}
-                marginY={2}
-                width="100%"
-                onClick={() => {
-                  navigate(item.link)
-                  onClose()
-                }}
-              >
-                {item.name}
-              </Button>
-            ))}
+            <SelectCategory />
+            <VStack
+              spacing={2}
+              align="stretch"
+              width="100%"
+              marginTop={20}
+              gap={'1.5rem'}
+            >
+              {DUMMY_CATEGORIES.map((category, index) => (
+                <ActionButton
+                  key={`${category.name}-${index}`}
+                  icon={category.icon}
+                  textAlign="start"
+                  title={`${category.name}`}
+                  pl={0}
+                  subtitle={''}
+                  onClick={() => {
+                    navigate('/home')
+                  }}
+                  variant={'ghost'}
+                  backgroundColor={'#313B50'}
+                  subColor="brandGold.500"
+                />
+              ))}
+            </VStack>
           </DrawerBody>
 
-          <DrawerFooter>
-            <ColorModeSwitcher justifySelf="flex-end" />
+          <DrawerFooter p={'1rem 0 '}>
+            <Container>
+              <SearchBar />
+              <Box p={'1rem 0'} borderTop={'1px solid #96A7AF'}>
+                <ProfileHeader name="John-Dag Addy" email="jaedagy@gmail.com" />
+              </Box>
+            </Container>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

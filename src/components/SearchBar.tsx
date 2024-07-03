@@ -23,19 +23,27 @@ const SearchBar = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <InputGroup size="lg" marginY={5}>
-          <InputLeftElement width="4.5rem">
+        <InputGroup size="lg" marginY={5} marginBottom={'1rem'}>
+          <InputLeftElement width="3.5rem">
             <Button
-              h="1.75rem"
-              size="sm"
+              h="1.5rem"
+              size="md"
               leftIcon={<FaSearch />}
               variant="ghost"
+              color="brandGray.500"
+              _hover={{ bg: 'transparent' }}
             />
           </InputLeftElement>
           <Input
-            borderRadius="50px"
-            paddingLeft="4.5rem"
-            placeholder="Search"
+            borderRadius="10px"
+            bg={'#262E40'}
+            paddingLeft="3rem"
+            placeholder="Search for anything"
+            _placeholder={{
+              color: 'brandGray.500',
+              fontWeight: '300',
+              fontSize: '0.875rem',
+            }}
             name="searchKey"
             control={control}
             errors={errors}

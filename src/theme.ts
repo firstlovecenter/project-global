@@ -4,48 +4,73 @@ import {
   type ThemeConfig,
 } from '@chakra-ui/react'
 
-import '@fontsource/bai-jamjuree/400.css'
-import '@fontsource/bai-jamjuree/700.css'
+import '@fontsource/signika/300.css'
+import '@fontsource/signika/400.css'
+import '@fontsource/signika/500.css'
+import '@fontsource/signika/700.css'
 
 const config: ThemeConfig = {
   initialColorMode: 'dark',
   useSystemColorMode: false,
 }
 
+const breakpoints = {
+  base: '0px',
+  sm: '320px',
+  md: '700px',
+  lg: '960px',
+  xl: '1200px',
+}
+
 const colors = {
   brandGold: {
-    50: '#f9f5f3',
-    100: '#f5e3d9',
-    200: '#e9c7b3',
-    300: '#dca98f',
-    400: '#d09b6b',
-    500: '#DDB995',
-    600: '#c37d47',
-    700: '#8c5732',
-    800: '#6f4227',
-    900: '#522d1c',
+    50: '#ffffff',
+    100: '#ffecd2',
+    200: '#ffdaa6',
+    300: '#ffc87a',
+    400: '#ffb64c',
+    500: '#f9a501',
+    600: '#d28c0e',
+    700: '#ac7313',
+    800: '#885b14',
+    900: '#654414',
   },
   brandTeal: {
-    50: '#f5f9fc',
-    100: '#eaf3fa',
-    200: '#a9c1d1',
-    300: '#456b7e',
-    400: '#2e596e',
-    500: '#17465e',
-    600: '#153f55',
-    700: '#12384b',
-    800: '#103142',
-    900: '#0e2a38',
+    50: '#f0f7fe',
+    100: '#bec8d4',
+    200: '#8e9aac',
+    300: '#626f85',
+    400: '#3a4660',
+    500: '#14213d',
+    600: '#131d35',
+    700: '#121a2d',
+    800: '#111625',
+    900: '#0f121e',
+  },
+
+  brandGray: {
+    50: '#f7f7f7',
+    100: '#EDEDED',
+    200: 'E4E4E4',
+    300: '#C8C8C8',
+    400: '#ADADAD',
+    500: '#999999',
+    600: '#888888',
+    700: '#7B7B7B',
+    800: '#676767',
+    900: '#545454',
+    950: '#363636',
   },
 }
 
 const Button = defineStyleConfig({
   baseStyle: {
     fontWeight: 'bold',
-    textTransform: 'uppercase',
-    borderRadius: '50px',
+    textAlign: 'center',
+    borderRadius: '9px',
+    padding: '2rem 1.5rem',
+    maxWidth: '315px',
   },
-
   variants: {
     outline: {
       border: '2px solid',
@@ -53,7 +78,17 @@ const Button = defineStyleConfig({
       color: '#DDB995',
     },
     solid: {
-      color: '#17465e',
+      color: '#000000',
+      bg: 'brandGold.500',
+
+      _hover: {
+        bg: 'brandGold.600',
+      },
+
+      _disabled: {
+        bg: '#5B5B5B',
+        color: 'gray.300',
+      },
     },
   },
   defaultProps: {
@@ -72,23 +107,46 @@ const Heading = defineStyleConfig({
   },
 })
 
+const Input = defineStyleConfig({
+  baseStyle: {
+    field: {
+      borderRadius: '16px',
+      border: '2px solid',
+      borderColor: 'white',
+      color: 'brandGray.200',
+    },
+  },
+
+  defaultProps: {
+    size: 'lg',
+    variant: 'outline',
+    colorScheme: 'brandTeal',
+  },
+})
+
 const theme = extendTheme({
   config,
   colors,
+  breakpoints,
   components: {
     Button,
     Heading,
+    Input,
   },
   fonts: {
-    heading: `'Bai Jamjuree', sans-serif`,
-    body: `Bai Jamjuree, sans-serif`,
+    heading: `'Signika', sans-serif`,
+    body: `Signika, sans-serif`,
   },
   styles: {
     global: () => ({
       body: {
+        display: 'flex',
+        flexDirection: 'column',
+        // justifyContent: 'center',
+        // paddingBottom: '3rem',
         minHeight: '100vh',
-        paddingBottom: '50px',
-        background: 'linear-gradient(to top right, #224157, #34637a)',
+        // background: 'linear-gradient(to top right, #39405a, #14213d)',
+        background: '#262E40',
       },
     }),
   },
