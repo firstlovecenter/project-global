@@ -123,7 +123,9 @@ function Navigation() {
           <DrawerFooter p={'1rem 0 '}>
             <Container>
               <SearchBar />
-              <ProfileHeader name="John-Dag Addy" email="jaedagy@gmail.com" />
+              <Box p={'1rem 0'} borderTop={'1px solid #96A7AF'}>
+                <ProfileHeader name="John-Dag Addy" email="jaedagy@gmail.com" />
+              </Box>
             </Container>
           </DrawerFooter>
         </DrawerContent>

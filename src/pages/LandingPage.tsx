@@ -8,6 +8,7 @@ import {
   AlertTitle,
   Button,
   VStack,
+  Flex,
   Spacer,
   Box,
   Img,
@@ -25,6 +26,7 @@ import { RoleChurch } from 'types/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'redux-config/store'
 import { ActionButton } from 'components/ActionButton'
+import ProfileHeader from 'components/ProfileHeader'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
@@ -111,64 +113,92 @@ const LandingPage = () => {
       margin={0}
     >
       <Box
-        marginTop={20}
+        marginTop={{ base: 20, md: 0 }}
         width={{ base: '100%', md: 'min(50%, 70vw)' }}
         alignSelf={{ base: 'center', md: 'flex-start' }}
-        padding={{ base: 0, md: 10 }}
+        // paddingY={{ base: 0, md: 10 }}
         background={{ base: 'none', md: '#262E40' }}
+        display={'flex'}
+        flexDirection={'column'}
+        justifyContent={'center'}
+        alignItems={'center'}
       >
-        <Text
-          fontSize="3xl"
-          fontWeight="700"
-          marginTop={14}
-          alignSelf={'flex-start'}
+        <Box
+          width={'310px'}
+          height={{ base: '100%', md: '100vh' }}
+          display={{ base: 'block', md: 'flex' }}
+          flexDirection={'column'}
+          justifyContent={'center'}
+          alignItems={'center'}
         >
-          UO-FLC 190
-        </Text>
+          <Text
+            fontSize="3xl"
+            fontWeight="700"
+            marginTop={14}
+            alignSelf={'flex-start'}
+          >
+            UO-FLC 190
+          </Text>
 
-        <VStack
-          spacing={2}
-          align="center"
-          width="100%"
-          marginTop={10}
-          gap={'1.5rem'}
-        >
-          {DUMMY_CATEGORIES.map((category, index) => (
-            <ActionButton
-              key={`${category.name}-${index}`}
-              icon={category.icon}
-              textAlign="start"
-              title={`${category.name}`}
-              subtitle={category.subtitle}
-              onClick={() => {
-                navigate('/home')
-              }}
-              variant={'ghost'}
-              backgroundColor={'#454D62'}
-              // color={"white"}
-              subColor="brandGold.500"
-            />
-          ))}
+          <VStack
+            spacing={2}
+            align="center"
+            width="100%"
+            marginTop={10}
+            gap={'1.5rem'}
+          >
+            {DUMMY_CATEGORIES.map((category, index) => (
+              <ActionButton
+                key={`${category.name}-${index}`}
+                icon={category.icon}
+                textAlign="start"
+                title={`${category.name}`}
+                subtitle={category.subtitle}
+                onClick={() => {
+                  navigate('/home')
+                }}
+                variant={'ghost'}
+                backgroundColor={{ base: '#454D62', md: ' #14213D' }}
+                minWidth={'310px'}
+                // color={"white"}
+                subColor="brandGold.500"
+              />
+            ))}
 
-          <Spacer />
-          <Spacer />
-          {error && (
-            <Alert status="error">
-              <AlertIcon />
-              <AlertTitle>Error!</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-        </VStack>
+            <Spacer />
+            <Spacer />
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                <AlertTitle>Error!</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+          </VStack>
+        </Box>
         <Box
           position={'absolute'}
           bottom={0}
           right={0}
           top={0}
-          zIndex={-2}
+          zIndex={-3}
           height={'100vh'}
           overflow={'hidden'}
+          display={'flex'}
+          flexDirection={'column'}
+          alignItems={'flex-end'}
         >
+          <Flex
+            alignSelf={'flex-end'}
+            display={{ base: 'none', md: 'flex' }}
+            position={'absolute'}
+            top={3}
+            right={5}
+            zIndex={3}
+            width={'310px'}
+          >
+            <ProfileHeader name="John-Dag Addy" email="jaedagy@gmail.com" />
+          </Flex>
           <Img
             src="src\assets\landing_page_bg(Desktop).png"
             objectFit={'cover'}
