@@ -127,8 +127,9 @@ const LogIn = () => {
                         size="sm"
                         marginRight="1rem"
                         onClick={handleClick}
+                        p={4}
                         variant="ghost"
-                        color={'brandGold.500'}
+                        colorScheme="brandGold"
                       >
                         {show ? 'Hide' : 'Show'}
                       </Button>
@@ -137,7 +138,6 @@ const LogIn = () => {
                   <Container marginTop={1}>
                     <Text
                       textAlign="center"
-                      color="#ffffff"
                       fontWeight={'300'}
                       onClick={() => navigate('/forgot-password')}
                     >

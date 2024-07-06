@@ -78,17 +78,15 @@ const Button = defineStyleConfig({
       color: '#DDB995',
     },
     solid: {
-      color: '#000000',
-      bg: 'brandGold.500',
-
-      _hover: {
-        bg: 'brandGold.600',
-      },
-
-      _disabled: {
-        bg: '#5B5B5B',
-        color: 'gray.300',
-      },
+      // color: '#000000',
+      // bg: 'brandGold.500',
+      // _hover: {
+      //   bg: 'brandGold.600',
+      // },
+      // _disabled: {
+      //   bg: '#5B5B5B',
+      //   color: 'gray.300',
+      // },
     },
   },
   defaultProps: {
@@ -100,10 +98,15 @@ const Button = defineStyleConfig({
 
 const Heading = defineStyleConfig({
   baseStyle: {
-    color: '#DDB995',
+    colorScheme: 'brandGray',
     marginTop: '10',
-    textTransform: 'uppercase',
-    // textAlign: 'center',
+    textTransform: 'capitalize',
+  },
+})
+
+const Text = defineStyleConfig({
+  baseStyle: {
+    colorScheme: 'brandGray',
   },
 })
 
@@ -132,6 +135,7 @@ const theme = extendTheme({
     Button,
     Heading,
     Input,
+    Text,
   },
   fonts: {
     heading: `'Signika', sans-serif`,
@@ -140,13 +144,14 @@ const theme = extendTheme({
   styles: {
     global: () => ({
       body: {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         // justifyContent: 'center',
         // paddingBottom: '3rem',
         minHeight: '100vh',
         // background: 'linear-gradient(to top right, #39405a, #14213d)',
-        background: '#262E40',
+        // background: '#262E40',
       },
     }),
   },

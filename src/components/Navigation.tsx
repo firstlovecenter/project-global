@@ -11,18 +11,21 @@ import {
   DrawerOverlay,
   IconButton,
   VStack,
+  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
 import React from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SplashLogoImage from '../assets/icons/FL_logo.png'
+import SplashLogoImageDark from '../assets/icons/FL_logo_dark.png'
 import SelectCategory from './SelectCategory'
 import { FaBible, FaChurch } from 'react-icons/fa'
 import { RiBuilding2Line } from 'react-icons/ri'
 import { ActionButton } from './ActionButton'
 import SearchBar from './SearchBar'
 import ProfileHeader from './ProfileHeader'
+import { ColorModeSwitcher } from './ColorModeSwitcher'
 
 function Navigation() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -31,7 +34,7 @@ function Navigation() {
 
   const routeParam = useLocation().pathname
 
-  console.log(routeParam)
+  const currentColorMode = useColorModeValue('light', 'dark')
 
   const DUMMY_CATEGORIES = [
     {
@@ -78,19 +81,25 @@ function Navigation() {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent bg="#313B50">
+        <DrawerContent>
           <DrawerCloseButton
             top={4}
             right={6}
             transform={'translateY(7px)'}
             size={'sm'}
-            color={'#96A7AF'}
           />
           <DrawerHeader display={'flex'} alignItems={'center'} gap={2}>
             <Box width={'50px'}>
-              <img src={SplashLogoImage} alt="Splash Logo" />
+              <img
+                src={
+                  currentColorMode === 'light'
+                    ? SplashLogoImage
+                    : SplashLogoImageDark
+                }
+                alt="Splash Logo"
+              />
             </Box>
-            <p style={{ color: '#96A7AF', fontWeight: 400 }}>Global</p>
+            <p style={{ fontWeight: 400 }}>Global</p>
           </DrawerHeader>
 
           <DrawerBody>
@@ -114,8 +123,6 @@ function Navigation() {
                     navigate('/home')
                   }}
                   variant={'ghost'}
-                  backgroundColor={'#313B50'}
-                  subColor="brandGold.500"
                 />
               ))}
             </VStack>
@@ -128,6 +135,7 @@ function Navigation() {
                 <ProfileHeader name="John-Dag Addy" email="jaedagy@gmail.com" />
               </Box>
             </Container>
+            <ColorModeSwitcher marginLeft={0} marginRight={2.5} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

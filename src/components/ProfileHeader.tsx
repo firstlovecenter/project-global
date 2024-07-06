@@ -19,7 +19,7 @@ function ProfileHeader({
         <Img src="https://via.placeholder.com/150" />
       </Box>
       <Box>
-        <Text fontSize={'14px'} colorScheme="brandGray">
+        <Text fontSize={'14px'} color="#ffffff">
           {name}
         </Text>
         <Text fontSize={'12px'} color={'#7B8488'}>

@@ -33,27 +33,19 @@ const SelectCategory: React.FC = () => {
     <Menu matchWidth>
       <MenuButton
         as={Button}
-        rightIcon={<RiArrowDropDownLine color="#E4E4E4" />}
-        bg="brandTeal.500"
-        color="brandGold.500"
+        rightIcon={<RiArrowDropDownLine />}
+        colorScheme="brandTeal"
         width="100%"
         height="4rem"
         fontSize="1.25rem"
         borderRadius="0.5rem"
-        _hover={{ bg: 'brandTeal.400' }}
         _active={{ borderRadius: '0.5rem 0.5rem 0 0' }}
       >
         <Flex alignItems="center" gap={1}>
           <Icon as={FaChurch} mr={2} />
           <Box textAlign="left">
             <Text fontWeight={500}>{selectedItem?.label}</Text>
-            <Text
-              fontSize="10px"
-              color={'#FAF9F6'}
-              opacity={0.5}
-              fontWeight={300}
-              textTransform={'capitalize'}
-            >
+            <Text fontSize="10px" fontWeight={300} textTransform={'capitalize'}>
               {selectedItem?.subLabel}
             </Text>
           </Box>
@@ -62,7 +54,6 @@ const SelectCategory: React.FC = () => {
       <MenuList
         border="none"
         width={'100%'}
-        bg="#1B2841"
         marginY={-2}
         p={0}
         borderRadius={'0 0 0.5rem 0.5rem'}
@@ -72,9 +63,6 @@ const SelectCategory: React.FC = () => {
           <MenuItem
             key={index}
             onClick={() => setSelectedItem(item)}
-            bg=""
-            _hover={{ bg: 'brandTeal.400' }}
-            color="brandGold.500"
             height="4rem"
             p={4}
           >
@@ -89,12 +77,7 @@ const SelectCategory: React.FC = () => {
                   <Text fontSize="1.25rem" fontWeight={500}>
                     {item.label}
                   </Text>
-                  <Text
-                    fontSize="10px"
-                    color={'#FAF9F6'}
-                    fontWeight={300}
-                    opacity={0.5}
-                  >
+                  <Text fontSize="10px" fontWeight={300}>
                     {item.subLabel}
                   </Text>
                 </Box>
