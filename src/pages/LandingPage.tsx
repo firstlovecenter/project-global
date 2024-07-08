@@ -162,12 +162,11 @@ const LandingPage = () => {
                 title={`${category.name}`}
                 subtitle={category.subtitle}
                 onClick={() => {
-                  navigate('/home')
+                  navigate(category.path)
                 }}
                 variant={'ghost'}
                 backgroundColor={'#14213D'}
                 minWidth={'310px'}
-                // color={"white"}
               />
             ))}
 

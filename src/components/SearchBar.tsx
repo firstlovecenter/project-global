@@ -29,6 +29,7 @@ const SearchBar = () => {
               h="1.5rem"
               size="md"
               leftIcon={<FaSearch />}
+              p={0}
               variant="ghost"
               color="#ffffff"
               _hover={{ bg: 'transparent' }}

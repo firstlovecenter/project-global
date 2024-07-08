@@ -72,10 +72,13 @@ const Button = defineStyleConfig({
     maxWidth: '315px',
   },
   variants: {
+    filter: {
+      border: '2px solid ',
+      // borderRadius: "10000px",
+    },
     outline: {
       border: '2px solid',
-      borderColor: 'white',
-      color: '#DDB995',
+      colorScheme: 'brandGold',
     },
     solid: {
       // color: '#000000',

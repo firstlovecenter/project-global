@@ -120,7 +120,8 @@ function Navigation() {
                   pl={0}
                   subtitle={''}
                   onClick={() => {
-                    navigate('/home')
+                    navigate(category.path)
+                    onClose()
                   }}
                   variant={'ghost'}
                 />
