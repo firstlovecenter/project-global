@@ -42,7 +42,7 @@
     "@chakra-ui/react": "^2.2.1",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
-    "@fontsource/bai-jamjuree": "^5.0.8",
+    "@fontsource/signika": "^5.0.20",
     "@fontsource/signika": "^5.0.20",
     "@hookform/resolvers": "^3.3.1",
     "@jaedag/admin-portal-react-core": "^2.4.0",

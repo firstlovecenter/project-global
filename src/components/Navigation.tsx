@@ -58,6 +58,10 @@ function Navigation() {
     return null
   }
 
+  if (routeParam === '/login') {
+    return null
+  }
+
   return (
     <>
       <IconButton
