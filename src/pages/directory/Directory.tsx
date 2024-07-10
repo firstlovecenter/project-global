@@ -62,7 +62,7 @@ const Directory = () => {
         <Flex justifyContent={'space-between'}>
           <Button
             variant={'ghost'}
-            onClick={() => navigate('/directory/members/add')}
+            onClick={() => navigate('/directory/register-member')}
             fontSize={'sm'}
             fontWeight={'300'}
             p={1}

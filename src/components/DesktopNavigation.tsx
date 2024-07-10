@@ -39,7 +39,7 @@ const DesktopNavigation: FC = () => {
   return (
     <Portal>
       <Container
-        position="absolute"
+        position="fixed"
         top={0}
         left={0}
         bottom={0}
@@ -77,6 +77,7 @@ const DesktopNavigation: FC = () => {
             aria-label="Logout"
             icon={<RiLogoutBoxRLine size={25} />}
             variant={'ghost'}
+            colorScheme="black"
           />
           <ColorModeSwitcher ml={0} />
         </VStack>
