@@ -9,6 +9,7 @@ import {
   Heading,
   Text,
   VStack,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { ApolloWrapper, capitalise } from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
@@ -28,41 +29,45 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { RootState } from 'redux-config/store'
+import Select from 'components/FormPrimitives/FormSelect'
+import DropDownMenu from 'components/DropDownMenu'
+import { link } from 'fs'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
   const { user } = useUser()
   const navigate = useNavigate()
-  const member = useSelector((state: RootState) => state.member?.data)
-  const dispatch = useDispatch()
+  const currentColorMode = useColorModeValue('light', 'dark')
+  // const member = useSelector((state: RootState) => state.member?.data)
+  // const dispatch = useDispatch()
 
-  const memRef = doc(useFirestore(), 'members', memberRef ?? user.id)
+  // const memRef = doc(useFirestore(), 'members', memberRef ?? user.id)
 
-  const { status, data, error } = useFirestoreDocData(memRef)
+  // const { status, data, error } = useFirestoreDocData(memRef)
 
-  useEffect(() => {
-    dispatch({
-      type: 'member/setMemberBio',
-      payload: {
-        ...data,
-        updatedAt: member?.updatedAt?.toDate().toISOString(),
-      },
-    })
-  }, [data, dispatch, member?.updatedAt])
+  // useEffect(() => {
+  //   dispatch({
+  //     type: 'member/setMemberBio',
+  //     payload: {
+  //       ...data,
+  //       updatedAt: member?.updatedAt?.toDate().toISOString(),
+  //     },
+  //   })
+  // }, [data, dispatch, member?.updatedAt])
 
-  const roleChurchesRef = collection(
-    useFirestore(),
-    'members',
-    memberRef || user.id,
-    'roleChurches'
-  )
+  // const roleChurchesRef = collection(
+  //   useFirestore(),
+  //   'members',
+  //   memberRef || user.id,
+  //   'roleChurches'
+  // )
 
-  const {
-    status: roleChurchesStatus,
-    data: roleChurchesData,
-    error: roleChurchesError,
-  } = useFirestoreCollectionData(roleChurchesRef)
-  const roleChurches = (roleChurchesData || []) as RoleChurch[]
+  // const {
+  //   status: roleChurchesStatus,
+  //   data: roleChurchesData,
+  //   error: roleChurchesError,
+  // } = useFirestoreCollectionData(roleChurchesRef)
+  // const roleChurches = (roleChurchesData || []) as RoleChurch[]
 
   const documents = [
     {
@@ -91,92 +96,92 @@ const MemberProfile = () => {
     },
   ]
 
+  const oversightInfo = [
+    {
+      name: 'London Campus Head',
+      link: '/directory/london-campus-head',
+    },
+    {
+      name: 'UK Country Head',
+      link: '/directory/uk-country-head',
+    },
+    {
+      name: 'UK Family Head',
+      link: '/directory/uk-family-head',
+    },
+    {
+      name: 'Europe Continent Head',
+      link: '/directory/europe-empire-head',
+    },
+  ]
+
+  const colorGoldViaColorMode =
+    currentColorMode === 'light' ? 'brandGold.500' : 'brandGold.300'
+  const colorTealViaColorMode =
+    currentColorMode === 'light' ? 'brandTeal.500' : 'brandTeal.300'
+
   return (
-    <ApolloWrapper
-      data={data && roleChurchesData}
-      loading={status === 'loading' || roleChurchesStatus === 'loading'}
-      error={error || roleChurchesError}
-    >
-      <Container>
-        <Heading size="lg">Member Profile</Heading>
+    // <ApolloWrapper
+    //   data={data && roleChurchesData}
+    //   loading={status === 'loading' || roleChurchesStatus === 'loading'}
+    //   error={error || roleChurchesError}
+    // >
+    <Container p={8}>
+      <VStack>
         <Center marginTop={10}>
           <Avatar
-            src={member?.pictureUrl}
-            name={member?.firstName + ' ' + member?.lastName}
+            // src={member?.pictureUrl}
+            // name={member?.firstName + ' ' + member?.lastName}
             size="2xl"
+            padding={2}
+            border={'4px solid'}
+            borderColor={colorGoldViaColorMode}
           />
         </Center>
-        <Box textAlign="center">
-          <Text color="brandGold.500" fontWeight="bold" fontSize="xl">
-            {member?.firstName + ' ' + member?.lastName}
-          </Text>
-          <Text>Active Roles</Text>
+        <Heading size="lg">Kent Njeru</Heading>
+      </VStack>
 
-          <Center marginY={2}>
-            <HStack spacing={10}>
-              <ProfileIcon
-                icon={<FaWhatsapp />}
-                label="Whatsapp"
-                onClick={() =>
-                  (window.location.href = `https://wa.me/${member?.phoneNumber}`)
-                }
-              />
-              <ProfileIcon
-                icon={<FaPhone />}
-                label="Phone"
-                onClick={() =>
-                  (window.location.href = `tel:${member?.phoneNumber}`)
-                }
-              />
-              <ProfileIcon
-                icon={<GiMailbox />}
-                label="Email"
-                onClick={() =>
-                  (window.location.href = `mailto:${member?.email}`)
-                }
-              />
-            </HStack>
-          </Center>
+      <Box textAlign="center">
+        <Text fontSize="13px">Uk Family Head</Text>
+        <Text fontSize="13px">London Campus Shepherd</Text>
 
-          <Divider />
-        </Box>
+        <Center marginY={5}>
+          <HStack spacing={8}>
+            <ProfileIcon
+              icon={<FaWhatsapp />}
+              label="Whatsapp"
+              // onClick={
+              //   () =>
+              //   (window.location.href = `https://wa.me/${member?.phoneNumber}`)
+              // }
+            />
+            <ProfileIcon
+              icon={<FaPhone />}
+              label="Phone"
+              // onClick={
+              //   () =>
+              //   (window.location.href = `tel:${member?.phoneNumber}`)
+              // }
+            />
+            <ProfileIcon
+              icon={<GiMailbox />}
+              label="Email"
+              // onClick={
+              //   () =>
+              //   (window.location.href = `mailto:${member?.email}`)
+              // }
+            />
+          </HStack>
+        </Center>
+      </Box>
 
-        <ProfileSectionLabel label="Personal Documents" />
-        <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
-          {documents.map((doc) => (
-            <Box
-              backgroundColor="brandGold.500"
-              color="brandTeal.500"
-              fontWeight="bold"
-              padding={2}
-              paddingX={6}
-              borderRadius={50}
-              key={doc.name}
-              onClick={() => navigate(doc.link)}
-            >
-              <Text textAlign="start">{doc.name.toUpperCase()}</Text>
-            </Box>
-          ))}
-        </VStack>
-
-        {!!roleChurches.length && (
-          <>
-            <ProfileSectionLabel label="Oversight Info" />
-            <VStack align="stretch" marginLeft="2rem" marginBottom={10}>
-              {roleChurches?.map((role) => (
-                <Text key={role.id + role.level + role.role} textAlign="start">
-                  {role.name} {role.level} {capitalise(role.role)}
-                </Text>
-              ))}
-            </VStack>
-          </>
-        )}
-
-        <Button width="100%" variant="outline">
-          Construction:
-        </Button>
-      </Container>
-    </ApolloWrapper>
+      <VStack my={10} spacing={10} align="stretch">
+        <DropDownMenu label="Personal Documents" options={documents} />
+        <DropDownMenu label="Oversight Information" options={oversightInfo} />
+        <DropDownMenu label="Construction" />
+      </VStack>
+    </Container>
+    // </ApolloWrapper>
   )
 }
 
