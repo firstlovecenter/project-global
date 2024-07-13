@@ -9,6 +9,7 @@ import {
   Text,
   useColorModeValue,
   Flex,
+  Button,
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { RxCaretRight } from 'react-icons/rx'
@@ -37,17 +38,23 @@ const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
         </h2>
         <AccordionPanel>
           {options?.map(({ name, link }) => (
-            <Flex
+            <Button
               key={name}
-              p={1}
+              p={0}
+              pl={0}
+              pr={0}
+              variant={'ghost'}
+              display={'flex'}
               justifyContent={'space-between'}
+              borderRadius={'none'}
               borderBottom={'1px solid #96A7AF'}
               color={'#96A7AF'}
+              minWidth={'100%'}
               my={2}
             >
               <Text>{name}</Text>
               <RxCaretRight />
-            </Flex>
+            </Button>
           ))}
         </AccordionPanel>
       </AccordionItem>

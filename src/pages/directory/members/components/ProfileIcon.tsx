@@ -12,7 +12,7 @@ const ProfileIcon = (props: ProfileIconPropsType) => {
 
   return (
     <VStack onClick={onClick}>
-      <IconButton icon={icon} aria-label="message" />
+      <IconButton icon={icon} aria-label="message" borderRadius={'100000'} />
       <Text fontSize="xs">{label}</Text>
     </VStack>
   )
