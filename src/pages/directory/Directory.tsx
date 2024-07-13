@@ -20,6 +20,7 @@ import { useUser } from 'contexts/UserContext'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FilterButton from 'components/FilterButton'
+import MemberList from './members/MemberList'
 
 const Directory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()

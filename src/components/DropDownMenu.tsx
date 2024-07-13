@@ -11,7 +11,7 @@ import {
   Flex,
   Button,
 } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { RxCaretRight } from 'react-icons/rx'
 interface DropDownMenuProps {
   label: string
@@ -20,6 +20,7 @@ interface DropDownMenuProps {
 
 const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
   const currentColorMode = useColorModeValue('light', 'dark')
+  const navigate = useNavigate()
 
   return (
     <Accordion allowToggle>
@@ -51,6 +52,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
               color={'#96A7AF'}
               minWidth={'100%'}
               my={2}
+              onClick={() => navigate(link)}
             >
               <Text>{name}</Text>
               <RxCaretRight />

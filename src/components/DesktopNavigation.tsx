@@ -54,17 +54,26 @@ const DesktopNavigation: FC = () => {
         <Img src={currentColorMode === 'light' ? SplashLogo : SplashLogoDark} />
         <VStack mt={20} gap={6}>
           <FaSearch size={20} />
-          <Link to={'/home'}>
+          <Link to={'/'}>
             <FaHome size={20} fill={route === '/' ? '#DDB995' : 'white'} />
           </Link>
           <Link to={'/directory'}>
-            <FaBible size={20} />
+            <FaBible
+              size={20}
+              fill={route === '/directory' ? '#DDB995' : 'white'}
+            />
           </Link>
           <Link to={'/churches'}>
-            <FaChurch size={20} />
+            <FaChurch
+              size={20}
+              fill={route === '/churches' ? '#DDB995' : 'white'}
+            />
           </Link>
           <Link to={'/buildings'}>
-            <RiBuilding2Line size={20} />
+            <RiBuilding2Line
+              size={20}
+              fill={route === '/buildings' ? '#DDB995' : 'white'}
+            />
           </Link>
         </VStack>
         <VStack justifySelf={'flex-end'} mt={'auto'} gap={6}>

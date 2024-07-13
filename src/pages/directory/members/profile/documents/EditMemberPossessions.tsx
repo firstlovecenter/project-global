@@ -12,10 +12,32 @@ const EditMemberPossessions = () => {
   const toast = useToast()
   const dispatch = useDispatch()
 
-  const initialValues = {
-    housesOwned: member.housesOwned,
-    carsOwned: member.carsOwned,
-  }
+  const initialValues = [
+    // housesOwned: member.housesOwned,
+    // carsOwned: member.carsOwned,
+    {
+      key: 'Car Title Document',
+      link: '/',
+      // value: member.housesOwned,
+      lastUpdated: 'unknown',
+    },
+    {
+      key: 'Residence Picture',
+      // lastUpdated: member.carsOwned,
+      link: '/',
+      lastUpdated: 'unknown',
+    },
+    {
+      key: 'Residence Document',
+      link: '/',
+      lastUpdated: 'unknown',
+    },
+    {
+      key: 'Car Picture',
+      link: '/',
+      lastUpdated: 'unknown',
+    },
+  ]
 
   const onSubmit = async (values: typeof initialValues) => {
     try {
@@ -70,7 +92,7 @@ const EditMemberPossessions = () => {
       <Heading size="md">Edit Member Possessions</Heading>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
+        {/* <Input
           name="housesOwned"
           label="Houses Owned"
           control={control}
@@ -81,7 +103,7 @@ const EditMemberPossessions = () => {
           label="Cars Owned"
           control={control}
           errors={errors}
-        />
+        /> */}
 
         <Center>
           <Button type="submit" marginY={10} isLoading={isSubmitting}>

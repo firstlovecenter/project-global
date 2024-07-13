@@ -116,9 +116,9 @@ const MemberProfile = () => {
   ]
 
   const colorGoldViaColorMode =
-    currentColorMode === 'light' ? 'brandGold.500' : 'brandGold.300'
+    currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
   const colorTealViaColorMode =
-    currentColorMode === 'light' ? 'brandTeal.500' : 'brandTeal.300'
+    currentColorMode === 'light' ? 'brandTeal.400' : 'brandTeal.200'
 
   return (
     // <ApolloWrapper
@@ -134,7 +134,7 @@ const MemberProfile = () => {
             // name={member?.firstName + ' ' + member?.lastName}
             size="2xl"
             padding={2}
-            border={'4px solid'}
+            borderWidth={'4px'}
             borderColor={colorGoldViaColorMode}
           />
         </Center>

@@ -12,6 +12,11 @@ const EditMemberBioData = lazy(
 const MemberPossessions = lazy(
   () => import('./profile/documents/MemberPossessions')
 )
+
+const UploadMemberDocuments = lazy(
+  () => import('./profile/documents/UploadMemberDocuments')
+)
+
 const EditMemberPossessions = lazy(
   () => import('./profile/documents/EditMemberPossessions')
 )
@@ -49,6 +54,11 @@ export const memberRoutes: LazyRouteTypes[] = [
   {
     path: '/member/documents/possessions',
     element: MemberPossessions,
+    roles: ['all'],
+  },
+  {
+    path: '/member/documents/possessions/upload',
+    element: UploadMemberDocuments,
     roles: ['all'],
   },
   {

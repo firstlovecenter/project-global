@@ -35,6 +35,7 @@ const SelectCategory: React.FC = () => {
         as={Button}
         rightIcon={<RiArrowDropDownLine />}
         colorScheme="brandTeal"
+        color={'white'}
         width="100%"
         height="4rem"
         fontSize="1.25rem"

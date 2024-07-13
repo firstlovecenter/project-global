@@ -77,10 +77,20 @@ const MemberBioData = () => {
   ]
 
   const colorGoldViaColorMode =
-    currentColorMode === 'light' ? 'brandGold.500' : 'brandGold.300'
+    currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
 
   return (
     <Container position={'relative'} alignSelf={'center'} padding={8}>
+      <Button
+        variant={'ghost'}
+        position={'absolute'}
+        top={5}
+        right={5}
+        onClick={() => navigate('/member/documents/bio-data/edit')}
+        p={0}
+      >
+        Edit
+      </Button>
       <Center marginY={10} display={'flex'} gap={4}>
         <Avatar
           // src={member?.pictureUrl}
@@ -141,9 +151,9 @@ const MemberBioData = () => {
           <Flex
             key={field.key}
             justifyContent={'space-between'}
-            p={'4px 0'}
+            p={'6px 0'}
             borderBottom={'1px solid'}
-            borderColor={'whiteAlpha.400'}
+            borderColor={'whiteAlpha.300'}
           >
             <Text color="whiteAlpha.700" pl={0} pr={0}>
               {field.key}

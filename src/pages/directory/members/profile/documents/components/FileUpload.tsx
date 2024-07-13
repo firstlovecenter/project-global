@@ -7,13 +7,13 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Text,
 } from '@chakra-ui/react'
 import { BeatLoader } from 'react-spinners'
 import { UseFormSetValue } from 'react-hook-form'
 import { ReactHookFormComponentProps } from '@jaedag/admin-portal-react-core'
 import { FaFileUpload } from 'react-icons/fa'
 import { useUser } from 'contexts/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 export interface FileUploadProps extends ReactHookFormComponentProps {
   uploadPreset: string
@@ -29,6 +29,7 @@ const FileUpload = (props: FileUploadProps) => {
   const { label, name, uploadPreset, tags, setValue, value, errors, ...rest } =
     props
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate()
   const handleButtonClick = () => {
     fileInputRef.current?.click()
   }
@@ -67,6 +68,7 @@ const FileUpload = (props: FileUploadProps) => {
 
     setValue(name, file.secure_url)
     setLoading(false)
+    navigate('/member/documents/possessions')
   }
 
   return (
@@ -83,9 +85,7 @@ const FileUpload = (props: FileUploadProps) => {
             <BeatLoader data-testid="loading-spinner" color="grey" />
           ) : file || value ? (
             <FaFileUpload />
-          ) : (
-            <Text color="GrayText">Not Uploaded</Text>
-          )}
+          ) : null}
         </Center>
       </Container>
 
@@ -99,8 +99,8 @@ const FileUpload = (props: FileUploadProps) => {
           onChange={uploadFile}
           ref={fileInputRef}
         />
-        <Button colorScheme="blue" size="xs" onClick={handleButtonClick}>
-          Upload File
+        <Button p={6} width={'100%'} onClick={handleButtonClick}>
+          Select File
         </Button>
       </Container>
 
