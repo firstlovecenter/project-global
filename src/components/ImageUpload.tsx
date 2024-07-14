@@ -1,43 +1,57 @@
-import { useState, useRef, ChangeEventHandler } from 'react'
+import React, { useState, useRef, ChangeEventHandler } from 'react'
 import {
   Button,
   Center,
   Container,
   FormControl,
   FormErrorMessage,
-  FormLabel,
+  Image,
   Input,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { BeatLoader } from 'react-spinners'
+import { ReactHookFormComponentProps } from '../components/FormPrimitives/react-hook-form-types'
 import { UseFormSetValue } from 'react-hook-form'
-import { ReactHookFormComponentProps } from '@jaedag/admin-portal-react-core'
-import { FaFileUpload } from 'react-icons/fa'
-import { useUser } from 'contexts/UserContext'
-import { useNavigate } from 'react-router-dom'
 
-export interface FileUploadProps extends ReactHookFormComponentProps {
+export interface ImageUploadProps extends ReactHookFormComponentProps {
   uploadPreset: string
   tags?: 'facial-recognition'
+  initialValue?: string
   loading?: boolean
-  value?: string
+  cloudinaryAccount: 'church-insights' | 'firstlovecenter'
+  user: {
+    id: string
+    firstName: string
+    lastName: string
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setValue: UseFormSetValue<any>
 }
 
-const FileUpload = (props: FileUploadProps) => {
-  const { user } = useUser()
-  const { label, name, uploadPreset, tags, setValue, value, errors, ...rest } =
-    props
+const ImageUpload = (props: ImageUploadProps) => {
+  const {
+    label,
+    name,
+    cloudinaryAccount,
+    initialValue,
+    uploadPreset,
+    placeholder,
+    tags,
+    user,
+    setValue,
+    control,
+    errors,
+    ...rest
+  } = props
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const navigate = useNavigate()
   const handleButtonClick = () => {
     fileInputRef.current?.click()
   }
 
   const [loading, setLoading] = useState(false)
-  const [file, setFile] = useState('')
+  const [image, setImage] = useState('')
 
-  const uploadFile: ChangeEventHandler<HTMLInputElement> = async (e) => {
+  const uploadImage: ChangeEventHandler<HTMLInputElement> = async (e) => {
     const files = e.target.files ?? []
     const date = new Date().toISOString().slice(0, 10)
     const username = `${user.firstName.toLowerCase()}-${user.lastName.toLowerCase()}`
@@ -56,7 +70,7 @@ const FileUpload = (props: FileUploadProps) => {
     setLoading(true)
 
     const res = await fetch(
-      'https://api.cloudinary.com/v1_1/firstlovecenter/image/upload',
+      `https://api.cloudinary.com/v1_1/${cloudinaryAccount}/image/upload`,
       {
         method: 'POST',
         body: data,
@@ -64,28 +78,33 @@ const FileUpload = (props: FileUploadProps) => {
     )
     const file = await res.json()
 
-    setFile(file.secure_url)
+    setImage(file.secure_url)
 
     setValue(name, file.secure_url)
     setLoading(false)
-    navigate('/member/documents/possessions')
   }
 
-  return (
-    <FormControl>
-      {label ? (
-        <FormLabel textAlign="center" htmlFor={name}>
-          {label}
-        </FormLabel>
-      ) : null}
+  const currentColorMode = useColorModeValue('light', 'dark')
+  const borderColor =
+    currentColorMode === 'light' ? 'brandGold.500' : 'brandGold.300'
 
-      <Container padding={0} marginBottom={4}>
+  return (
+    <FormControl my={12}>
+      <Container padding={0} width="190px" height="190px" marginBottom={6}>
         <Center height="100%">
           {props.loading || loading ? (
             <BeatLoader data-testid="loading-spinner" color="grey" />
-          ) : file || value ? (
-            <FaFileUpload />
-          ) : null}
+          ) : (
+            <Image
+              alt={label}
+              data-testid="image-loaded"
+              src={image || initialValue}
+              fallbackSrc="https://res.cloudinary.com/firstlovecenter/image/upload/v1683818433/placeholder350_tt6roc.png"
+              rounded="full"
+              border={'4px solid'}
+              borderColor={borderColor}
+            />
+          )}
         </Center>
       </Container>
 
@@ -94,13 +113,13 @@ const FileUpload = (props: FileUploadProps) => {
           id={name}
           display="none"
           type="file"
-          accept="file/png, file/webp, file/jpg, file/jpeg file/pdf"
+          accept="image/png, image/webp, image/jpg, image/jpeg"
           {...rest}
-          onChange={uploadFile}
+          onChange={uploadImage}
           ref={fileInputRef}
         />
-        <Button p={6} width={'100%'} onClick={handleButtonClick}>
-          Select File
+        <Button onClick={handleButtonClick} width={'100%'}>
+          Choose Image
         </Button>
       </Container>
 
@@ -111,4 +130,4 @@ const FileUpload = (props: FileUploadProps) => {
   )
 }
 
-export default FileUpload
+export default ImageUpload

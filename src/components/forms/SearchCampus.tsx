@@ -5,6 +5,7 @@ import {
   Center,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   Input,
   InputProps,
   Spinner,
@@ -85,7 +86,11 @@ const SearchCampus = (props: RoleBasedSearch) => {
 
   return (
     <FormControl>
-      {label ? <label className="label">{label}</label> : null}
+      {label ? (
+        <FormLabel className="label" htmlFor={name} fontSize={'10px'}>
+          {label.toLocaleUpperCase()}
+        </FormLabel>
+      ) : null}
 
       <Autosuggest
         inputProps={{
@@ -126,8 +131,8 @@ const SearchCampus = (props: RoleBasedSearch) => {
             paddingLeft={4}
             position="absolute"
             zIndex={isHighlighted ? 'popover' : 'base'}
-            backgroundColor={isHighlighted ? 'blue.200' : 'gray.700'}
-            color={isHighlighted ? 'blue.800' : 'gray.200'}
+            backgroundColor={isHighlighted ? 'brandGold.200' : 'gray.700'}
+            color={isHighlighted ? 'brandGold.800' : 'gray.200'}
             width="100%"
           >
             {suggestion.name}

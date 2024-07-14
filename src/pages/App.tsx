@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Navigation from '../components/Navigation'
 import { AuthProvider } from 'contexts/AuthContext'
 import PrivateRoute from 'auth/ProtectedRoute'
@@ -13,6 +13,7 @@ import { UserProvider } from 'contexts/UserContext'
 import { functions } from 'firebase/firebase'
 import { Provider as ReduxProvider } from 'react-redux'
 import store from 'redux-config/store'
+import DesktopNavigation from 'components/DesktopNavigation'
 
 const App = () => {
   const firestoreInstance = getFirestore(useFirebaseApp())
@@ -25,26 +26,7 @@ const App = () => {
             <AuthProvider>
               <UserProvider>
                 <RefContextProvider>
-                  <Navigation />
-                  <Suspense fallback={<LoadingPage />}>
-                    <Routes>
-                      {[...authRoutes, ...directoryRoutes].map((route, i) => (
-                        <Route
-                          key={i}
-                          path={route.path}
-                          element={
-                            <PrivateRoute
-                              roles={route.roles}
-                              placeholder={route.placeholder}
-                            >
-                              <route.element />
-                            </PrivateRoute>
-                          }
-                        />
-                      ))}
-                      <Route path="*" element={<PageNotFound />} />
-                    </Routes>
-                  </Suspense>
+                  <MainLayout />
                 </RefContextProvider>
               </UserProvider>
             </AuthProvider>
@@ -52,6 +34,39 @@ const App = () => {
         </FunctionsProvider>
       </ReduxProvider>
     </FirestoreProvider>
+  )
+}
+
+const MainLayout = () => {
+  const location = useLocation()
+  const excludeNavigationRoutes = ['/login', '/loading']
+
+  return (
+    <>
+      {!excludeNavigationRoutes.includes(location.pathname) && (
+        <DesktopNavigation />
+      )}
+      <Navigation />
+      <Suspense fallback={<LoadingPage />}>
+        <Routes>
+          {[...authRoutes, ...directoryRoutes].map((route, i) => (
+            <Route
+              key={i}
+              path={route.path}
+              element={
+                <PrivateRoute
+                  roles={route.roles}
+                  placeholder={route.placeholder}
+                >
+                  <route.element />
+                </PrivateRoute>
+              }
+            />
+          ))}
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Suspense>
+    </>
   )
 }
 

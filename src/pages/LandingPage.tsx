@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'redux-config/store'
 import { ActionButton } from 'components/ActionButton'
 import ProfileHeader from 'components/ProfileHeader'
+import SelectCategory from 'components/SelectCategory'
 
 const LandingPage = () => {
   const [error, setError] = useState('')
@@ -116,8 +117,6 @@ const LandingPage = () => {
         marginTop={{ base: 20, md: 0 }}
         width={{ base: '100%', md: 'min(50%, 70vw)' }}
         alignSelf={{ base: 'center', md: 'flex-start' }}
-        // paddingY={{ base: 0, md: 10 }}
-        background={{ base: 'none', md: '#262E40' }}
         display={'flex'}
         flexDirection={'column'}
         justifyContent={'center'}
@@ -131,6 +130,14 @@ const LandingPage = () => {
           justifyContent={'center'}
           alignItems={'center'}
         >
+          <Box
+            width={'310px'}
+            justifySelf={'flex-start'}
+            transform={'translateY(-130px)'}
+            display={{ base: 'none', md: 'block' }}
+          >
+            <SelectCategory />
+          </Box>
           <Text
             fontSize="3xl"
             fontWeight="700"
@@ -155,13 +162,11 @@ const LandingPage = () => {
                 title={`${category.name}`}
                 subtitle={category.subtitle}
                 onClick={() => {
-                  navigate('/home')
+                  navigate(category.path)
                 }}
                 variant={'ghost'}
-                backgroundColor={{ base: '#454D62', md: ' #14213D' }}
+                backgroundColor={'#14213D'}
                 minWidth={'310px'}
-                // color={"white"}
-                subColor="brandGold.500"
               />
             ))}
 

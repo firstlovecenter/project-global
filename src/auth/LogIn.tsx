@@ -58,11 +58,7 @@ const LogIn = () => {
   })
 
   return (
-    <Container
-      padding={'0 1.5rem'}
-      justifyContent={'center'}
-      marginTop={{ base: '1rem', md: '3rem' }}
-    >
+    <Container padding={'0 1.5rem'} justifyContent={'center'}>
       <Center>
         <Container padding={'0px'}>
           <Box height="80vh">
@@ -131,8 +127,9 @@ const LogIn = () => {
                         size="sm"
                         marginRight="1rem"
                         onClick={handleClick}
+                        p={4}
                         variant="ghost"
-                        color={'brandGold.500'}
+                        colorScheme="brandGold"
                       >
                         {show ? 'Hide' : 'Show'}
                       </Button>
@@ -141,7 +138,6 @@ const LogIn = () => {
                   <Container marginTop={1}>
                     <Text
                       textAlign="center"
-                      color="#ffffff"
                       fontWeight={'300'}
                       onClick={() => navigate('/forgot-password')}
                     >

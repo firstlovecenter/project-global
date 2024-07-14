@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, ButtonProps, Container } from '@chakra-ui/react'
+import { Box, Button, ButtonProps, Heading } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
 
 interface ActionButtonProps extends ButtonProps {
@@ -7,7 +7,6 @@ interface ActionButtonProps extends ButtonProps {
   title: string
   subtitle: string
   icon: IconType
-  subColor: string
 }
 
 export const ActionButton = ({
@@ -15,11 +14,10 @@ export const ActionButton = ({
   title,
   subtitle,
   icon: Icon,
-  subColor,
   ...props
 }: ActionButtonProps) => {
   return (
-    <Button onClick={onClick} {...props} color={subColor}>
+    <Button onClick={onClick} {...props}>
       <Box
         display={'flex'}
         alignItems={'center'}
@@ -30,16 +28,15 @@ export const ActionButton = ({
       >
         <Icon />
         <Box ml={2} flex={1}>
-          <h2
+          <Heading
             style={{
               margin: 0,
               fontSize: '20px',
-              color: 'white',
               fontWeight: 400,
             }}
           >
             {title}
-          </h2>
+          </Heading>
           {subtitle && (
             <p style={{ margin: 0, fontSize: 'small', fontWeight: 300 }}>
               {subtitle}

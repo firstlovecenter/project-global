@@ -2,14 +2,14 @@ import { Button, Center, Container, Heading, useToast } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   GENDER_OPTIONS,
-  ImageUpload,
-  Input,
   MARITAL_STATUS_OPTIONS,
   PHONE_NUM_REGEX,
-  Select,
 } from '@jaedag/admin-portal-react-core'
 import { parsePhoneNumber } from '@jaedag/admin-portal-types'
+import FormInput from 'components/FormPrimitives/FormInput'
+import FormSelect from 'components/FormPrimitives/FormSelect'
 import SearchCampus from 'components/forms/SearchCampus'
+import ImageUpload from 'components/ImageUpload'
 import { useRef } from 'contexts/RefContext'
 import { useUser } from 'contexts/UserContext'
 import { DIRECTORY_FUNCTION_BASE_URL } from 'firebase/cloudFunctionsConfig'
@@ -71,6 +71,8 @@ const RegisterMember = () => {
     values.whatsappNumber = parsePhoneNumber(values.whatsappNumber)
     values.phoneNumber = parsePhoneNumber(values.phoneNumber)
 
+    console.log('🚀 ~ file: RegisterMember.tsx:8 ~ values:', values)
+
     try {
       const response = await fetch(DIRECTORY_FUNCTION_BASE_URL + '/member', {
         method: 'POST',
@@ -120,8 +122,10 @@ const RegisterMember = () => {
   })
 
   return (
-    <Container>
-      <Heading>Register Member</Heading>
+    <Container p={10}>
+      <Center>
+        <Heading>Register Member</Heading>
+      </Center>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <ImageUpload
@@ -134,39 +138,47 @@ const RegisterMember = () => {
           control={control}
           errors={errors}
         />
-        <Input
+        <FormInput
           name="firstName"
           label="First Name"
           control={control}
           errors={errors}
         />
-        <Input
+
+        <FormInput
           name="middleName"
           label="Middle Name"
           control={control}
           errors={errors}
         />
-        <Input
+        <FormInput
           name="lastName"
           label="Last Name"
           control={control}
           errors={errors}
         />
-        <Input
+        <FormInput
           name="email"
           label="Email"
           control={control}
           errors={errors}
           type="email"
         />
-        <Input
+        <FormInput
+          name="dateOfBirth"
+          label="Date of Birth"
+          control={control}
+          errors={errors}
+          type="date"
+        />
+        <FormInput
           name="phoneNumber"
           label="Phone Number"
           control={control}
           errors={errors}
           type="tel"
         />
-        <Input
+        <FormInput
           name="whatsappNumber"
           label="WhatsApp Number"
           control={control}
@@ -174,27 +186,27 @@ const RegisterMember = () => {
           type="tel"
         />
 
-        <Select
+        <FormSelect
           name="gender"
           label="Gender"
           control={control}
           errors={errors}
           options={GENDER_OPTIONS}
         />
-        <Select
+        <FormSelect
           name="maritalStatus"
           label="Marital Status"
           control={control}
           errors={errors}
           options={MARITAL_STATUS_OPTIONS}
         />
-        <Input
+        <FormInput
           name="occupation"
           label="Occupation"
           control={control}
           errors={errors}
         />
-        <Select
+        <FormSelect
           name="employeeStatus"
           label="Employee Status"
           control={control}
@@ -203,13 +215,6 @@ const RegisterMember = () => {
             { key: 'Full Time Staff', value: 'staff' },
             { key: 'Lay/Non Staff', value: 'non-staff' },
           ]}
-        />
-        <Input
-          name="dateOfBirth"
-          label="Date of Birth"
-          control={control}
-          errors={errors}
-          type="date"
         />
         <SearchCampus
           name="campus"
@@ -220,8 +225,8 @@ const RegisterMember = () => {
           placeholder="Search for a campus"
         />
 
-        <Center>
-          <Button type="submit" marginTop={5} isLoading={isSubmitting}>
+        <Center marginTop={20}>
+          <Button type="submit" isLoading={isSubmitting} width="100%">
             Submit
           </Button>
         </Center>

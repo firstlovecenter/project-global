@@ -72,23 +72,24 @@ const Button = defineStyleConfig({
     maxWidth: '315px',
   },
   variants: {
+    filter: {
+      border: '2px solid ',
+      // borderRadius: "10000px",
+    },
     outline: {
       border: '2px solid',
-      borderColor: 'white',
-      color: '#DDB995',
+      colorScheme: 'brandGold',
     },
     solid: {
-      color: '#000000',
-      bg: 'brandGold.500',
-
-      _hover: {
-        bg: 'brandGold.600',
-      },
-
-      _disabled: {
-        bg: '#5B5B5B',
-        color: 'gray.300',
-      },
+      // color: '#000000',
+      // bg: 'brandGold.500',
+      // _hover: {
+      //   bg: 'brandGold.600',
+      // },
+      // _disabled: {
+      //   bg: '#5B5B5B',
+      //   color: 'gray.300',
+      // },
     },
   },
   defaultProps: {
@@ -100,10 +101,16 @@ const Button = defineStyleConfig({
 
 const Heading = defineStyleConfig({
   baseStyle: {
-    color: '#DDB995',
+    colorScheme: 'black',
     marginTop: '10',
-    textTransform: 'uppercase',
-    // textAlign: 'center',
+    textTransform: 'capitalize',
+    fontWeight: '400',
+  },
+})
+
+const Text = defineStyleConfig({
+  baseStyle: {
+    colorScheme: 'brandGray',
   },
 })
 
@@ -113,7 +120,6 @@ const Input = defineStyleConfig({
       borderRadius: '16px',
       border: '2px solid',
       borderColor: 'white',
-      color: 'brandGray.200',
     },
   },
 
@@ -132,6 +138,7 @@ const theme = extendTheme({
     Button,
     Heading,
     Input,
+    Text,
   },
   fonts: {
     heading: `'Signika', sans-serif`,
@@ -140,16 +147,16 @@ const theme = extendTheme({
   styles: {
     global: () => ({
       body: {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: {
-          base: 'flex-start',
-          md: 'center',
-        },
-        // paddingBottom: '3rem',
         minHeight: '100vh',
-        // background: 'linear-gradient(to top right, #39405a, #14213d)',
-        background: '#262E40',
+      },
+      '#root': {
+        display: 'flex',
+        position: 'relative',
+        flexDirection: 'column',
+        minHeight: '100vh',
       },
     }),
   },

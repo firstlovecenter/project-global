@@ -1,94 +1,142 @@
 import {
+  Box,
   Button,
   Center,
   Container,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerOverlay,
+  Flex,
   Heading,
   Text,
   VStack,
+  useDisclosure,
 } from '@chakra-ui/react'
-import DirectoryBook from 'assets/icons/DirectoryBook'
+
+import SearchBar from 'components/SearchBar'
+import { RiFilter3Line } from 'react-icons/ri'
 import { useUser } from 'contexts/UserContext'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import FilterButton from 'components/FilterButton'
+import MemberList from './members/MemberList'
 
 const Directory = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [filters, setFilters] = useState([''])
   const navigate = useNavigate()
   const { user } = useUser()
 
-  const directoryMenuItems = [
+  const filterMenuItems = [
     {
       title: 'Members',
-      onClick: () => navigate('/directory/members'),
-      roles: ['all'],
     },
     {
       title: 'Bishops',
-      onClick: () => navigate('/directory/members/bishops'),
-      roles: ['all'],
     },
     {
       title: 'Apostles',
-      onClick: () => navigate('/directory/members/apostles'),
-      roles: ['all'],
     },
     {
       title: 'Missionaries',
-      onClick: () => navigate('/directory/members/missionaries'),
-      roles: ['all'],
     },
     {
       title: 'Assisting Missionaries',
-      onClick: () => navigate('/directory/members/assisting-missionaries'),
-      roles: ['all'],
     },
     {
       title: 'Campus Shepherds',
-      onClick: () => navigate('/directory/members/campus-shepherds'),
-      roles: ['all'],
     },
     {
       title: 'Associate Pastors',
-      onClick: () => navigate('/directory/members/associate-pastors'),
-      roles: ['all'],
     },
     {
       title: 'Full Time Staff',
-      onClick: () => navigate('/directory/members/full-time-staff'),
-      roles: ['all'],
     },
   ]
 
   return (
-    <Container>
-      <Heading>DIRECTORY</Heading>
-      <Text fontSize="xl" fontWeight="semi-bold">
-        {user.selectedProfile.name} {user.selectedProfile.level}
-      </Text>
-      <Text fontSize="xl" fontWeight="semi-bold" mb={12}>
-        {user.selectedProfile.level} {user.selectedProfile.role}
-      </Text>
-      <VStack marginTop={10} spacing={4} align="stretch">
-        <Center>
-          <DirectoryBook />
-        </Center>
-        <Button
-          size="lg"
-          onClick={() => navigate('/directory/register-member')}
-        >
-          Register A Member
-        </Button>
-
-        {directoryMenuItems.map((item) => (
+    <Container p={10}>
+      <Heading fontWeight={400}>Directory</Heading>
+      <Box my={10}>
+        <SearchBar />
+        <Flex justifyContent={'space-between'}>
           <Button
-            key={item.title}
-            paddingY="25px"
-            size="lg"
-            variant="outline"
-            onClick={item.onClick}
+            variant={'ghost'}
+            onClick={() => navigate('/directory/register-member')}
+            fontSize={'sm'}
+            fontWeight={'300'}
+            p={1}
           >
-            {item.title}
+            Add Member
           </Button>
-        ))}
-      </VStack>
+          <Button
+            variant={'ghost'}
+            fontSize={'sm'}
+            fontWeight={'300'}
+            p={1}
+            colorScheme="brandTeal"
+            onClick={onOpen}
+          >
+            <Flex alignItems={'center'} gap={1}>
+              <span
+                style={{
+                  transform: 'translateY(-1.5px)',
+                }}
+              >
+                <RiFilter3Line />
+              </span>{' '}
+              Filters
+            </Flex>
+          </Button>
+        </Flex>
+      </Box>
+      <VStack marginTop={10} spacing={4} align="stretch"></VStack>
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        size={{ base: 'full', md: 'md' }}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerBody>
+            <Center>
+              <Heading fontWeight={400}>Filters</Heading>
+            </Center>
+            <Flex justifyContent={'space-between'}>
+              <Button
+                variant={'ghost'}
+                colorScheme="brandTeal"
+                fontWeight={'300'}
+                p={1}
+                onClick={() => setFilters([])}
+              >
+                {' '}
+                Clear Filters
+              </Button>
+              <Button
+                variant={'ghost'}
+                onClick={onClose}
+                fontWeight={'300'}
+                p={1}
+              >
+                Done
+              </Button>
+            </Flex>
+            <Flex wrap={'wrap'} gap={2} mt={4}>
+              {filterMenuItems.map((item) => (
+                <FilterButton
+                  key={item?.title}
+                  value={item?.title}
+                  filter={filters}
+                  setFilter={setFilters}
+                />
+              ))}
+            </Flex>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Container>
   )
 }

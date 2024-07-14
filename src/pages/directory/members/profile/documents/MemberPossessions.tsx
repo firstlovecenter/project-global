@@ -1,61 +1,181 @@
 import {
+  Avatar,
   Box,
   Button,
   Center,
   Container,
+  Flex,
   Heading,
-  Table,
-  Tbody,
-  Td,
-  Tr,
+  HStack,
+  Text,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RootState } from 'redux-config/store'
 import ProfileAvatar from './components/ProfileAvatar'
+import ProfileIcon from '../../components/ProfileIcon'
+import { FaPhone, FaWhatsapp } from 'react-icons/fa'
+import { GiMailbox } from 'react-icons/gi'
 
 const MemberPossessions = () => {
-  const member = useSelector((state: RootState) => state.member.data)
+  // const member = useSelector((state: RootState) => state.member.data)
   const navigate = useNavigate()
+  const currentColorMode = useColorModeValue('light', 'dark')
 
-  const fields = [
+  const fields: any[] | undefined = [
     {
-      key: 'Houses Owned',
-      value: member.housesOwned,
+      key: 'Car Title Document',
+      link: '/',
+      // value: member.housesOwned,
+      lastUpdated: 'unknown',
     },
     {
-      key: 'Cars Owned',
-      value: member.carsOwned,
+      key: 'Residence Picture',
+      // lastUpdated: member.carsOwned,
+      link: '/',
+      lastUpdated: 'unknown',
+    },
+    {
+      key: 'Residence Document',
+      link: '/',
+      lastUpdated: 'unknown',
+    },
+    {
+      key: 'Car Picture',
+      link: '/',
+      lastUpdated: 'unknown',
     },
   ]
 
+  const colorGoldViaColorMode =
+    currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
+  const colorTealViaColorMode =
+    currentColorMode === 'light' ? 'brandTeal.500' : 'brandTeal.400'
+
   return (
     <>
-      <Container>
-        <Heading>Possessions Data</Heading>
+      <Container position={'relative'} alignSelf={'center'} padding={8}>
+        <Center marginY={10} display={'flex'} gap={4}>
+          <Avatar
+            // src={member?.pictureUrl}
+            // name={member?.firstName + ' ' + member?.lastName}
+            size="xl"
+            padding={2}
+            borderWidth={3}
+            borderStyle={'solid'}
+            borderColor={colorGoldViaColorMode}
+          />
+          <Box>
+            <Heading margin={0} mb={3} fontSize={'2xl'}>
+              Kent Njeru
+            </Heading>
+            <Text fontSize="13px">Uk Family Head</Text>
+            <Text fontSize="13px">London Campus Shepherd</Text>
+          </Box>
+        </Center>
 
-        <Box marginY={10}>
-          <ProfileAvatar member={member} />
-          <Center marginTop={5}>
-            <Button
-              size="sm"
-              onClick={() => navigate('/member/documents/possessions/edit')}
-            >
-              Edit Data
-            </Button>
-          </Center>
-        </Box>
+        <Center marginY={5}>
+          <HStack spacing={8}>
+            <ProfileIcon
+              icon={<FaWhatsapp />}
+              label="Whatsapp"
+              // onClick={
+              //   () =>
+              //   (window.location.href = `https://wa.me/${member?.phoneNumber}`)
+              // }
+            />
+            <ProfileIcon
+              icon={<FaPhone />}
+              label="Phone"
+              // onClick={
+              //   () =>
+              //   (window.location.href = `tel:${member?.phoneNumber}`)
+              // }
+            />
+            <ProfileIcon
+              icon={<GiMailbox />}
+              label="Email"
+              // onClick={
+              //   () =>
+              //   (window.location.href = `mailto:${member?.email}`)
+              // }
+            />
+          </HStack>
+        </Center>
 
-        <Table variant="unstyled" size="sm">
-          <Tbody>
-            {fields.map((field) => (
-              <Tr key={field.key}>
-                <Td color="whiteAlpha.700">{field.key}</Td>
-                <Td>{field.value ?? 0}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
+        <Container mt={10} p={0}>
+          <Heading size={'sm'} m={0} mb={2} ml={5}>
+            Possesions
+          </Heading>
+          <Flex
+            bgColor={'brandTeal.300'}
+            p={'0 32px'}
+            borderRadius={10}
+            minHeight={350}
+            flexDirection={'column'}
+            alignItems={'center'}
+            justifyContent={'center'}
+          >
+            {fields.length > 0 ? (
+              fields.map((field) => (
+                <Button
+                  key={field.key}
+                  alignItems={'center'}
+                  justifyContent={'flex-start'}
+                  height={70}
+                  gap={4}
+                  p={'6px 0'}
+                  pl={0}
+                  pr={0}
+                  variant={'ghost'}
+                  minWidth={'100%'}
+                  borderBottom={'1px solid'}
+                  borderColor={'whiteAlpha.300'}
+                >
+                  <Box
+                    width={50}
+                    height={50}
+                    borderRadius={'10px'}
+                    bg={colorTealViaColorMode}
+                    display={'flex'}
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                    fontSize={'2xl'}
+                    color={colorGoldViaColorMode}
+                  >
+                    AB
+                  </Box>
+                  <Box textAlign={'left'}>
+                    <Text pl={0} pr={0} color={'whiteAlpha.900'}>
+                      {field.key}
+                    </Text>
+                    <Text
+                      pl={0}
+                      pr={0}
+                      color="whiteAlpha.500"
+                      fontSize={'13px'}
+                    >
+                      {field.lastUpdated}
+                    </Text>
+                  </Box>
+                </Button>
+              ))
+            ) : (
+              <Text color={colorGoldViaColorMode}>
+                You have no possession documents
+              </Text>
+            )}
+          </Flex>
+          <Button
+            p={6}
+            mt={5}
+            onClick={() => navigate('/member/documents/possessions/upload')}
+            minWidth={'100%'}
+          >
+            Upload Files
+          </Button>
+        </Container>
       </Container>
     </>
   )

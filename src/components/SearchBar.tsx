@@ -29,8 +29,9 @@ const SearchBar = () => {
               h="1.5rem"
               size="md"
               leftIcon={<FaSearch />}
+              p={0}
               variant="ghost"
-              color="brandGray.500"
+              color="#ffffff"
               _hover={{ bg: 'transparent' }}
             />
           </InputLeftElement>
@@ -39,6 +40,7 @@ const SearchBar = () => {
             bg={'#262E40'}
             paddingLeft="3rem"
             placeholder="Search for anything"
+            color="#ffffff"
             _placeholder={{
               color: 'brandGray.500',
               fontWeight: '300',
