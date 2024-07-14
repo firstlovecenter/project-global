@@ -15,6 +15,7 @@ import { RiBuilding2Line, RiLogoutBoxRLine } from 'react-icons/ri'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from 'contexts/AuthContext'
 import { ColorModeSwitcher } from './ColorModeSwitcher'
+import { useUser } from 'contexts/UserContext'
 
 const DesktopNavigation: FC = () => {
   const [error, setError] = React.useState('')
@@ -22,6 +23,7 @@ const DesktopNavigation: FC = () => {
   const currentColorMode = useColorModeValue('light', 'dark')
   const route = useLocation().pathname
   const { logout, setUser } = useAuth()
+  const { user } = useUser()
 
   const navigate = useNavigate()
 
@@ -78,7 +80,7 @@ const DesktopNavigation: FC = () => {
         </VStack>
         <VStack justifySelf={'flex-end'} mt={'auto'} gap={6}>
           <Box borderRadius={'5000px'} p={0} overflow={'hidden'} width={'40px'}>
-            <Img src="https://via.placeholder.com/150" />
+            <Img src={user.pictureUrl} />
           </Box>
           <IconButton
             bg={'transparent'}

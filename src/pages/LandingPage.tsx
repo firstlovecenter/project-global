@@ -66,16 +66,15 @@ const LandingPage = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (roleChurches?.length >= 1) {
-      dispatch({
-        type: 'user/setUser',
-        payload: {
-          ...user,
-          updatedAt: user?.updatedAt.toDate().toISOString(),
-          roleChurches,
-        },
-      })
-    }
+    console.log('setting useir')
+    dispatch({
+      type: 'user/setUser',
+      payload: {
+        ...user,
+        updatedAt: user?.updatedAt.toString(),
+        roleChurches: roleChurches?.length >= 1 ? roleChurches : [],
+      },
+    })
   }, [data, dispatch, roleChurches, user])
 
   const userFromStore = useSelector((state: RootState) => state.user.data)
@@ -89,7 +88,7 @@ const LandingPage = () => {
     },
     {
       name: 'Churches',
-      subtitle: 'THe churhces of the UO-FLC 190',
+      subtitle: 'The churches of the UO-FLC 190',
       path: '/churches',
       icon: FaChurch,
     },
@@ -202,7 +201,7 @@ const LandingPage = () => {
             zIndex={3}
             width={'310px'}
           >
-            <ProfileHeader name="John-Dag Addy" email="jaedagy@gmail.com" />
+            <ProfileHeader />
           </Flex>
           <Img
             src="src\assets\landing_page_bg(Desktop).png"

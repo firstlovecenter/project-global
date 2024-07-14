@@ -137,7 +137,7 @@ function Navigation() {
             <Container>
               <SearchBar />
               <Box p={'1rem 0'} borderTop={'1px solid #96A7AF'}>
-                <ProfileHeader name="John-Dag Addy" email="jaedagy@gmail.com" />
+                <ProfileHeader />
               </Box>
             </Container>
             <ColorModeSwitcher marginLeft={0} marginRight={2.5} />
