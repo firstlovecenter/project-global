@@ -78,6 +78,7 @@ const LandingPage = () => {
   }, [data, dispatch, roleChurches, user])
 
   const userFromStore = useSelector((state: RootState) => state.user.data)
+  console.log('🚀 ~ file: LandingPage.tsx:81 ~ userFromStore:', userFromStore)
 
   const DUMMY_CATEGORIES = [
     {
