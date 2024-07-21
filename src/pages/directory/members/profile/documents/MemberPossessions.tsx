@@ -157,12 +157,7 @@ const MemberPossessions = () => {
                     <Text pl={0} pr={0} color={'whiteAlpha.900'}>
                       {field.key}
                     </Text>
-                    <Text
-                      pl={0}
-                      pr={0}
-                      color="whiteAlpha.500"
-                      fontSize={'13px'}
-                    >
+                    <Text pl={0} pr={0} fontSize={'13px'}>
                       {field.lastUpdated}
                     </Text>
                   </Box>
