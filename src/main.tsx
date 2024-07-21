@@ -5,7 +5,6 @@ import { ChakraProvider } from '@chakra-ui/react'
 import theme from './theme'
 import { FirebaseAppProvider } from 'reactfire'
 import { firebaseConfig } from 'firebase/firebase'
-import DesktopNavigation from 'components/DesktopNavigation'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

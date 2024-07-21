@@ -5,13 +5,11 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Box,
   Text,
   useColorModeValue,
-  Flex,
   Button,
 } from '@chakra-ui/react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { RxCaretRight } from 'react-icons/rx'
 interface DropDownMenuProps {
   label: string

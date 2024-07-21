@@ -27,16 +27,22 @@ const DesktopNavigation: FC = () => {
 
   const navigate = useNavigate()
 
+  error && console.log('🚀 ~ file: DesktopNavigation.tsx:8 ~ error:', error)
+
   const handleLogout = async () => {
     setError('')
 
     try {
       await logout()
+      setUser(user)
       navigate('/login')
     } catch (error) {
       setError('Failed to log out')
     }
   }
+
+  const colorGoldViaColorMode =
+    currentColorMode === 'light' ? '#f9a501' : '#DDB995'
 
   return (
     <Portal>
@@ -57,29 +63,38 @@ const DesktopNavigation: FC = () => {
         <VStack mt={20} gap={6}>
           <FaSearch size={20} />
           <Link to={'/'}>
-            <FaHome size={20} fill={route === '/' ? '#DDB995' : 'white'} />
+            <FaHome
+              size={20}
+              fill={route === '/' ? colorGoldViaColorMode : 'white'}
+            />
           </Link>
           <Link to={'/directory'}>
             <FaBible
               size={20}
-              fill={route === '/directory' ? '#DDB995' : 'white'}
+              fill={route === '/directory' ? colorGoldViaColorMode : 'white'}
             />
           </Link>
           <Link to={'/churches'}>
             <FaChurch
               size={20}
-              fill={route === '/churches' ? '#DDB995' : 'white'}
+              fill={route === '/churches' ? colorGoldViaColorMode : 'white'}
             />
           </Link>
           <Link to={'/buildings'}>
             <RiBuilding2Line
               size={20}
-              fill={route === '/buildings' ? '#DDB995' : 'white'}
+              fill={route === '/buildings' ? colorGoldViaColorMode : 'white'}
             />
           </Link>
         </VStack>
         <VStack justifySelf={'flex-end'} mt={'auto'} gap={6}>
-          <Box borderRadius={'5000px'} p={0} overflow={'hidden'} width={'40px'}>
+          <Box
+            borderRadius={'5000px'}
+            p={0}
+            overflow={'hidden'}
+            width={'40px'}
+            height={'40px'}
+          >
             <Img src={user.pictureUrl} />
           </Box>
           <IconButton

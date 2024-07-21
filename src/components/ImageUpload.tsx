@@ -39,7 +39,6 @@ const ImageUpload = (props: ImageUploadProps) => {
     tags,
     user,
     setValue,
-    control,
     errors,
     ...rest
   } = props
@@ -112,6 +111,7 @@ const ImageUpload = (props: ImageUploadProps) => {
         <Input
           id={name}
           display="none"
+          placeholder={placeholder}
           type="file"
           accept="image/png, image/webp, image/jpg, image/jpeg"
           {...rest}
