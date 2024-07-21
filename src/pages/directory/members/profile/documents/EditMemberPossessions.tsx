@@ -1,5 +1,4 @@
 import { Button, Center, Container, Heading, useToast } from '@chakra-ui/react'
-import { Input } from '@jaedag/admin-portal-react-core'
 import { DIRECTORY_FUNCTION_BASE_URL } from 'firebase/cloudFunctionsConfig'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -81,8 +80,7 @@ const EditMemberPossessions = () => {
 
   const {
     handleSubmit,
-    control,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<typeof initialValues>({
     defaultValues: initialValues,
   })

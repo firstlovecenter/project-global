@@ -15,7 +15,13 @@ function ProfileHeader() {
       borderRadius={'10px'}
       width={'100%'}
     >
-      <Box borderRadius={'5000px'} p={0} overflow={'hidden'} width={'40px'}>
+      <Box
+        borderRadius={'5000px'}
+        p={0}
+        overflow={'hidden'}
+        width={'40px'}
+        height={'40px'}
+      >
         <Img src={user.pictureUrl} />
       </Box>
       <Box>

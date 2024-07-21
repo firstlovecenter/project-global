@@ -13,17 +13,20 @@ import {
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RootState } from 'redux-config/store'
-import ProfileAvatar from './components/ProfileAvatar'
 import ProfileIcon from '../../components/ProfileIcon'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
 
 const MemberPossessions = () => {
-  // const member = useSelector((state: RootState) => state.member.data)
+  const member = useSelector((state: RootState) => state.member.data)
   const navigate = useNavigate()
   const currentColorMode = useColorModeValue('light', 'dark')
 
-  const fields: any[] | undefined = [
+  console.log('🚀 ~ file: MemberPossessions.tsx:8 ~ member:', member)
+
+  const fields:
+    | { key: string; link: string; lastUpdated: string }[]
+    | undefined = [
     {
       key: 'Car Title Document',
       link: '/',
@@ -56,19 +59,28 @@ const MemberPossessions = () => {
   return (
     <>
       <Container position={'relative'} alignSelf={'center'} padding={8}>
+        <Button
+          variant={'ghost'}
+          position={'absolute'}
+          top={5}
+          right={5}
+          onClick={() => navigate('/member/documents/possessions/edit')}
+          p={0}
+        >
+          Edit
+        </Button>
         <Center marginY={10} display={'flex'} gap={4}>
           <Avatar
-            // src={member?.pictureUrl}
-            // name={member?.firstName + ' ' + member?.lastName}
+            src={member?.pictureUrl}
             size="xl"
-            padding={2}
-            borderWidth={3}
+            padding={1}
+            borderWidth={2}
             borderStyle={'solid'}
             borderColor={colorGoldViaColorMode}
           />
           <Box>
             <Heading margin={0} mb={3} fontSize={'2xl'}>
-              Kent Njeru
+              {member?.firstName + ' ' + member?.lastName}
             </Heading>
             <Text fontSize="13px">Uk Family Head</Text>
             <Text fontSize="13px">London Campus Shepherd</Text>
@@ -80,26 +92,21 @@ const MemberPossessions = () => {
             <ProfileIcon
               icon={<FaWhatsapp />}
               label="Whatsapp"
-              // onClick={
-              //   () =>
-              //   (window.location.href = `https://wa.me/${member?.phoneNumber}`)
-              // }
+              onClick={() =>
+                (window.location.href = `https://wa.me/${member?.whatsappNumber}`)
+              }
             />
             <ProfileIcon
               icon={<FaPhone />}
               label="Phone"
-              // onClick={
-              //   () =>
-              //   (window.location.href = `tel:${member?.phoneNumber}`)
-              // }
+              onClick={() =>
+                (window.location.href = `tel:${member?.phoneNumber}`)
+              }
             />
             <ProfileIcon
               icon={<GiMailbox />}
               label="Email"
-              // onClick={
-              //   () =>
-              //   (window.location.href = `mailto:${member?.email}`)
-              // }
+              onClick={() => (window.location.href = `mailto:${member?.email}`)}
             />
           </HStack>
         </Center>

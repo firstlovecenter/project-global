@@ -17,12 +17,11 @@ export const ActionButton = ({
   ...props
 }: ActionButtonProps) => {
   return (
-    <Button onClick={onClick} {...props}>
+    <Button onClick={onClick} {...props} h={'auto'}>
       <Box
         display={'flex'}
         alignItems={'center'}
         justifyContent={'center'}
-        padding={'1rem'}
         width={'100%'}
         gap={2}
       >

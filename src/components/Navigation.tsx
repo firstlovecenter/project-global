@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   Drawer,
   DrawerBody,
@@ -109,7 +108,7 @@ function Navigation() {
           <DrawerBody>
             <SelectCategory />
             <VStack
-              spacing={2}
+              spacing={1}
               align="stretch"
               width="100%"
               marginTop={20}

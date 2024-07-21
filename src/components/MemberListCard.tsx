@@ -1,4 +1,4 @@
-import { Avatar, Box, HStack, Text } from '@chakra-ui/react'
+import { Avatar, Box, HStack, Text, useColorModeValue } from '@chakra-ui/react'
 import { useRef } from 'contexts/RefContext'
 import { useNavigate } from 'react-router-dom'
 import { Member } from 'types/types'
@@ -12,6 +12,10 @@ const MemberListCard = (props: MemberListCardProps) => {
   const { member, subtitle } = props
   const navigate = useNavigate()
   const { clickCard } = useRef()
+  const currentColorMode = useColorModeValue('light', 'dark')
+
+  const colorGoldViaColorMode =
+    currentColorMode === 'light' ? 'brandGold.500' : 'brandGold.200'
 
   return (
     <HStack
@@ -19,6 +23,7 @@ const MemberListCard = (props: MemberListCardProps) => {
         clickCard(member.id, 'member')
         navigate('/member/profile')
       }}
+      cursor={'pointer'}
     >
       <Avatar
         size="lg"
@@ -26,10 +31,12 @@ const MemberListCard = (props: MemberListCardProps) => {
         src={member.pictureUrl}
       />
       <Box paddingLeft={5}>
-        <Text fontSize="xl" color="brandGold.500" fontWeight="bold">
+        <Text fontSize="md" color={colorGoldViaColorMode}>
           {member.firstName} {member.lastName}
         </Text>
-        <Text>{subtitle}</Text>
+        <Text fontSize={'sm'} fontWeight={300}>
+          {subtitle}
+        </Text>
       </Box>
     </HStack>
   )

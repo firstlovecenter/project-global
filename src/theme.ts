@@ -68,13 +68,12 @@ const Button = defineStyleConfig({
     fontWeight: 'bold',
     textAlign: 'center',
     borderRadius: '9px',
-    padding: '2rem 1.5rem',
+    padding: '1rem 0.5rem',
     maxWidth: '315px',
   },
   variants: {
     filter: {
       border: '2px solid ',
-      // borderRadius: "10000px",
     },
     outline: {
       border: '2px solid',
@@ -93,7 +92,7 @@ const Button = defineStyleConfig({
     },
   },
   defaultProps: {
-    size: 'md',
+    // size: 'md',
     variant: 'solid',
     colorScheme: 'brandGold',
   },
@@ -105,12 +104,6 @@ const Heading = defineStyleConfig({
     marginTop: '10',
     textTransform: 'capitalize',
     fontWeight: '400',
-  },
-})
-
-const Text = defineStyleConfig({
-  baseStyle: {
-    colorScheme: 'brandGray',
   },
 })
 
@@ -138,7 +131,6 @@ const theme = extendTheme({
     Button,
     Heading,
     Input,
-    Text,
   },
   fonts: {
     heading: `'Signika', sans-serif`,

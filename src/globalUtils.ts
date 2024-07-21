@@ -68,3 +68,12 @@ export const camelCaseToSentenceCase = (camelCase: string): string => {
     .replace(/([A-Z])/g, ' $1') // Add space before capital letters
     .replace(/^./, (str) => str.toUpperCase()) // Capitalize the first letter
 }
+
+export const formatDate = (date: string): string => {
+  const userDate = new Date(date)
+  const day = String(userDate.getDate()).padStart(2, '0')
+  const month = String(userDate.getMonth() + 1).padStart(2, '0')
+  const year = userDate.getFullYear()
+
+  return `${day}/${month}/${year}`
+}

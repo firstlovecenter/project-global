@@ -7,17 +7,15 @@ import {
   Button,
   Center,
   Container,
-  Heading,
   InputGroup,
   InputRightElement,
-  Link,
   Text,
 } from '@chakra-ui/react'
 import { useAuth } from 'contexts/AuthContext'
 import * as Yup from 'yup'
 import { useState } from 'react'
 import { Input } from '@jaedag/admin-portal-react-core'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import SplashLogo from 'assets/SplashLogo'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'

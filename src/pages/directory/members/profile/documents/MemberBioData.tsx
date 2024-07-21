@@ -1,4 +1,3 @@
-import ProfileAvatar from './components/ProfileAvatar'
 import {
   Avatar,
   Box,
@@ -8,71 +7,66 @@ import {
   Flex,
   Heading,
   HStack,
-  Table,
-  Tbody,
-  Td,
   Text,
-  Thead,
-  Tr,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { getHumanReadableDate } from '@jaedag/admin-portal-types'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RootState } from 'redux-config/store'
 import ProfileIcon from '../../components/ProfileIcon'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
+import { formatDate } from 'globalUtils'
 
 const MemberBioData = () => {
-  // const member = useSelector((state: RootState) => state.member.data)
+  const member = useSelector((state: RootState) => state.member.data)
   const navigate = useNavigate()
   const currentColorMode = useColorModeValue('light', 'dark')
 
   const fields = [
     {
       key: 'First Name',
-      value: 'random',
+      value: member?.firstName,
     },
     {
       key: 'Middle Name',
-      value: 'random',
+      value: member?.middleName || 'n/a',
     },
     {
       key: 'Last Name',
-      value: 'random',
+      value: member?.lastName,
     },
     {
       key: 'Email',
-      value: 'random',
+      value: member?.email,
     },
     {
       key: 'Phone Number',
-      value: 'random',
+      value: member?.phoneNumber,
     },
     {
       key: 'WhatsApp Number',
-      value: 'random',
+      value: member?.whatsappNumber,
     },
     {
       key: 'Gender',
-      value: 'random',
+      value: member?.gender,
     },
     {
       key: 'Marital Status',
-      value: 'random',
+      value: member?.maritalStatus,
     },
     {
       key: 'Occupation',
-      value: 'random',
+      value: member?.occupation,
     },
     {
       key: 'Employee Status',
-      value: 'random',
+      value: member?.occupation ? 'Employed' : 'Unemployed',
     },
     {
       key: 'Date of Birth',
-      value: 'random',
+      value: formatDate(member?.dateOfBirth),
     },
   ]
 
@@ -93,17 +87,16 @@ const MemberBioData = () => {
       </Button>
       <Center marginY={10} display={'flex'} gap={4}>
         <Avatar
-          // src={member?.pictureUrl}
-          // name={member?.firstName + ' ' + member?.lastName}
+          src={member?.pictureUrl}
           size="xl"
-          padding={2}
-          borderWidth={3}
+          padding={1}
+          borderWidth={2}
           borderStyle={'solid'}
           borderColor={colorGoldViaColorMode}
         />
         <Box>
           <Heading margin={0} mb={3} fontSize={'2xl'}>
-            Kent Njeru
+            {member?.firstName + ' ' + member?.lastName}
           </Heading>
           <Text fontSize="13px" color={colorGoldViaColorMode}>
             Uk Family Head
@@ -119,26 +112,21 @@ const MemberBioData = () => {
           <ProfileIcon
             icon={<FaWhatsapp />}
             label="Whatsapp"
-            // onClick={
-            //   () =>
-            //   (window.location.href = `https://wa.me/${member?.phoneNumber}`)
-            // }
+            onClick={() =>
+              (window.location.href = `https://wa.me/${member?.phoneNumber}`)
+            }
           />
           <ProfileIcon
             icon={<FaPhone />}
             label="Phone"
-            // onClick={
-            //   () =>
-            //   (window.location.href = `tel:${member?.phoneNumber}`)
-            // }
+            onClick={() =>
+              (window.location.href = `tel:${member?.phoneNumber}`)
+            }
           />
           <ProfileIcon
             icon={<GiMailbox />}
             label="Email"
-            // onClick={
-            //   () =>
-            //   (window.location.href = `mailto:${member?.email}`)
-            // }
+            onClick={() => (window.location.href = `mailto:${member?.email}`)}
           />
         </HStack>
       </Center>
@@ -158,7 +146,7 @@ const MemberBioData = () => {
             <Text color="whiteAlpha.700" pl={0} pr={0}>
               {field.key}
             </Text>
-            <Text pl={0} pr={0} width={'min-content'}>
+            <Text pl={0} pr={0} width={'fit-content'}>
               {field.value}
             </Text>
           </Flex>
