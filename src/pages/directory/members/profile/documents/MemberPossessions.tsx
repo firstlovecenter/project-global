@@ -123,6 +123,7 @@ const MemberPossessions = () => {
             flexDirection={'column'}
             alignItems={'center'}
             justifyContent={'center'}
+            gap={2}
           >
             {fields.length > 0 ? (
               fields.map((field) => (
@@ -130,13 +131,12 @@ const MemberPossessions = () => {
                   key={field.key}
                   alignItems={'center'}
                   justifyContent={'flex-start'}
-                  height={70}
                   gap={4}
-                  p={'6px 0'}
-                  pl={0}
-                  pr={0}
+                  height={'auto'}
+                  p={'6px'}
                   variant={'ghost'}
                   minWidth={'100%'}
+                  borderRadius={'none'}
                   borderBottom={'1px solid'}
                   borderColor={'whiteAlpha.300'}
                 >
