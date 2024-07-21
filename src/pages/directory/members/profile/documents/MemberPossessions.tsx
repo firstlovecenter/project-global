@@ -154,7 +154,7 @@ const MemberPossessions = () => {
                     AB
                   </Box>
                   <Box textAlign={'left'}>
-                    <Text pl={0} pr={0} color={'whiteAlpha.900'}>
+                    <Text pl={0} pr={0}>
                       {field.key}
                     </Text>
                     <Text pl={0} pr={0} fontSize={'13px'}>
