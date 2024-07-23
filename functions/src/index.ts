@@ -20,3 +20,4 @@ export {
 } from './updateRoleChurches'
 export { resizeAvatar } from './storage'
 export { search } from './search'
+export { directoryMembers } from './directory-members'
