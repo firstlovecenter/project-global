@@ -1,7 +1,7 @@
 import {
-  Avatar,
   Box,
   Button,
+  Card,
   Center,
   Container,
   Flex,
@@ -17,10 +17,13 @@ import ProfileIcon from '../../components/ProfileIcon'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
 import { formatDate } from 'globalUtils'
+import CustomAvatar from 'components/chakra-custom/CustomAvatar'
+import useCustomColors from 'hooks/useCustomColors'
 
 const MemberBioData = () => {
   const member = useSelector((state: RootState) => state.member.data)
   const navigate = useNavigate()
+  const { yellow } = useCustomColors()
   const currentColorMode = useColorModeValue('light', 'dark')
 
   const fields = [
@@ -30,7 +33,7 @@ const MemberBioData = () => {
     },
     {
       key: 'Middle Name',
-      value: member?.middleName || 'n/a',
+      value: member?.middleName || '-',
     },
     {
       key: 'Last Name',
@@ -86,13 +89,13 @@ const MemberBioData = () => {
         Edit
       </Button>
       <Center marginY={10} display={'flex'} gap={4}>
-        <Avatar
+        <CustomAvatar
           src={member?.pictureUrl}
           size="xl"
           padding={1}
           borderWidth={2}
           borderStyle={'solid'}
-          borderColor={colorGoldViaColorMode}
+          borderColor={yellow}
         />
         <Box>
           <Heading margin={0} mb={3} fontSize={'2xl'}>
@@ -131,7 +134,7 @@ const MemberBioData = () => {
         </HStack>
       </Center>
 
-      <Container bgColor={'brandTeal.300'} p={4} borderRadius={14} mt={10}>
+      <Card p={4} borderRadius={14} mt={10}>
         <Heading size={'sm'} m={0} mb={4}>
           Bio Data
         </Heading>
@@ -143,7 +146,7 @@ const MemberBioData = () => {
             borderBottom={'1px solid'}
             borderColor={'whiteAlpha.300'}
           >
-            <Text color="whiteAlpha.700" pl={0} pr={0}>
+            <Text pl={0} pr={0} opacity={0.6}>
               {field.key}
             </Text>
             <Text pl={0} pr={0} width={'fit-content'}>
@@ -151,7 +154,7 @@ const MemberBioData = () => {
             </Text>
           </Flex>
         ))}
-      </Container>
+      </Card>
     </Container>
   )
 }

@@ -6,7 +6,6 @@ import {
   AccordionPanel,
   AccordionIcon,
   Text,
-  useColorModeValue,
   Button,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
@@ -17,7 +16,6 @@ interface DropDownMenuProps {
 }
 
 const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
-  const currentColorMode = useColorModeValue('light', 'dark')
   const navigate = useNavigate()
 
   return (
@@ -25,7 +23,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
       <AccordionItem
         border={'none'}
         borderRadius={'8px'}
-        bg={currentColorMode === 'light' ? 'brandTeal.500' : '#454D62'}
+        bg="whiteAlpha.400"
         color={'#ffffff'}
         py={1.5}
       >
@@ -52,7 +50,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
               my={2}
               onClick={() => navigate(link)}
             >
-              <Text>{name}</Text>
+              <Text fontWeight="normal">{name}</Text>
               <RxCaretRight />
             </Button>
           ))}

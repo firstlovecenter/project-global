@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Center,
   Container,
@@ -17,7 +16,6 @@ import {
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from 'reactfire'
-import { RoleChurch } from 'types/types'
 import { useUser } from 'contexts/UserContext'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
@@ -26,11 +24,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { RootState } from 'redux-config/store'
 import DropDownMenu from 'components/DropDownMenu'
+import CustomAvatar from 'components/chakra-custom/CustomAvatar'
+import useCustomColors from 'hooks/useCustomColors'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
   const { user } = useUser()
   const currentColorMode = useColorModeValue('light', 'dark')
+  const { yellow } = useCustomColors()
   const member = useSelector((state: RootState) => state.member?.data)
   const dispatch = useDispatch()
 
@@ -60,7 +61,7 @@ const MemberProfile = () => {
     data: roleChurchesData,
     error: roleChurchesError,
   } = useFirestoreCollectionData(roleChurchesRef)
-  const roleChurches = (roleChurchesData || []) as RoleChurch[]
+  // const roleChurches = (roleChurchesData || []) as RoleChurch[]
 
   const documents = [
     {
@@ -111,9 +112,6 @@ const MemberProfile = () => {
   const colorGoldViaColorMode =
     currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
 
-  console.log('🚀 ~ file: MemberProfile.tsx:8 ~ Member:', member)
-  console.log('🚀 ~ file: MemberProfile.tsx:8 ~ Role churches:', roleChurches)
-
   return (
     <ApolloWrapper
       data={data && roleChurchesData}
@@ -123,12 +121,12 @@ const MemberProfile = () => {
       <Container p={8}>
         <VStack>
           <Center marginTop={10}>
-            <Avatar
+            <CustomAvatar
               src={member?.pictureUrl}
               size="2xl"
               padding={1}
               borderWidth={'2px'}
-              borderColor={colorGoldViaColorMode}
+              borderColor={yellow}
             />
           </Center>
           <Heading size="lg" mt={4}>
