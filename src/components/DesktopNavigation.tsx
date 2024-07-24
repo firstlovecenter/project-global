@@ -1,24 +1,25 @@
 import React, { FC } from 'react'
 import {
-  Box,
   Container,
   IconButton,
   Img,
   Portal,
   VStack,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 import SplashLogo from 'assets/icons/FL_logo.png'
 import SplashLogoDark from 'assets/icons/FL_logo_dark.png'
 import { FaHome, FaSearch, FaBible, FaChurch } from 'react-icons/fa'
 import { RiBuilding2Line, RiLogoutBoxRLine } from 'react-icons/ri'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from 'contexts/AuthContext'
 import { ColorModeSwitcher } from './ColorModeSwitcher'
 import { useUser } from 'contexts/UserContext'
+import CustomAvatar from './chakra-custom/CustomAvatar'
 
 const DesktopNavigation: FC = () => {
-  const [error, setError] = React.useState('')
+  const toast = useToast()
 
   const currentColorMode = useColorModeValue('light', 'dark')
   const route = useLocation().pathname
@@ -27,22 +28,26 @@ const DesktopNavigation: FC = () => {
 
   const navigate = useNavigate()
 
-  error && console.log('🚀 ~ file: DesktopNavigation.tsx:8 ~ error:', error)
-
   const handleLogout = async () => {
-    setError('')
-
+    toast({
+      title: 'Logged out',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    })
     try {
       await logout()
       setUser(user)
       navigate('/login')
     } catch (error) {
-      setError('Failed to log out')
+      toast({
+        title: 'Failed to log out',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
     }
   }
-
-  const colorGoldViaColorMode =
-    currentColorMode === 'light' ? '#f9a501' : '#DDB995'
 
   return (
     <Portal>
@@ -62,41 +67,49 @@ const DesktopNavigation: FC = () => {
         <Img src={currentColorMode === 'light' ? SplashLogo : SplashLogoDark} />
         <VStack mt={20} gap={6}>
           <FaSearch size={20} />
-          <Link to={'/'}>
-            <FaHome
-              size={20}
-              fill={route === '/' ? colorGoldViaColorMode : 'white'}
-            />
-          </Link>
-          <Link to={'/directory'}>
-            <FaBible
-              size={20}
-              fill={route === '/directory' ? colorGoldViaColorMode : 'white'}
-            />
-          </Link>
-          <Link to={'/churches'}>
-            <FaChurch
-              size={20}
-              fill={route === '/churches' ? colorGoldViaColorMode : 'white'}
-            />
-          </Link>
-          <Link to={'/buildings'}>
-            <RiBuilding2Line
-              size={20}
-              fill={route === '/buildings' ? colorGoldViaColorMode : 'white'}
-            />
-          </Link>
+
+          <IconButton
+            onClick={() => navigate('/')}
+            colorScheme={route === '/' ? 'yellow' : 'white'}
+            variant="outline"
+            aria-label="home button"
+            border="none"
+            icon={<FaHome size={20} />}
+          />
+
+          <IconButton
+            onClick={() => navigate('/directory')}
+            colorScheme={route === '/directory' ? 'yellow' : 'white'}
+            variant="outline"
+            aria-label="directory button"
+            border="none"
+            icon={<FaBible size={20} />}
+          />
+
+          <IconButton
+            onClick={() => navigate('/churches')}
+            colorScheme={route === '/churches' ? 'yellow' : 'white'}
+            variant="outline"
+            aria-label="churches button"
+            border="none"
+            icon={<FaChurch size={20} />}
+          />
+
+          <IconButton
+            onClick={() => navigate('/buildings')}
+            colorScheme={route === '/buildings' ? 'yellow' : 'white'}
+            variant="outline"
+            aria-label="buildings button"
+            border="none"
+            icon={<RiBuilding2Line size={20} />}
+          />
         </VStack>
         <VStack justifySelf={'flex-end'} mt={'auto'} gap={6}>
-          <Box
-            borderRadius={'5000px'}
-            p={0}
-            overflow={'hidden'}
-            width={'40px'}
-            height={'40px'}
-          >
-            <Img src={user.pictureUrl} />
-          </Box>
+          <CustomAvatar
+            name={user.firstName + ' ' + user.lastName}
+            src={user.pictureUrl}
+          />
+
           <IconButton
             bg={'transparent'}
             onClick={handleLogout}

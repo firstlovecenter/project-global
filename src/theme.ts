@@ -23,33 +23,61 @@ const breakpoints = {
 }
 
 const colors = {
-  brandGold: {
-    50: '#ffffff',
-    100: '#ffecd2',
-    200: '#ffdaa6',
-    300: '#ffc87a',
-    400: '#ffb64c',
-    500: '#f9a501',
-    600: '#d28c0e',
-    700: '#ac7313',
-    800: '#885b14',
-    900: '#654414',
+  brandYellow: {
+    50: '#FFFBEA',
+    100: '#FFF4C5',
+    200: '#FFE787',
+    300: '#FFD548',
+    400: '#FFC01E',
+    500: '#FCA311',
+    600: '#DF7500',
+    700: '#B95104',
+    800: '#963E0A',
+    900: '#7B330C',
+    950: '#471901',
   },
-  brandTeal: {
-    50: '#f0f7fe',
-    100: '#bec8d4',
-    200: '#8e9aac',
-    300: '#626f85',
-    400: '#3a4660',
-    500: '#14213d',
-    600: '#131d35',
-    700: '#121a2d',
-    800: '#111625',
-    900: '#0f121e',
+  brandBlue: {
+    50: '#F0F7FE',
+    100: '#DDEDFC',
+    200: '#c3E0FA',
+    300: '#99CDF7',
+    400: '#69B2F1',
+    500: '#4594EC',
+    600: '#3076E0',
+    700: '#2762CE',
+    800: '#264FA7',
+    900: '#244584',
+    950: '#14213D',
   },
-
-  brandGray: {
-    50: '#f7f7f7',
+  brandNavy: '#12203B',
+  brandGray1: {
+    50: '#F6F6F6',
+    100: '#E7E7E7',
+    200: '#D1D1D1',
+    300: '#B0B0B0',
+    400: '#888888',
+    500: '#6D6D6D',
+    600: '#5D5D5D',
+    700: '#4F4F4F',
+    800: '#454545',
+    900: '#3D3D3D',
+    950: '#000000',
+  },
+  brandGray2: {
+    50: '#FFFFFF',
+    100: '#EFEFEF',
+    200: '#DCDCDC',
+    300: '#BDBDBD',
+    400: '989898',
+    500: '#7C7C7C',
+    600: '#656565',
+    700: '#525252',
+    800: '#464646',
+    900: '#3D3D3D',
+    950: '#292929',
+  },
+  brandGray3: {
+    50: '#F7F7F7',
     100: '#EDEDED',
     200: 'E4E4E4',
     300: '#C8C8C8',
@@ -77,13 +105,13 @@ const Button = defineStyleConfig({
     },
     outline: {
       border: '2px solid',
-      colorScheme: 'brandGold',
+      colorScheme: 'brandYellow',
     },
     solid: {},
   },
   defaultProps: {
     variant: 'solid',
-    colorScheme: 'brandGold',
+    colorScheme: 'brandYellow',
   },
 })
 
@@ -108,7 +136,7 @@ const Input = defineStyleConfig({
   defaultProps: {
     size: 'lg',
     variant: 'outline',
-    colorScheme: 'brandTeal',
+    colorScheme: 'brandBlue',
   },
 })
 

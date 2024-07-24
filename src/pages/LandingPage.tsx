@@ -48,7 +48,6 @@ const LandingPage = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('setting useir')
     dispatch({
       type: 'user/setUser',
       payload: {

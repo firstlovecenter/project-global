@@ -17,9 +17,11 @@ import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { useUser } from 'contexts/UserContext'
 import { RoleChurch } from 'types/types'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
+import useCustomColors from 'hooks/useCustomColors'
 
 const SelectCategory: React.FC = () => {
   const { user } = useUser()
+  const { yellow, gray } = useCustomColors()
 
   const roleChurchesRef = collection(
     useFirestore(),
@@ -35,7 +37,6 @@ const SelectCategory: React.FC = () => {
   } = useFirestoreCollectionData(roleChurchesRef)
   const roleChurches = data as RoleChurch[]
 
-  console.log('🚀 ~ file: SelectCategory.tsx:8 ~ roles:', roleChurches)
   const initialRole = roleChurches
     ? roleChurches[0]
     : { name: 'ACCRA', level: 'CAMPUS', role: 'ADMIN' }
@@ -54,8 +55,7 @@ const SelectCategory: React.FC = () => {
         <MenuButton
           as={Button}
           rightIcon={<RiArrowDropDownLine />}
-          colorScheme="brandTeal"
-          color={'white'}
+          colorScheme="blackAlpha"
           width="100%"
           height="4rem"
           fontSize="1.25rem"
@@ -63,15 +63,16 @@ const SelectCategory: React.FC = () => {
           _active={{ borderRadius: '0.5rem 0.5rem 0 0' }}
         >
           <Flex alignItems="center" gap={1}>
-            <Icon as={FaChurch} mr={2} />
+            <Icon as={FaChurch} mr={2} color={yellow} />
             <Box textAlign="left">
-              <Text fontWeight={500} textTransform={'uppercase'}>
+              <Text fontWeight={500} textTransform={'uppercase'} color={yellow}>
                 {selectedItem?.label}
               </Text>
               <Text
                 fontSize="10px"
                 fontWeight={300}
                 textTransform={'uppercase'}
+                color={gray}
               >
                 {selectedItem?.subLabel}
               </Text>

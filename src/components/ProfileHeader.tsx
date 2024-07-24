@@ -1,38 +1,38 @@
-import { Box, Flex, Img, Text } from '@chakra-ui/react'
+import { Box, Button, HStack, Text } from '@chakra-ui/react'
 import { useUser } from 'contexts/UserContext'
-
-import React from 'react'
+import useCustomColors from 'hooks/useCustomColors'
+import CustomAvatar from './chakra-custom/CustomAvatar'
 
 function ProfileHeader() {
   const { user } = useUser()
+  const { textPrimary, textSecondary } = useCustomColors()
 
   return (
-    <Flex
-      gap={3}
-      bg={'#262A32'}
-      p={'0.65rem 0.5rem '}
-      alignItems={'center'}
-      borderRadius={'10px'}
-      width={'100%'}
+    <Button
+      colorScheme="blackAlpha"
+      textAlign="start"
+      justifyContent="flex-start"
+      fontWeight="normal"
+      width="100%"
+      paddingY={8}
     >
-      <Box
-        borderRadius={'5000px'}
-        p={0}
-        overflow={'hidden'}
-        width={'40px'}
-        height={'40px'}
-      >
-        <Img src={user.pictureUrl} />
-      </Box>
-      <Box>
-        <Text fontSize={'14px'} color="#ffffff">
-          {user.firstName + ' ' + user.lastName}
-        </Text>
-        <Text fontSize={'12px'} color={'#7B8488'}>
-          {user.email}
-        </Text>
-      </Box>
-    </Flex>
+      <HStack>
+        <CustomAvatar
+          size="sm"
+          name={user.firstName + ' ' + user.lastName}
+          src={user.pictureUrl}
+        />
+
+        <Box paddingLeft={3}>
+          <Text color={textPrimary}>
+            {user.firstName + ' ' + user.lastName}
+          </Text>
+          <Text color={textSecondary} fontSize="small">
+            {user.email}
+          </Text>
+        </Box>
+      </HStack>
+    </Button>
   )
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, ButtonProps, Heading } from '@chakra-ui/react'
+import { Box, Button, ButtonProps, Heading, Text } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
 
 interface ActionButtonProps extends ButtonProps {
@@ -28,18 +28,17 @@ export const ActionButton = ({
         <Icon />
         <Box ml={2} flex={1}>
           <Heading
-            style={{
-              margin: 0,
-              fontSize: '20px',
-              fontWeight: 400,
-            }}
+            margin={0}
+            fontSize={'20px'}
+            fontWeight={400}
+            color={'White'}
           >
             {title}
           </Heading>
           {subtitle && (
-            <p style={{ margin: 0, fontSize: 'small', fontWeight: 300 }}>
+            <Text as="p" margin={0} fontSize={'small'} fontWeight={300}>
               {subtitle}
-            </p>
+            </Text>
           )}
         </Box>
       </Box>
