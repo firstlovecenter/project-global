@@ -79,20 +79,9 @@ const Button = defineStyleConfig({
       border: '2px solid',
       colorScheme: 'brandGold',
     },
-    solid: {
-      // color: '#000000',
-      // bg: 'brandGold.500',
-      // _hover: {
-      //   bg: 'brandGold.600',
-      // },
-      // _disabled: {
-      //   bg: '#5B5B5B',
-      //   color: 'gray.300',
-      // },
-    },
+    solid: {},
   },
   defaultProps: {
-    // size: 'md',
     variant: 'solid',
     colorScheme: 'brandGold',
   },
@@ -143,11 +132,13 @@ const theme = extendTheme({
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
+        overflowY: 'auto',
       },
       '#root': {
         display: 'flex',
         position: 'relative',
         flexDirection: 'column',
+        overflowY: 'auto',
         minHeight: '100vh',
       },
     }),

@@ -75,7 +75,7 @@ function Navigation() {
         ref={btnRef}
         onClick={onOpen}
         icon={<GiHamburgerMenu />}
-        display={{ base: 'flex', md: 'none' }}
+        display={{ base: 'flex', lg: 'none' }}
       />
       <Drawer
         isOpen={isOpen}

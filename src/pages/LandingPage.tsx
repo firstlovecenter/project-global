@@ -19,8 +19,7 @@ import { useUser } from 'contexts/UserContext'
 import { collection } from 'firebase/firestore'
 import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { RoleChurch } from 'types/types'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from 'redux-config/store'
+import { useDispatch } from 'react-redux'
 import { ActionButton } from 'components/ActionButton'
 import ProfileHeader from 'components/ProfileHeader'
 import SelectCategory from 'components/SelectCategory'
@@ -61,9 +60,6 @@ const LandingPage = () => {
     setError('')
   }, [data, dispatch, roleChurches, user])
 
-  const userFromStore = useSelector((state: RootState) => state.user.data)
-  console.log('🚀 ~ file: LandingPage.tsx:81 ~ userFromStore:', userFromStore)
-
   const DUMMY_CATEGORIES = [
     {
       name: 'Directory',
@@ -88,20 +84,19 @@ const LandingPage = () => {
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={memError}>
       <Container
-        centerContent
-        width={'100vw'}
         maxWidth={'100vw'}
+        minHeight={'100dvh'}
         minWidth={'310px'}
-        height={'100%'}
         alignItems={'center'}
+        justifyContent={'center'}
         position={'relative'}
         padding={0}
         margin={0}
       >
         <Box
-          marginTop={{ base: 20, md: 0 }}
-          width={{ base: '100%', md: 'min(50%, 70vw)' }}
-          alignSelf={{ base: 'center', md: 'flex-start' }}
+          width={{ base: '100%', lg: 'min(50%, 70vw)' }}
+          alignSelf={'center'}
+          height={{ base: '100%', lg: '100vh' }}
           display={'flex'}
           flexDirection={'column'}
           justifyContent={'center'}
@@ -109,24 +104,24 @@ const LandingPage = () => {
         >
           <Box
             width={'310px'}
-            height={{ base: '100%', md: '100vh' }}
-            display={{ base: 'block', md: 'flex' }}
+            height={{ base: '100vh', lg: '100%' }}
+            alignSelf={'center'}
+            display={'flex'}
             flexDirection={'column'}
             justifyContent={'center'}
             alignItems={'center'}
           >
             <Box
               width={'310px'}
-              justifySelf={'flex-start'}
-              transform={'translateY(-130px)'}
-              display={{ base: 'none', md: 'block' }}
+              mt={{ base: 0, lg: 10 }}
+              display={{ base: 'none', lg: 'block' }}
             >
               <SelectCategory />
             </Box>
             <Text
               fontSize="3xl"
               fontWeight="700"
-              marginTop={14}
+              marginTop={{ base: 0, lg: 14 }}
               alignSelf={'flex-start'}
             >
               UO-FLC 190
@@ -136,7 +131,7 @@ const LandingPage = () => {
               spacing={2}
               align="center"
               width="100%"
-              marginTop={10}
+              marginTop={{ base: 1, lg: 5 }}
               gap={'1.5rem'}
             >
               {DUMMY_CATEGORIES.map((category, index) => (
@@ -171,16 +166,15 @@ const LandingPage = () => {
             bottom={0}
             right={0}
             top={0}
+            left={0}
             zIndex={-3}
-            height={'100vh'}
-            overflow={'hidden'}
             display={'flex'}
             flexDirection={'column'}
             alignItems={'flex-end'}
           >
             <Flex
               alignSelf={'flex-end'}
-              display={{ base: 'none', md: 'flex' }}
+              display={{ base: 'none', lg: 'flex' }}
               position={'absolute'}
               top={3}
               right={5}
@@ -193,6 +187,7 @@ const LandingPage = () => {
               src="src\assets\landing_page_bg(Desktop).png"
               objectFit={'cover'}
               height={'100%'}
+              width={{ base: '100%', lg: 'min(50%, 70vw)' }}
               filter={'brightness(45%) saturate(1.1) contrast(2)'}
               opacity={0.4}
             />
