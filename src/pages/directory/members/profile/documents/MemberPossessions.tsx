@@ -16,9 +16,12 @@ import { RootState } from 'redux-config/store'
 import ProfileIcon from '../../components/ProfileIcon'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
+import ProfileInfoCard from '../../components/ProfileInfoCard'
+import useCustomColors from 'hooks/useCustomColors'
 
 const MemberPossessions = () => {
   const member = useSelector((state: RootState) => state.member.data)
+  const { yellow } = useCustomColors()
   const navigate = useNavigate()
   const currentColorMode = useColorModeValue('light', 'dark')
 
@@ -26,30 +29,7 @@ const MemberPossessions = () => {
 
   const fields:
     | { key: string; link: string; lastUpdated: string }[]
-    | undefined = [
-    {
-      key: 'Car Title Document',
-      link: '/',
-      // value: member.housesOwned,
-      lastUpdated: 'unknown',
-    },
-    {
-      key: 'Residence Picture',
-      // lastUpdated: member.carsOwned,
-      link: '/',
-      lastUpdated: 'unknown',
-    },
-    {
-      key: 'Residence Document',
-      link: '/',
-      lastUpdated: 'unknown',
-    },
-    {
-      key: 'Car Picture',
-      link: '/',
-      lastUpdated: 'unknown',
-    },
-  ]
+    | undefined = []
 
   const colorGoldViaColorMode =
     currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
@@ -76,14 +56,18 @@ const MemberPossessions = () => {
             padding={1}
             borderWidth={2}
             borderStyle={'solid'}
-            borderColor={colorGoldViaColorMode}
+            borderColor={yellow}
           />
           <Box>
             <Heading margin={0} mb={3} fontSize={'2xl'}>
               {member?.firstName + ' ' + member?.lastName}
             </Heading>
-            <Text fontSize="13px">Uk Family Head</Text>
-            <Text fontSize="13px">London Campus Shepherd</Text>
+            <Text fontSize="13px" color={yellow}>
+              Uk Family Head
+            </Text>
+            <Text fontSize="13px" color={yellow}>
+              London Campus Shepherd
+            </Text>
           </Box>
         </Center>
 
@@ -111,10 +95,7 @@ const MemberPossessions = () => {
           </HStack>
         </Center>
 
-        <Container mt={10} p={0}>
-          <Heading size={'sm'} m={0} mb={2} ml={5}>
-            Possesions
-          </Heading>
+        <ProfileInfoCard title="Possessions">
           <Flex
             bgColor={'brandTeal.300'}
             p={'0 32px'}
@@ -164,9 +145,7 @@ const MemberPossessions = () => {
                 </Button>
               ))
             ) : (
-              <Text color={colorGoldViaColorMode}>
-                You have no possession documents
-              </Text>
+              <Text color={yellow}>You have no possession documents</Text>
             )}
           </Flex>
           <Button
@@ -177,7 +156,7 @@ const MemberPossessions = () => {
           >
             Upload Files
           </Button>
-        </Container>
+        </ProfileInfoCard>
       </Container>
     </>
   )

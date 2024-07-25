@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Card,
   Center,
   Container,
   Flex,
@@ -18,6 +17,7 @@ import { GiMailbox } from 'react-icons/gi'
 import { formatDate } from 'globalUtils'
 import CustomAvatar from 'components/chakra-custom/CustomAvatar'
 import useCustomColors from 'hooks/useCustomColors'
+import ProfileInfoCard from '../../components/ProfileInfoCard'
 
 const MemberBioData = () => {
   const member = useSelector((state: RootState) => state.member.data)
@@ -129,10 +129,7 @@ const MemberBioData = () => {
         </HStack>
       </Center>
 
-      <Card p={4} borderRadius={14} mt={10}>
-        <Heading size={'sm'} m={0} mb={4}>
-          Bio Data
-        </Heading>
+      <ProfileInfoCard title="Bio Data">
         {fields.map((field) => (
           <Flex
             key={field.key}
@@ -149,7 +146,7 @@ const MemberBioData = () => {
             </Text>
           </Flex>
         ))}
-      </Card>
+      </ProfileInfoCard>
     </Container>
   )
 }
