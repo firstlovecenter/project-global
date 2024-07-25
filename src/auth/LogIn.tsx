@@ -10,6 +10,7 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { useAuth } from 'contexts/AuthContext'
 import * as Yup from 'yup'
@@ -19,6 +20,7 @@ import { useNavigate } from 'react-router-dom'
 import SplashLogo from 'assets/SplashLogo'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import SplashLogoDark from 'assets/SplashLogoDark'
 
 const LogIn = () => {
   const [show, setShow] = useState(false)
@@ -26,6 +28,7 @@ const LogIn = () => {
   const handleClick = () => setShow(!show)
   const { login } = useAuth()
   const navigate = useNavigate()
+  const currentColorMode = useColorModeValue('light', 'dark')
 
   const initialValues = {
     email: '',
@@ -61,7 +64,11 @@ const LogIn = () => {
         <Container padding={'0px'}>
           <Box height="80vh">
             <Center>
-              <SplashLogo />
+              {currentColorMode === 'light' ? (
+                <SplashLogo />
+              ) : (
+                <SplashLogoDark />
+              )}
             </Center>
 
             {error && (
