@@ -57,7 +57,7 @@ const DesktopNavigation: FC = () => {
         left={0}
         bottom={0}
         width={'60px'}
-        display={{ base: 'none', md: 'flex' }}
+        display={{ base: 'none', lg: 'flex' }}
         py={4}
         px={2}
         flexDirection={'column'}
