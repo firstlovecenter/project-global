@@ -5,11 +5,11 @@ import CustomAvatar from './chakra-custom/CustomAvatar'
 
 function ProfileHeader() {
   const { user } = useUser()
-  const { textPrimary, textSecondary } = useCustomColors()
+  const { textPrimary, textSecondary, themeAlpha } = useCustomColors()
 
   return (
     <Button
-      colorScheme="blackAlpha"
+      colorScheme={themeAlpha.normal}
       textAlign="start"
       justifyContent="flex-start"
       fontWeight="normal"

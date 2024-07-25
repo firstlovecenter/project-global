@@ -8,7 +8,6 @@ import {
   Heading,
   HStack,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -24,7 +23,6 @@ const MemberBioData = () => {
   const member = useSelector((state: RootState) => state.member.data)
   const navigate = useNavigate()
   const { yellow } = useCustomColors()
-  const currentColorMode = useColorModeValue('light', 'dark')
 
   const fields = [
     {
@@ -73,9 +71,6 @@ const MemberBioData = () => {
     },
   ]
 
-  const colorGoldViaColorMode =
-    currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
-
   return (
     <Container position={'relative'} alignSelf={'center'} padding={8}>
       <Button
@@ -101,10 +96,10 @@ const MemberBioData = () => {
           <Heading margin={0} mb={3} fontSize={'2xl'}>
             {member?.firstName + ' ' + member?.lastName}
           </Heading>
-          <Text fontSize="13px" color={colorGoldViaColorMode}>
+          <Text fontSize="13px" color={yellow}>
             Uk Family Head
           </Text>
-          <Text fontSize="13px" color={colorGoldViaColorMode}>
+          <Text fontSize="13px" color={yellow}>
             London Campus Shepherd
           </Text>
         </Box>

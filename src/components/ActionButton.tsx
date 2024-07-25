@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Button, ButtonProps, Heading, Text } from '@chakra-ui/react'
 import { IconType } from 'react-icons'
+import useCustomColors from 'hooks/useCustomColors'
 
 interface ActionButtonProps extends ButtonProps {
   onClick: () => void
@@ -16,6 +17,8 @@ export const ActionButton = ({
   icon: Icon,
   ...props
 }: ActionButtonProps) => {
+  const { textPrimary } = useCustomColors()
+
   return (
     <Button onClick={onClick} {...props} h={'auto'}>
       <Box
@@ -31,7 +34,7 @@ export const ActionButton = ({
             margin={0}
             fontSize={'20px'}
             fontWeight={400}
-            color={'White'}
+            color={textPrimary}
           >
             {title}
           </Heading>

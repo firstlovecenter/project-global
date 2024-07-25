@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { RxCaretRight } from 'react-icons/rx'
+import useCustomColors from 'hooks/useCustomColors'
 interface DropDownMenuProps {
   label: string
   options?: { name: string; link: string }[]
@@ -17,14 +18,14 @@ interface DropDownMenuProps {
 
 const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
   const navigate = useNavigate()
+  const { oppAlpha } = useCustomColors()
 
   return (
     <Accordion allowToggle>
       <AccordionItem
         border={'none'}
         borderRadius={'8px'}
-        bg="whiteAlpha.400"
-        color={'#ffffff'}
+        bg={oppAlpha[200]}
         py={1.5}
       >
         <h2>

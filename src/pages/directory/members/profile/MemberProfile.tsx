@@ -6,7 +6,6 @@ import {
   Heading,
   Text,
   VStack,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
@@ -30,7 +29,6 @@ import useCustomColors from 'hooks/useCustomColors'
 const MemberProfile = () => {
   const { memberRef } = useRef()
   const { user } = useUser()
-  const currentColorMode = useColorModeValue('light', 'dark')
   const { yellow } = useCustomColors()
   const member = useSelector((state: RootState) => state.member?.data)
   const dispatch = useDispatch()
@@ -109,9 +107,6 @@ const MemberProfile = () => {
     },
   ]
 
-  const colorGoldViaColorMode =
-    currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
-
   return (
     <ApolloWrapper
       data={data && roleChurchesData}
@@ -134,7 +129,7 @@ const MemberProfile = () => {
           </Heading>
         </VStack>
 
-        <Box textAlign="center" color={colorGoldViaColorMode}>
+        <Box textAlign="center" color={yellow}>
           <Text fontSize="13px">Uk Family Head</Text>
           <Text fontSize="13px">London Campus Shepherd</Text>
 

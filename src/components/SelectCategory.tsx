@@ -21,7 +21,7 @@ import useCustomColors from 'hooks/useCustomColors'
 
 const SelectCategory: React.FC = () => {
   const { user } = useUser()
-  const { yellow, gray } = useCustomColors()
+  const { yellow, gray, textPrimary, darkButtonBg } = useCustomColors()
 
   const roleChurchesRef = collection(
     useFirestore(),
@@ -54,8 +54,8 @@ const SelectCategory: React.FC = () => {
       <Menu matchWidth>
         <MenuButton
           as={Button}
-          rightIcon={<RiArrowDropDownLine />}
-          colorScheme="blackAlpha"
+          rightIcon={<RiArrowDropDownLine color={textPrimary} />}
+          colorScheme={darkButtonBg}
           width="100%"
           height="4rem"
           fontSize="1.25rem"
