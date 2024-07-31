@@ -4,7 +4,7 @@ import express from 'express'
 import cors from 'cors'
 import axios from 'axios'
 import { json } from 'body-parser'
-import { Church, Member } from './types/types'
+import { Church, ChurchData, Member } from './types/types'
 import { notifyBaseURL } from './constants'
 import { validateRequest } from './utils/utils'
 
@@ -164,6 +164,19 @@ app.post('/church/continent', async (request, response) => {
 
   try {
     await continentRef.set(continent)
+
+    // get the leaderRef
+    const memberData = await getMemberByLeaderRef(continent.leaderRef)
+
+    if (!memberData.exist) {
+      const churchData = {
+        ...memberData,
+        churchName: continent.name,
+      } as ChurchData
+
+      await sendChurchLeaderEmail(churchData)
+    }
+
     response.send(continent)
     return
   } catch (error) {
@@ -190,6 +203,17 @@ app.post('/church/country', async (request, response) => {
 
   try {
     await countryRef.set(country)
+    // get the leaderRef
+    const memberData = await getMemberByLeaderRef(country.leaderRef)
+
+    if (!memberData.exist) {
+      const churchData = {
+        ...memberData,
+        churchName: country.name,
+      } as ChurchData
+      await sendChurchLeaderEmail(churchData)
+    }
+
     response.send(country)
     return
   } catch (error) {
@@ -216,6 +240,16 @@ app.post('/church/city', async (request, response) => {
 
   try {
     await cityRef.set(city)
+    // get the leaderRef
+    const memberData = await getMemberByLeaderRef(city.leaderRef)
+
+    if (memberData.exist) {
+      const churchData = {
+        ...memberData,
+        churchName: city.name,
+      } as ChurchData
+      await sendChurchLeaderEmail(churchData)
+    }
     response.send(city)
     return
   } catch (error) {
@@ -242,6 +276,16 @@ app.post('/church/family', async (request, response) => {
 
   try {
     await familyRef.set(family)
+    // get the leaderRef
+    const memberData = await getMemberByLeaderRef(family.leaderRef)
+
+    if (memberData.exist) {
+      const churchData = {
+        ...memberData,
+        churchName: family.name,
+      } as ChurchData
+      await sendChurchLeaderEmail(churchData)
+    }
     response.send(family)
     return
   } catch (error) {
@@ -268,6 +312,16 @@ app.post('/church/council', async (request, response) => {
 
   try {
     await councilRef.set(council)
+    // get the leaderRef
+    const memberData = await getMemberByLeaderRef(council.leaderRef)
+
+    if (memberData.exist) {
+      const churchData = {
+        ...memberData,
+        churchName: council.name,
+      } as ChurchData
+      await sendChurchLeaderEmail(churchData)
+    }
     response.send(council)
     return
   } catch (error) {
@@ -295,6 +349,16 @@ app.post('/church/campus', async (request, response) => {
 
   try {
     await campusRef.set(campus)
+    // get the leaderRef
+    const memberData = await getMemberByLeaderRef(campus.leaderRef)
+
+    if (memberData.exist) {
+      const churchData = {
+        ...memberData,
+        churchName: campus.name,
+      } as ChurchData
+      await sendChurchLeaderEmail(churchData)
+    }
     response.send(campus)
     return
   } catch (error) {
@@ -303,6 +367,41 @@ app.post('/church/campus', async (request, response) => {
   }
 })
 
+async function getMemberByLeaderRef(leaderRef: string) {
+  const memberEmailQuerySnapshot = await admin
+    .firestore()
+    .collection('members')
+    .where('email', '==', leaderRef)
+    .limit(1)
+    .get()
+
+  const memberData = memberEmailQuerySnapshot.docs[0]?.data()
+  return memberData
+}
+
+async function sendChurchLeaderEmail(ChurchData: ChurchData) {
+  await Promise.all([
+    axios({
+      method: 'post',
+      baseURL: notifyBaseURL,
+      url: '/send-email',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-secret-key': process.env.FLC_NOTIFY_KEY,
+      },
+      data: {
+        template: 'den-app-church-leader-email',
+        to: ChurchData.email,
+        from: 'FL Den Admin <no-reply@firstlovecenter.org>',
+        't:variables': {
+          firstName: ChurchData.firstName,
+          email: ChurchData.email,
+          churchName: ChurchData.churchName,
+        },
+      },
+    }),
+  ])
+}
 export const directory = functions
   .region('europe-west1')
   .runWith({
