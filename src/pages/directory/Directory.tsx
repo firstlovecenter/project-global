@@ -11,7 +11,6 @@ import {
   Flex,
   Heading,
   VStack,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
 
@@ -20,20 +19,28 @@ import { RiFilter3Line } from 'react-icons/ri'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FilterButton from 'components/FilterButton'
-import { collection, query } from 'firebase/firestore'
+import { collection, query, where } from 'firebase/firestore'
 import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { Member } from 'types/types'
 import MemberListCard from 'components/MemberListCard'
 import { ApolloWrapper, capitalise } from '@jaedag/admin-portal-react-core'
+import useCustomColors from 'hooks/useCustomColors'
+import { useUser } from 'contexts/UserContext'
 
 const Directory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [filters, setFilters] = useState([''])
   const navigate = useNavigate()
-  const currentColorMode = useColorModeValue('light', 'dark')
+  const { yellow } = useCustomColors()
+  const { user } = useUser()
+
+  const { selectedProfile } = user
 
   const memberCollRef = collection(useFirestore(), 'members')
-  const memberQueryRef = query(memberCollRef)
+  const memberQueryRef = query(
+    memberCollRef,
+    where('campus', '==', selectedProfile.id)
+  )
 
   const { status, data, error } = useFirestoreCollectionData(memberQueryRef, {
     idField: 'id',
@@ -67,9 +74,6 @@ const Directory = () => {
     },
   ]
 
-  const colorGoldViaColorMode =
-    currentColorMode === 'light' ? 'brandGold.500' : 'brandGold.200'
-
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={error}>
       <Container p={10}>
@@ -83,7 +87,7 @@ const Directory = () => {
               fontSize={'sm'}
               fontWeight={'300'}
               p={1}
-              color={colorGoldViaColorMode}
+              color={yellow}
             >
               Add Member
             </Button>

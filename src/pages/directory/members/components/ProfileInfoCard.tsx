@@ -11,12 +11,14 @@ const ProfileInfoCard: React.FC<ProfileInfoCardProps> = ({
   children,
 }) => {
   return (
-    <Card p={4} borderRadius={14} mt={10}>
-      <Heading size={'sm'} m={0} mb={4}>
+    <>
+      <Heading size={'0.5rem'} mt={10} mb={1}>
         {title}
       </Heading>
-      {children}
-    </Card>
+      <Card p={4} borderRadius={14}>
+        {children}
+      </Card>
+    </>
   )
 }
 

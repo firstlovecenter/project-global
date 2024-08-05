@@ -9,12 +9,12 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
 import { FaChevronDown } from 'react-icons/fa'
 import FileUpload from './components/FileUpload'
 import { useForm } from 'react-hook-form'
+import useCustomColors from 'hooks/useCustomColors'
 
 const fields = [
   {
@@ -44,10 +44,7 @@ const fields = [
 const UploadMemberDocuments = () => {
   const [selectedItem, setSelectedItem] = useState('Select document type')
   const { control } = useForm()
-
-  const currentColorMode = useColorModeValue('light', 'dark')
-  const colorTealViaColorMode =
-    currentColorMode === 'light' ? 'brandTeal.500' : 'brandTeal.400'
+  const { menuBtnBg } = useCustomColors()
 
   return (
     <Container
@@ -72,13 +69,15 @@ const UploadMemberDocuments = () => {
           <MenuButton
             as={Button}
             width={'100%'}
-            bg={colorTealViaColorMode}
+            p={7}
+            pl={2}
+            pr={3}
             display={'flex'}
             justifyContent={'space-between'}
-            rightIcon={<FaChevronDown />}
-            colorScheme="brandTeal"
+            rightIcon={<FaChevronDown fontSize={'0.875rem'} />}
+            bg={menuBtnBg}
             textAlign={'left'}
-            color={'white'}
+            color={'whiteAlpha.900'}
             _active={{ borderRadius: '0.5rem 0.5rem 0 0' }}
             fontWeight={400}
             fontSize={'1.25rem'}
@@ -89,7 +88,7 @@ const UploadMemberDocuments = () => {
             border="none"
             marginY={-2}
             width={'100%'}
-            p={4}
+            p={'0.5rem 0'}
             borderRadius={'0 0 0.5rem 0.5rem'}
             overflow={'hidden'}
           >
@@ -110,7 +109,7 @@ const UploadMemberDocuments = () => {
           </MenuList>
         </Menu>
       </VStack>
-      <Box mt={'auto'} width={'100%'}>
+      <Box mt={'auto'} width={'100%'} mb={10}>
         <FileUpload
           name={selectedItem}
           uploadPreset="preset"

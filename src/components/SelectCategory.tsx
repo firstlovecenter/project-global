@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -20,7 +20,7 @@ import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 import useCustomColors from 'hooks/useCustomColors'
 
 const SelectCategory: React.FC = () => {
-  const { user } = useUser()
+  const { user, setCurrentUser } = useUser()
   const { yellow, gray, textPrimary, darkButtonBg } = useCustomColors()
 
   const roleChurchesRef = collection(
@@ -48,6 +48,21 @@ const SelectCategory: React.FC = () => {
     label: initialRole.name,
     subLabel: `${initialRole.level} ${initialRole.role}`,
   })
+
+  useEffect(() => {
+    if (roleChurches) {
+      setSelectedItem({
+        label: roleChurches[0].name,
+        subLabel: `${roleChurches[0].level} ${roleChurches[0].role}`,
+      })
+
+      setCurrentUser({
+        ...user,
+        selectedProfile: roleChurches[0],
+      })
+    }
+    console.log('🚀 ~ file: SelectCategory.tsx:18 ~ item:', roleChurches)
+  }, [roleChurches, setCurrentUser, user])
 
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={memError}>
@@ -90,12 +105,16 @@ const SelectCategory: React.FC = () => {
           {roleChurches?.map((item, index) => (
             <MenuItem
               key={index}
-              onClick={() =>
+              onClick={() => {
                 setSelectedItem({
                   label: item.name,
                   subLabel: `${item.level} ${item.role}`,
                 })
-              }
+                setCurrentUser({
+                  ...user,
+                  selectedProfile: item,
+                })
+              }}
               height="4rem"
               p={4}
             >

@@ -8,7 +8,6 @@ import {
   Heading,
   HStack,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -21,20 +20,14 @@ import useCustomColors from 'hooks/useCustomColors'
 
 const MemberPossessions = () => {
   const member = useSelector((state: RootState) => state.member.data)
-  const { yellow } = useCustomColors()
+  const { yellow, menuBtnBg } = useCustomColors()
   const navigate = useNavigate()
-  const currentColorMode = useColorModeValue('light', 'dark')
 
   console.log('🚀 ~ file: MemberPossessions.tsx:8 ~ member:', member)
 
   const fields:
     | { key: string; link: string; lastUpdated: string }[]
     | undefined = []
-
-  const colorGoldViaColorMode =
-    currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
-  const colorTealViaColorMode =
-    currentColorMode === 'light' ? 'brandTeal.500' : 'brandTeal.400'
 
   return (
     <>
@@ -125,12 +118,12 @@ const MemberPossessions = () => {
                     width={50}
                     height={50}
                     borderRadius={'10px'}
-                    bg={colorTealViaColorMode}
+                    bg={menuBtnBg}
                     display={'flex'}
                     alignItems={'center'}
                     justifyContent={'center'}
                     fontSize={'2xl'}
-                    color={colorGoldViaColorMode}
+                    color={yellow}
                   >
                     AB
                   </Box>
@@ -145,18 +138,20 @@ const MemberPossessions = () => {
                 </Button>
               ))
             ) : (
-              <Text color={yellow}>You have no possession documents</Text>
+              <Text color={yellow} fontSize={'0.875rem'}>
+                You have no possession documents
+              </Text>
             )}
           </Flex>
-          <Button
-            p={6}
-            mt={5}
-            onClick={() => navigate('/member/documents/possessions/upload')}
-            minWidth={'100%'}
-          >
-            Upload Files
-          </Button>
         </ProfileInfoCard>
+        <Button
+          p={6}
+          mt={8}
+          onClick={() => navigate('/member/documents/possessions/upload')}
+          minWidth={'100%'}
+        >
+          Upload Files
+        </Button>
       </Container>
     </>
   )

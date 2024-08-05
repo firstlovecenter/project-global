@@ -3,6 +3,7 @@ import { useColorModeValue } from '@chakra-ui/react'
 const useCustomColors = () => {
   const darkButtonBg = useColorModeValue('whiteAlpha', 'blackAlpha')
   const textPrimary = useColorModeValue('black', 'white')
+  const menuBtnBg = useColorModeValue('#262E40', '#454D62')
   const textSecondary = useColorModeValue('brandGray1.500', 'brandGray1.200')
   const yellow = useColorModeValue('brandYellow.500', 'brandYellow.200')
   const gray = useColorModeValue('brandGray1.500', 'brandGray1.200')
@@ -36,6 +37,7 @@ const useCustomColors = () => {
 
   return {
     darkButtonBg,
+    menuBtnBg,
     yellow,
     gray,
     oppAlpha,

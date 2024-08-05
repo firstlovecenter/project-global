@@ -1,8 +1,9 @@
-import { Box, HStack, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, HStack, Text } from '@chakra-ui/react'
 import { useRef } from 'contexts/RefContext'
 import { useNavigate } from 'react-router-dom'
 import { Member } from 'types/types'
 import CustomAvatar from './chakra-custom/CustomAvatar'
+import useCustomColors from 'hooks/useCustomColors'
 
 type MemberListCardProps = {
   member: Member
@@ -13,10 +14,7 @@ const MemberListCard = (props: MemberListCardProps) => {
   const { member, subtitle } = props
   const navigate = useNavigate()
   const { clickCard } = useRef()
-  const currentColorMode = useColorModeValue('light', 'dark')
-
-  const colorGoldViaColorMode =
-    currentColorMode === 'light' ? 'brandGold.500' : 'brandGold.200'
+  const { yellow } = useCustomColors()
 
   return (
     <HStack
@@ -32,7 +30,7 @@ const MemberListCard = (props: MemberListCardProps) => {
         src={member.pictureUrl}
       />
       <Box paddingLeft={5}>
-        <Text fontSize="md" color={colorGoldViaColorMode}>
+        <Text fontSize="md" color={yellow}>
           {member.firstName} {member.lastName}
         </Text>
         <Text fontSize={'sm'} fontWeight={300}>
