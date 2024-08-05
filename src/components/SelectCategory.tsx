@@ -38,14 +38,14 @@ const SelectCategory: React.FC = () => {
   } = useFirestoreCollectionData(roleChurchesRef)
   const roleChurches = data as RoleChurch[]
 
-  const initialRole = selectedProfile
-    ? {
-        name: selectedProfile.name,
-        level: selectedProfile.level,
-        role: selectedProfile.role,
-        id: selectedProfile.id,
-      }
-    : roleChurches[0]
+  const initialRole =
+    (selectedProfile && {
+      name: selectedProfile.name,
+      level: selectedProfile.level,
+      role: selectedProfile.role,
+      id: selectedProfile.id,
+    }) ||
+    roleChurches[0]
 
   const [selectedItem, setSelectedItem] = useState<{
     label: string
@@ -64,15 +64,26 @@ const SelectCategory: React.FC = () => {
         subLabel: `${initialRole.level} ${initialRole.role}`,
         id: initialRole.id,
       })
+
+      setCurrentUser({
+        ...user,
+        selectedProfile: {
+          id: selectedItem.id,
+          name: selectedItem.label,
+          role: initialRole.role,
+          level: initialRole.level,
+        },
+      })
     }
+
+    console.log(
+      '🚀 ~ file: SelectCategory.tsx:31 ~ useEffect ~ selectedItem:',
+      selectedItem
+    )
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roleChurches])
 
-  console.log(
-    '🚀 ~ file: SelectCategory.tsx:31 ~ useEffect ~ selectedItem:',
-    selectedItem
-  )
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={memError}>
       <Menu matchWidth>
