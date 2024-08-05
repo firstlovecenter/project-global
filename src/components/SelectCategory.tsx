@@ -22,6 +22,7 @@ import useCustomColors from 'hooks/useCustomColors'
 const SelectCategory: React.FC = () => {
   const { user, setCurrentUser } = useUser()
   const { yellow, gray, textPrimary, darkButtonBg } = useCustomColors()
+  const { selectedProfile } = user
 
   const roleChurchesRef = collection(
     useFirestore(),
@@ -37,32 +38,50 @@ const SelectCategory: React.FC = () => {
   } = useFirestoreCollectionData(roleChurchesRef)
   const roleChurches = data as RoleChurch[]
 
-  const initialRole = roleChurches
-    ? roleChurches[0]
-    : { name: 'ACCRA', level: 'CAMPUS', role: 'ADMIN' }
+  const initialRole =
+    {
+      name: selectedProfile.name,
+      level: selectedProfile.level,
+      role: selectedProfile.role,
+      id: selectedProfile.id,
+    } || roleChurches[0]
 
   const [selectedItem, setSelectedItem] = useState<{
     label: string
     subLabel: string
+    id: string
   }>({
     label: initialRole.name,
     subLabel: `${initialRole.level} ${initialRole.role}`,
+    id: initialRole.id,
   })
 
   useEffect(() => {
     if (roleChurches) {
       setSelectedItem({
-        label: roleChurches[0].name,
-        subLabel: `${roleChurches[0].level} ${roleChurches[0].role}`,
+        label: initialRole.name,
+        subLabel: `${initialRole.level} ${initialRole.role}`,
+        id: initialRole.id,
       })
 
       setCurrentUser({
         ...user,
-        selectedProfile: roleChurches[0],
+        selectedProfile: {
+          id: selectedItem.id,
+          name: selectedItem.label,
+          role: selectedItem.subLabel,
+          level: 'campus',
+        },
       })
     }
-    console.log('🚀 ~ file: SelectCategory.tsx:18 ~ item:', roleChurches)
-  }, [roleChurches, setCurrentUser, user])
+
+    console.log(
+      '🚀 ~ file: SelectCategory.tsx:31 ~ useEffect ~ selectedItem:',
+      selectedItem
+    )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roleChurches])
 
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={memError}>
@@ -102,13 +121,14 @@ const SelectCategory: React.FC = () => {
           borderRadius={'0 0 0.5rem 0.5rem'}
           overflow={'hidden'}
         >
-          {roleChurches?.map((item, index) => (
+          {roleChurches?.map((item) => (
             <MenuItem
-              key={index}
+              key={item.id}
               onClick={() => {
                 setSelectedItem({
                   label: item.name,
                   subLabel: `${item.level} ${item.role}`,
+                  id: item.id,
                 })
                 setCurrentUser({
                   ...user,
