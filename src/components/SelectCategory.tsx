@@ -68,8 +68,8 @@ const SelectCategory: React.FC = () => {
       setCurrentUser({
         ...user,
         selectedProfile: {
-          id: selectedItem.id,
-          name: selectedItem.label,
+          id: initialRole.id,
+          name: initialRole.name,
           role: initialRole.role,
           level: initialRole.level,
         },

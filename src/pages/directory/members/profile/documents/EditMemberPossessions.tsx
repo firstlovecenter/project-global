@@ -87,7 +87,9 @@ const EditMemberPossessions = () => {
 
   return (
     <Container>
-      <Heading size="md">Edit Member Possessions</Heading>
+      <Heading size="md" textAlign={'center'}>
+        Edit Member Possessions
+      </Heading>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* <Input

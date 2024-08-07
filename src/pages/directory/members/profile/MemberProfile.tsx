@@ -76,7 +76,7 @@ const MemberProfile = () => {
     },
     {
       name: 'Government ID and Certificates',
-      link: '/member/documents/government-id-and-certificates',
+      link: '/member/documents/gov-documents',
     },
     {
       name: 'Educational Certificates',

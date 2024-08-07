@@ -24,6 +24,18 @@ const MemberHRDocuments = lazy(
   () => import('./profile/documents/MemberHRDocuments')
 )
 
+const MemberGovDocuments = lazy(
+  () => import('./profile/documents/MemberGovDocuments')
+)
+
+const MemberEducationalCertificates = lazy(
+  () => import('./profile/documents/MemberEducationalCertificates')
+)
+
+const MemberChildrensBirthCerts = lazy(
+  () => import('./profile/documents/MemberChildrensBirthCerts')
+)
+
 export const memberRoutes: LazyRouteTypes[] = [
   {
     path: '/directory/register-member',
@@ -69,6 +81,21 @@ export const memberRoutes: LazyRouteTypes[] = [
   {
     path: '/member/documents/hr-documents',
     element: MemberHRDocuments,
+    roles: ['all'],
+  },
+  {
+    path: '/member/documents/gov-documents',
+    element: MemberGovDocuments,
+    roles: ['all'],
+  },
+  {
+    path: '/member/documents/educational-certificates',
+    element: MemberEducationalCertificates,
+    roles: ['all'],
+  },
+  {
+    path: '/member/documents/childrens-birth-certificates',
+    element: MemberChildrensBirthCerts,
     roles: ['all'],
   },
 ]
