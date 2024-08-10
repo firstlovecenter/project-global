@@ -27,3 +27,10 @@ export const validateRequest = (request: any, requiredFields: string[]) => {
 export const removeSpaces = (str: string) => {
   return str.replace(/\s/g, '')
 }
+
+export const toKebabCase = (str: string) => {
+  return str
+    .toLowerCase() // Convert the string to lowercase
+    .trim() // Remove any leading or trailing whitespace
+    .replace(/\s+/g, '-') // Replace spaces with hyphenss
+}

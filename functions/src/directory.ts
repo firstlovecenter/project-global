@@ -6,7 +6,7 @@ import axios from 'axios'
 import { json } from 'body-parser'
 import { Church, ChurchData, Member } from './types/types'
 import { notifyBaseURL } from './constants'
-import { validateRequest } from './utils/utils'
+import { validateRequest, toKebabCase } from './utils/utils'
 
 admin.initializeApp()
 
@@ -146,10 +146,48 @@ app.put('/member', async (request, response) => {
   }
 })
 
+app.post('/church/denomination', async (request, response) => {
+  const denomination = request.body as Church
+  const invalidReq = validateRequest(request.body, ['name', 'leaderRef'])
+
+  if (invalidReq) {
+    response.status(400).send(invalidReq)
+    return
+  }
+
+  const denominationId = toKebabCase(denomination.name)
+
+  const denominationRef = admin
+    .firestore()
+    .doc(`denominations/${denominationId}`)
+
+  const churchData = formatInputData(denomination, denominationId)
+  try {
+    await denominationRef.set(churchData)
+
+    // get the leaderRef
+    const memberData = await getMemberByLeaderRef(denomination.leaderRef)
+
+    if (!memberData.exist) {
+      const churchData = {
+        ...memberData,
+        churchName: denomination.name,
+      } as ChurchData
+
+      await sendChurchLeaderEmail(churchData)
+    }
+
+    response.send(denomination)
+    return
+  } catch (error) {
+    console.error('Error creating continent:', error)
+    response.status(500).send(error)
+  }
+})
+
 app.post('/church/continent', async (request, response) => {
   const continent = request.body as Church
   const invalidReq = validateRequest(request.body, [
-    'id',
     'name',
     'leaderRef',
     'denominationRef',
@@ -160,10 +198,12 @@ app.post('/church/continent', async (request, response) => {
     return
   }
 
-  const continentRef = admin.firestore().doc(`continents/${continent.id}`)
-
   try {
-    await continentRef.set(continent)
+    const continentId = toKebabCase(continent.name)
+    const continentRef = admin.firestore().doc(`continents/${continentId}`)
+
+    const churchData = formatInputData(continent, continentId)
+    await continentRef.set(churchData)
 
     // get the leaderRef
     const memberData = await getMemberByLeaderRef(continent.leaderRef)
@@ -188,7 +228,6 @@ app.post('/church/continent', async (request, response) => {
 app.post('/church/country', async (request, response) => {
   const country = request.body as Church
   const invalidReq = validateRequest(request.body, [
-    'id',
     'name',
     'leaderRef',
     'continentRef',
@@ -199,10 +238,12 @@ app.post('/church/country', async (request, response) => {
     return
   }
 
-  const countryRef = admin.firestore().doc(`countries/${country.id}`)
-
   try {
-    await countryRef.set(country)
+    const countryId = toKebabCase(country.name)
+    const countryRef = admin.firestore().doc(`countries/${countryId}`)
+
+    const churchData = formatInputData(country, countryId)
+    await countryRef.set(churchData)
     // get the leaderRef
     const memberData = await getMemberByLeaderRef(country.leaderRef)
 
@@ -225,7 +266,6 @@ app.post('/church/country', async (request, response) => {
 app.post('/church/city', async (request, response) => {
   const city = request.body as Church
   const invalidReq = validateRequest(request.body, [
-    'id',
     'name',
     'leaderRef',
     'countryRef',
@@ -236,10 +276,12 @@ app.post('/church/city', async (request, response) => {
     return
   }
 
-  const cityRef = admin.firestore().doc(`cities/${city.id}`)
-
   try {
-    await cityRef.set(city)
+    const cityId = toKebabCase(city.name)
+    const cityRef = admin.firestore().doc(`cities/${cityId}`)
+    const churchData = formatInputData(city, cityId)
+    await cityRef.set(churchData)
+
     // get the leaderRef
     const memberData = await getMemberByLeaderRef(city.leaderRef)
 
@@ -261,7 +303,6 @@ app.post('/church/city', async (request, response) => {
 app.post('/church/family', async (request, response) => {
   const family = request.body as Church
   const invalidReq = validateRequest(request.body, [
-    'id',
     'name',
     'leaderRef',
     'denominationRef',
@@ -272,10 +313,13 @@ app.post('/church/family', async (request, response) => {
     return
   }
 
-  const familyRef = admin.firestore().doc(`families/${family.id}`)
-
   try {
-    await familyRef.set(family)
+    const familyId = toKebabCase(family.name)
+    const familyRef = admin.firestore().doc(`families/${family.id}`)
+    const churchData = formatInputData(family, familyId)
+
+    await familyRef.set(churchData)
+
     // get the leaderRef
     const memberData = await getMemberByLeaderRef(family.leaderRef)
 
@@ -297,7 +341,6 @@ app.post('/church/family', async (request, response) => {
 app.post('/church/council', async (request, response) => {
   const council = request.body as Church
   const invalidReq = validateRequest(request.body, [
-    'id',
     'name',
     'leaderRef',
     'familyRef',
@@ -308,10 +351,13 @@ app.post('/church/council', async (request, response) => {
     return
   }
 
-  const councilRef = admin.firestore().doc(`councils/${council.id}`)
-
   try {
-    await councilRef.set(council)
+    const councilId = toKebabCase(council.name)
+    const councilRef = admin.firestore().doc(`councils/${councilId}`)
+
+    const churchData = formatInputData(council, councilId)
+    await councilRef.set(churchData)
+
     // get the leaderRef
     const memberData = await getMemberByLeaderRef(council.leaderRef)
 
@@ -333,7 +379,6 @@ app.post('/church/council', async (request, response) => {
 app.post('/church/campus', async (request, response) => {
   const campus = request.body as Church
   const invalidReq = validateRequest(request.body, [
-    'id',
     'name',
     'leaderRef',
     'councilRef',
@@ -345,10 +390,13 @@ app.post('/church/campus', async (request, response) => {
     return
   }
 
-  const campusRef = admin.firestore().doc(`campuses/${campus.id}`)
-
   try {
-    await campusRef.set(campus)
+    const campusId = toKebabCase(campus.name)
+    const campusRef = admin.firestore().doc(`campuses/${campusId}`)
+
+    const churchData = formatInputData(campus, campusId)
+    await campusRef.set(churchData)
+
     // get the leaderRef
     const memberData = await getMemberByLeaderRef(campus.leaderRef)
 
@@ -379,6 +427,13 @@ async function getMemberByLeaderRef(leaderRef: string) {
   return memberData
 }
 
+function formatInputData(churchData: object, id: string) {
+  return {
+    ...churchData,
+    id: id,
+  }
+}
+
 async function sendChurchLeaderEmail(ChurchData: ChurchData) {
   await Promise.all([
     axios({
@@ -395,7 +450,7 @@ async function sendChurchLeaderEmail(ChurchData: ChurchData) {
         from: 'FL Den Admin <no-reply@firstlovecenter.org>',
         't:variables': {
           firstName: ChurchData.firstName,
-          email: ChurchData.email,
+          // email: ChurchData.email,
           churchName: ChurchData.churchName,
         },
       },
