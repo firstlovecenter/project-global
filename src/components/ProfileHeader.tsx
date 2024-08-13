@@ -3,9 +3,35 @@ import { useUser } from 'contexts/UserContext'
 import useCustomColors from 'hooks/useCustomColors'
 import CustomAvatar from './chakra-custom/CustomAvatar'
 
-function ProfileHeader() {
+interface ProfileHeaderProps {
+  isOpen?: boolean
+}
+function ProfileHeader({ isOpen }: ProfileHeaderProps) {
   const { user } = useUser()
   const { textPrimary, textSecondary, themeAlpha } = useCustomColors()
+
+  if (isOpen) {
+    return (
+      <Button
+        colorScheme={themeAlpha.normal}
+        textAlign="start"
+        justifyContent="flex-start"
+        fontWeight="normal"
+        width="100%"
+        pl={0}
+        py={8}
+      >
+        <Box paddingLeft={3}>
+          <Text color={textPrimary}>
+            {user.firstName + ' ' + user.lastName}
+          </Text>
+          <Text color={textSecondary} fontSize="small">
+            {user.email}
+          </Text>
+        </Box>
+      </Button>
+    )
+  }
 
   return (
     <Button

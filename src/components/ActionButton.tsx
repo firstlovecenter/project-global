@@ -27,6 +27,7 @@ export const ActionButton = ({
         justifyContent={'center'}
         width={'100%'}
         gap={2}
+        p={'0 .5rem'}
       >
         <Icon />
         <Box ml={2} flex={1}>

@@ -3,7 +3,11 @@ import { Input } from '@jaedag/admin-portal-react-core'
 import { useForm } from 'react-hook-form'
 import { FaSearch } from 'react-icons/fa'
 
-const SearchBar = () => {
+type SearchBarProps = {
+  isOpen?: boolean
+}
+
+const SearchBar = ({ isOpen }: SearchBarProps) => {
   const initialValues = {
     searchKey: '',
   }
@@ -24,21 +28,24 @@ const SearchBar = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup size="lg" marginY={5} marginBottom={'1rem'}>
-          <InputLeftElement width="3.5rem">
-            <Button
-              h="1.5rem"
-              size="md"
-              leftIcon={<FaSearch />}
-              p={0}
-              variant="ghost"
-              color="#ffffff"
-              _hover={{ bg: 'transparent' }}
-            />
-          </InputLeftElement>
+          {!isOpen && (
+            <InputLeftElement width="3.5rem">
+              <Button
+                h="1.5rem"
+                size="md"
+                leftIcon={<FaSearch />}
+                p={0}
+                variant="ghost"
+                color="#ffffff"
+                _hover={{ bg: 'transparent' }}
+              />
+            </InputLeftElement>
+          )}
           <Input
             borderRadius="10px"
+            textAlign={'left'}
             bg={'#262E40'}
-            paddingLeft="3rem"
+            paddingLeft={isOpen ? '1rem' : '3rem'}
             placeholder="Search for anything"
             color="#ffffff"
             _placeholder={{
