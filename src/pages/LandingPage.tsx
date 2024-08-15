@@ -22,7 +22,7 @@ import { RoleChurch } from 'types/types'
 import { useDispatch } from 'react-redux'
 import { ActionButton } from 'components/ActionButton'
 import ProfileHeader from 'components/ProfileHeader'
-import SelectCategory from 'components/SelectCategory'
+import SelectCategory from 'pages/directory/members/components/SelectProfile'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 
 const LandingPage = () => {

@@ -23,7 +23,7 @@ const FilterButton: FC<FilterButtonProps> = ({ filter, setFilter, value }) => {
       variant={filter.includes(value) ? 'solid' : 'outline'}
       borderRadius="10000px"
       p={4}
-      fontSize={'1.3rem'}
+      fontSize={{ base: '1.3rem', lg: '1rem' }}
       fontWeight={300}
     >
       <Flex

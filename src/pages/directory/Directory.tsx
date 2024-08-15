@@ -10,6 +10,7 @@ import {
   DrawerOverlay,
   Flex,
   Heading,
+  SimpleGrid,
   VStack,
   useDisclosure,
 } from '@chakra-ui/react'
@@ -17,21 +18,19 @@ import {
 import SearchBar from 'components/SearchBar'
 import { RiFilter3Line } from 'react-icons/ri'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import FilterButton from 'components/FilterButton'
 import { collection, query, where } from 'firebase/firestore'
 import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { Member } from 'types/types'
 import MemberListCard from 'components/MemberListCard'
 import { ApolloWrapper, capitalise } from '@jaedag/admin-portal-react-core'
-import useCustomColors from 'hooks/useCustomColors'
 import { useUser } from 'contexts/UserContext'
+import DesktopFilter from 'components/DesktopFilter'
+import AddMemberButton from 'components/AddMemberButton'
 
 const Directory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [filters, setFilters] = useState([''])
-  const navigate = useNavigate()
-  const { yellow } = useCustomColors()
   const { user } = useUser()
 
   const { selectedProfile } = user
@@ -76,27 +75,29 @@ const Directory = () => {
 
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={error}>
-      <Container p={10}>
-        <Heading fontWeight={400}>Directory</Heading>
+      <Container maxWidth={'90%'}>
+        <Heading fontWeight={400} mt={5}>
+          Directory
+        </Heading>
         <Box my={10}>
           <SearchBar />
-          <Flex justifyContent={'space-between'}>
-            <Button
-              variant={'ghost'}
-              onClick={() => navigate('/directory/register-member')}
-              fontSize={'sm'}
-              fontWeight={'300'}
-              p={1}
-              color={yellow}
-            >
-              Add Member
-            </Button>
+          <DesktopFilter
+            filters={filterMenuItems}
+            filter={filters}
+            setFilter={setFilters}
+          />
+          <Flex
+            justifyContent={{ base: 'space-between', lg: 'flex-end' }}
+            mt={{ lg: 5 }}
+          >
+            <AddMemberButton />
             <Button
               variant={'ghost'}
               fontSize={'sm'}
               fontWeight={'300'}
               p={1}
               colorScheme="brandTeal"
+              display={{ base: 'flex', lg: 'none' }}
               onClick={onOpen}
             >
               <Flex alignItems={'center'} gap={1}>
@@ -159,14 +160,32 @@ const Directory = () => {
           </DrawerContent>
         </Drawer>
         {members?.map((member) => (
-          <Box marginTop={5} key={member.id}>
+          <Box
+            marginTop={5}
+            key={member.id}
+            display={{ base: 'block', lg: 'none' }}
+          >
             <MemberListCard
               member={member}
               subtitle={capitalise(member.campus) + ' Campus'}
             />
-            <Divider marginTop={2} />
+            <Divider marginTop={2} display={{ base: 'block', lg: 'none' }} />
           </Box>
         ))}
+        {/* Desktop View */}
+        <SimpleGrid
+          minChildWidth="150px"
+          spacing="20px"
+          mt={5}
+          display={{ base: 'none', lg: 'grid' }}
+        >
+          {members?.map((member) => (
+            <MemberListCard
+              member={member}
+              subtitle={capitalise(member.campus) + ' Campus'}
+            />
+          ))}
+        </SimpleGrid>
       </Container>
     </ApolloWrapper>
   )
