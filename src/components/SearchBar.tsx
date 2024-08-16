@@ -45,7 +45,6 @@ const SearchBar = ({ isOpen }: SearchBarProps) => {
             borderRadius="10px"
             textAlign={'left'}
             bg={'#262E40'}
-            active={isOpen}
             paddingLeft={isOpen ? '1rem' : '3rem'}
             placeholder="Search for anything"
             color="#ffffff"

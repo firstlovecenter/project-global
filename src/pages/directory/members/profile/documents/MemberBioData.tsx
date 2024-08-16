@@ -14,10 +14,11 @@ import { RootState } from 'redux-config/store'
 import ProfileIcon from '../../components/ProfileIcon'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
-import { formatDate } from 'globalUtils'
+
 import CustomAvatar from 'components/chakra-custom/CustomAvatar'
 import useCustomColors from 'hooks/useCustomColors'
 import ProfileInfoCard from '../../components/ProfileInfoCard'
+import { formatDate } from 'globalUtils'
 
 const MemberBioData = () => {
   const member = useSelector((state: RootState) => state.member.data)

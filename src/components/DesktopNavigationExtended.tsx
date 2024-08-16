@@ -48,10 +48,17 @@ const DesktopNavigationExtended = (props: DesktopNavigationExtendedProps) => {
           <DrawerCloseButton
             top={4}
             right={6}
-            transform={'translateY(7px)'}
+            transform={'translateY(5px)'}
             size={'sm'}
+            mt={5}
           />
-          <DrawerHeader display={'flex'} alignItems={'center'} gap={2} my={1}>
+          <DrawerHeader
+            display={'flex'}
+            alignItems={'center'}
+            gap={2}
+            my={1}
+            mt={5}
+          >
             <p style={{ fontWeight: 400, marginLeft: '3rem' }}>Global</p>
           </DrawerHeader>
           <DrawerBody>

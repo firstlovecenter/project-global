@@ -1,4 +1,5 @@
 import {
+  Box,
   Container,
   IconButton,
   Img,
@@ -66,7 +67,9 @@ const DesktopNavigationBar = (props: DesktopNavigationBarProps) => {
       bg={'#14213D'}
       zIndex={2}
     >
-      <Img src={currentColorMode === 'light' ? SplashLogo : SplashLogoDark} />
+      <Box mt={4}>
+        <Img src={currentColorMode === 'light' ? SplashLogo : SplashLogoDark} />
+      </Box>
       <VStack mt={20} gap={6}>
         <FaSearch size={20} onClick={onOpen} cursor={'pointer'} />
         <IconButton

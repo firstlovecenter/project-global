@@ -25,6 +25,8 @@ import { RootState } from 'redux-config/store'
 import DropDownMenu from 'components/DropDownMenu'
 import CustomAvatar from 'components/chakra-custom/CustomAvatar'
 import useCustomColors from 'hooks/useCustomColors'
+import DesktopMemberProfile from './documents/components/DesktopMemberProfile'
+import { formatDate } from 'globalUtils'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
@@ -107,13 +109,60 @@ const MemberProfile = () => {
     },
   ]
 
+  const fields = [
+    {
+      key: 'First Name',
+      value: member?.firstName,
+    },
+    {
+      key: 'Middle Name',
+      value: member?.middleName || '-',
+    },
+    {
+      key: 'Last Name',
+      value: member?.lastName,
+    },
+    {
+      key: 'Email',
+      value: member?.email,
+    },
+    {
+      key: 'Phone Number',
+      value: member?.phoneNumber,
+    },
+    {
+      key: 'WhatsApp Number',
+      value: member?.whatsappNumber,
+    },
+    {
+      key: 'Gender',
+      value: member?.gender,
+    },
+    {
+      key: 'Marital Status',
+      value: member?.maritalStatus,
+    },
+    {
+      key: 'Occupation',
+      value: member?.occupation,
+    },
+    {
+      key: 'Employee Status',
+      value: member?.occupation ? 'Employed' : 'Unemployed',
+    },
+    {
+      key: 'Date of Birth',
+      value: formatDate(member?.dateOfBirth),
+    },
+  ]
+
   return (
     <ApolloWrapper
       data={data && roleChurchesData}
       loading={status === 'loading' || roleChurchesStatus === 'loading'}
       error={error || roleChurchesError}
     >
-      <Container p={8}>
+      <Container p={8} display={{ base: 'block', lg: 'none' }}>
         <VStack>
           <Center marginTop={10}>
             <CustomAvatar
@@ -179,6 +228,7 @@ const MemberProfile = () => {
           <DropDownMenu label="Construction" />
         </VStack>
       </Container>
+      <DesktopMemberProfile member={member} fields={fields} />
     </ApolloWrapper>
   )
 }
