@@ -11,6 +11,7 @@ import {
   SelectOptions,
 } from './react-hook-form-types'
 import { Controller } from 'react-hook-form'
+import useCustomColors from 'hooks/useCustomColors'
 
 export interface RHFSelectProps extends ReactHookFormComponentProps {
   defaultOption?: string
@@ -21,11 +22,12 @@ type SelectPropsType = RHFSelectProps & ChakraSelectProps
 const Select = (props: SelectPropsType) => {
   const { label, name, options, defaultOption, control, errors, ...rest } =
     props
+  const { oppAlpha } = useCustomColors()
 
   return (
     <FormControl isInvalid={!!errors[name]} marginY={4}>
       {!!label && (
-        <FormLabel htmlFor={name} fontSize={'10px'}>
+        <FormLabel htmlFor={name} fontSize={'10px'} color={oppAlpha[600]}>
           {label.toLocaleUpperCase()}
         </FormLabel>
       )}

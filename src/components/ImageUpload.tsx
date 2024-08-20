@@ -1,17 +1,23 @@
 import React, { useState, useRef, ChangeEventHandler } from 'react'
 import {
+  Box,
   Button,
+  Card,
+  CardBody,
   Center,
   Container,
+  Flex,
   FormControl,
   FormErrorMessage,
   Image,
   Input,
+  Text,
 } from '@chakra-ui/react'
 import { BeatLoader } from 'react-spinners'
 import { ReactHookFormComponentProps } from '../components/FormPrimitives/react-hook-form-types'
 import { UseFormSetValue } from 'react-hook-form'
 import useCustomColors from 'hooks/useCustomColors'
+import DesktopUploadIcon from './DesktopUploadIcon'
 
 export interface ImageUploadProps extends ReactHookFormComponentProps {
   uploadPreset: string
@@ -83,12 +89,19 @@ const ImageUpload = (props: ImageUploadProps) => {
     setLoading(false)
   }
 
-  const { yellow } = useCustomColors()
+  const { yellow, menuBtnBg } = useCustomColors()
 
   return (
-    <FormControl my={12}>
-      <Container padding={0} width="190px" height="190px" marginBottom={6}>
-        <Center height="100%">
+    <FormControl my={{ base: 12, lg: 0 }}>
+      <Flex
+        padding={0}
+        height="190px"
+        marginBottom={{ base: 6, lg: 0 }}
+        gap={5}
+        alignItems={'center'}
+        justifyContent={'center'}
+      >
+        <Center height={{ base: '100%', lg: '100px' }}>
           {props.loading || loading ? (
             <BeatLoader data-testid="loading-spinner" color="grey" />
           ) : (
@@ -100,12 +113,61 @@ const ImageUpload = (props: ImageUploadProps) => {
               rounded="full"
               border={'4px solid'}
               borderColor={yellow}
+              width={{ base: '190px', lg: '110px' }}
             />
           )}
         </Center>
-      </Container>
+        <Card
+          maxWidth={'490px'}
+          width={'100%'}
+          height={'130px'}
+          display={{ base: 'none', lg: 'flex' }}
+          borderWidth={2}
+          borderColor={menuBtnBg}
+        >
+          <CardBody p={0}>
+            <Flex
+              alignItems={'center'}
+              justifyContent={'center'}
+              flexDirection={'column'}
+              height={'100%'}
+            >
+              <Box
+                width={'fit-content'}
+                borderRadius={'full'}
+                p={2}
+                borderWidth={4}
+                borderColor={menuBtnBg}
+              >
+                <DesktopUploadIcon />
+              </Box>
+              <Box textAlign={'center'}>
+                <Text fontSize={'0.8rem'}>
+                  <Button
+                    variant={'ghost'}
+                    padding={0}
+                    fontSize={'0.8rem'}
+                    onClick={handleButtonClick}
+                  >
+                    Click to upload
+                  </Button>{' '}
+                  <span style={{ opacity: 0.8 }}>or drag and drop</span>
+                </Text>
+                <Text fontSize={'0.8rem'} opacity={0.8}>
+                  SVG, PNG, JPG or GIF (MAX. 800x400px)
+                </Text>
+              </Box>
+            </Flex>
+          </CardBody>
+        </Card>
+      </Flex>
 
-      <Container padding={0} marginBottom={4} centerContent>
+      <Container
+        padding={0}
+        marginBottom={4}
+        centerContent
+        display={{ base: 'flex', lg: 'none' }}
+      >
         <Input
           id={name}
           display="none"

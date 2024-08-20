@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import FilterButton from './FilterButton'
 
 interface DesktopFilterProps {
@@ -23,18 +23,6 @@ const DesktopFilter = ({ filters, filter, setFilter }: DesktopFilterProps) => {
           />
         ))}
       </Flex>
-      <Box>
-        <Button
-          variant={'ghost'}
-          colorScheme="brandTeal"
-          fontWeight={'300'}
-          p={1}
-          onClick={() => setFilter([])}
-        >
-          {' '}
-          Clear Filters
-        </Button>
-      </Box>
     </Flex>
   )
 }

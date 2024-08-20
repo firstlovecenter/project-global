@@ -10,6 +10,7 @@ import {
 import { ReactHookFormComponentProps } from './react-hook-form-types'
 import { Controller } from 'react-hook-form'
 import { camelCaseToSentenceCase } from 'globalUtils'
+import useCustomColors from 'hooks/useCustomColors'
 
 export interface FormInputProps extends ReactHookFormComponentProps {
   type?:
@@ -28,7 +29,9 @@ export interface FormInputProps extends ReactHookFormComponentProps {
 type FormInputPropsType = FormInputProps & Omit<InputProps, 'type'>
 
 const FormInput = (props: FormInputPropsType) => {
-  const { label, name, control, errors, ...rest } = props
+  const { label, name, placeholder, control, errors, ...rest } = props
+
+  const { oppAlpha } = useCustomColors()
 
   const ruleName = camelCaseToSentenceCase(label as string)
 
@@ -36,7 +39,7 @@ const FormInput = (props: FormInputPropsType) => {
     <FormControl isInvalid={!!errors[name]} mb={4}>
       {!!label && (
         <FormLabel htmlFor={name}>
-          <Text fontSize={'10px'} colorScheme="brandTeal">
+          <Text fontSize={'10px'} color={oppAlpha[600]}>
             {label.toLocaleUpperCase()}
           </Text>
         </FormLabel>
@@ -47,10 +50,12 @@ const FormInput = (props: FormInputPropsType) => {
         render={({ field }) => (
           <Input
             id={name}
+            placeholder={placeholder}
             {...field}
             {...rest}
-            colorScheme="brandTeal"
+            colorScheme="brandBlue"
             borderRadius={'10px'}
+            height={'40px'}
           />
         )}
       />
