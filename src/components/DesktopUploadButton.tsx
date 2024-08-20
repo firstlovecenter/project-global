@@ -6,7 +6,7 @@ const DesktopUploadButton = ({ onClick }: { onClick: () => void }) => {
   const { yellow, iconYellow } = useCustomColors()
 
   return (
-    <Button colorScheme={yellow} variant="ghost" onClick={onClick}>
+    <Button colorScheme={yellow} variant="ghost" onClick={onClick} mb={8}>
       <Flex gap={2} alignItems={'center'}>
         <svg
           width="18"
