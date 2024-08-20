@@ -167,7 +167,7 @@ const theme = extendTheme({
         position: 'relative',
         flexDirection: 'column',
         overflowY: 'auto',
-        minHeight: '100vh',
+        height: '100dvh',
       },
     }),
   },

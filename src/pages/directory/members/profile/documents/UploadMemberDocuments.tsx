@@ -53,9 +53,9 @@ const UploadMemberDocuments = () => {
       flexDirection={'column'}
       alignItems={'center'}
       p={8}
-      height={'100vh'}
+      height={'100%'}
     >
-      <Center>
+      <Center display={{ base: 'flex', lg: 'none' }}>
         <Heading>Upload Documents</Heading>
       </Center>
       <VStack

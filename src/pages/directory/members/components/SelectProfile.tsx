@@ -19,7 +19,7 @@ import { RoleChurch } from 'types/types'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 import useCustomColors from 'hooks/useCustomColors'
 
-const SelectCategory: React.FC = () => {
+const SelectProfile: React.FC = () => {
   const { user, setCurrentUser } = useUser()
   const { yellow, gray, textPrimary, darkButtonBg } = useCustomColors()
   const { selectedProfile } = user
@@ -77,7 +77,7 @@ const SelectCategory: React.FC = () => {
     }
 
     console.log(
-      '🚀 ~ file: SelectCategory.tsx:31 ~ useEffect ~ selectedItem:',
+      '🚀 ~ file: SelectProfile.tsx:31 ~ useEffect ~ selectedItem:',
       selectedItem
     )
 
@@ -173,4 +173,4 @@ const SelectCategory: React.FC = () => {
   )
 }
 
-export default SelectCategory
+export default SelectProfile

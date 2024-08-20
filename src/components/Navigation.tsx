@@ -18,7 +18,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SplashLogoImage from '../assets/icons/FL_logo.png'
 import SplashLogoImageDark from '../assets/icons/FL_logo_dark.png'
-import SelectCategory from '../pages/directory/members/components/SelectProfile'
+import SelectProfile from '../pages/directory/members/components/SelectProfile'
 import { ActionButton } from './ActionButton'
 import SearchBar from './SearchBar'
 import ProfileHeader from './ProfileHeader'
@@ -87,7 +87,7 @@ function Navigation() {
           </DrawerHeader>
 
           <DrawerBody>
-            <SelectCategory />
+            <SelectProfile />
             <VStack
               spacing={1}
               align="stretch"

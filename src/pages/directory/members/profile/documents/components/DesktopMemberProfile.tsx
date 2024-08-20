@@ -17,6 +17,7 @@ import { Member } from 'types/types'
 import CustomAvatar from 'components/chakra-custom/CustomAvatar'
 import useCustomColors from 'hooks/useCustomColors'
 import MemberPossessionsDetails from './MemberPossessionsDetails'
+import PossessionsUpload from './PossessionsUpload'
 
 interface DesktopMemberProfileProps {
   member: Member
@@ -43,7 +44,12 @@ const DesktopMemberProfile = ({
   const { yellow, tabBg } = useCustomColors()
 
   return (
-    <Container display={{ base: 'none', lg: 'block' }} maxWidth={'90%'}>
+    <Container
+      display={{ base: 'none', lg: 'block' }}
+      maxWidth={'90%'}
+      position={'relative'}
+      height={'100%'}
+    >
       <Flex width={'min-content'} mt={5} mb={10}>
         <Heading mt={2}>Directory</Heading>
       </Flex>
@@ -98,6 +104,7 @@ const DesktopMemberProfile = ({
           <TabPanels>
             <TabPanel px={0}>
               <MemberPossessionsDetails />
+              <PossessionsUpload />
             </TabPanel>
           </TabPanels>
         </Tabs>

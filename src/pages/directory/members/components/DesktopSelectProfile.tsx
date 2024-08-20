@@ -9,6 +9,7 @@ const DesktopSelectProfile = () => {
       top={4}
       right={20}
       minW={'300px'}
+      zIndex={10}
     >
       <SelectProfile />
     </Box>

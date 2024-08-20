@@ -7,11 +7,11 @@ import {
   FormErrorMessage,
   Image,
   Input,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { BeatLoader } from 'react-spinners'
 import { ReactHookFormComponentProps } from '../components/FormPrimitives/react-hook-form-types'
 import { UseFormSetValue } from 'react-hook-form'
+import useCustomColors from 'hooks/useCustomColors'
 
 export interface ImageUploadProps extends ReactHookFormComponentProps {
   uploadPreset: string
@@ -83,9 +83,7 @@ const ImageUpload = (props: ImageUploadProps) => {
     setLoading(false)
   }
 
-  const currentColorMode = useColorModeValue('light', 'dark')
-  const borderColor =
-    currentColorMode === 'light' ? 'brandGold.500' : 'brandGold.300'
+  const { yellow } = useCustomColors()
 
   return (
     <FormControl my={12}>
@@ -101,7 +99,7 @@ const ImageUpload = (props: ImageUploadProps) => {
               fallbackSrc="https://res.cloudinary.com/firstlovecenter/image/upload/v1683818433/placeholder350_tt6roc.png"
               rounded="full"
               border={'4px solid'}
-              borderColor={borderColor}
+              borderColor={yellow}
             />
           )}
         </Center>

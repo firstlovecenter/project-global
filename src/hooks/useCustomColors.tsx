@@ -7,6 +7,7 @@ const useCustomColors = () => {
   const tabBg = useColorModeValue('white', '#2D3748')
   const textSecondary = useColorModeValue('brandGray1.500', 'brandGray1.200')
   const yellow = useColorModeValue('brandYellow.500', 'brandYellow.200')
+  const iconYellow = useColorModeValue('#FCA311', '#FFE787')
   const gray = useColorModeValue('brandGray1.500', 'brandGray1.200')
   const oppAlpha = {
     normal: useColorModeValue('blackAlpha', 'whiteAlpha'),
@@ -41,6 +42,7 @@ const useCustomColors = () => {
     menuBtnBg,
     tabBg,
     yellow,
+    iconYellow,
     gray,
     oppAlpha,
     themeAlpha,
