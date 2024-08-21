@@ -14,6 +14,7 @@ import { functions } from 'firebase/firebase'
 import { Provider as ReduxProvider } from 'react-redux'
 import store from 'redux-config/store'
 import DesktopNavigation from 'components/DesktopNavigation'
+import DesktopSelectProfile from './directory/members/components/DesktopSelectProfile'
 
 const App = () => {
   const firestoreInstance = getFirestore(useFirebaseApp())
@@ -39,12 +40,16 @@ const App = () => {
 
 const MainLayout = () => {
   const location = useLocation()
-  const excludeNavigationRoutes = ['/login', '/loading']
+  const excludeNavigationRoutes = ['/login', '/loading', '/forgot-password']
+  const profileExcludeRoutes = [...excludeNavigationRoutes, '/']
 
   return (
     <>
       {!excludeNavigationRoutes.includes(location.pathname) && (
         <DesktopNavigation />
+      )}
+      {!profileExcludeRoutes.includes(location.pathname) && (
+        <DesktopSelectProfile />
       )}
       <Navigation />
       <Suspense fallback={<LoadingPage />}>

@@ -22,7 +22,7 @@ import { RoleChurch } from 'types/types'
 import { useDispatch } from 'react-redux'
 import { ActionButton } from 'components/ActionButton'
 import ProfileHeader from 'components/ProfileHeader'
-import SelectCategory from 'components/SelectCategory'
+import SelectProfile from 'pages/directory/members/components/SelectProfile'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 
 const LandingPage = () => {
@@ -48,7 +48,6 @@ const LandingPage = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('setting useir')
     dispatch({
       type: 'user/setUser',
       payload: {
@@ -116,7 +115,7 @@ const LandingPage = () => {
               mt={{ base: 0, lg: 10 }}
               display={{ base: 'none', lg: 'block' }}
             >
-              <SelectCategory />
+              <SelectProfile />
             </Box>
             <Text
               fontSize="3xl"

@@ -6,27 +6,26 @@ import {
   AccordionPanel,
   AccordionIcon,
   Text,
-  useColorModeValue,
   Button,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { RxCaretRight } from 'react-icons/rx'
+import useCustomColors from 'hooks/useCustomColors'
 interface DropDownMenuProps {
   label: string
   options?: { name: string; link: string }[]
 }
 
 const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
-  const currentColorMode = useColorModeValue('light', 'dark')
   const navigate = useNavigate()
+  const { oppAlpha } = useCustomColors()
 
   return (
     <Accordion allowToggle>
       <AccordionItem
         border={'none'}
         borderRadius={'8px'}
-        bg={currentColorMode === 'light' ? 'brandTeal.500' : '#454D62'}
-        color={'#ffffff'}
+        bg={oppAlpha[200]}
         py={1.5}
       >
         <h2>
@@ -52,7 +51,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({ label, options }) => {
               my={2}
               onClick={() => navigate(link)}
             >
-              <Text>{name}</Text>
+              <Text fontWeight="normal">{name}</Text>
               <RxCaretRight />
             </Button>
           ))}

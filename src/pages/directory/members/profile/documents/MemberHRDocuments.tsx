@@ -168,7 +168,7 @@ const MemberHRDocuments = () => {
   return (
     <>
       <Container>
-        <Heading>HR Documents</Heading>
+        <Heading textAlign={'center'}>HR Documents</Heading>
 
         <Box marginY={10}>
           <ProfileAvatar member={member} />
@@ -179,7 +179,9 @@ const MemberHRDocuments = () => {
             <GridItem key={field.key}>
               <Card>
                 <CardHeader paddingY={2}>
-                  <Text fontWeight="bold">{field.key}</Text>
+                  <Text fontWeight="bold" textAlign={'center'}>
+                    {field.key}
+                  </Text>
                 </CardHeader>
                 <CardBody>
                   {field.value && (

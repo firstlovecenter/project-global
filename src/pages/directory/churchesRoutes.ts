@@ -2,7 +2,7 @@ import { LazyRouteTypes } from 'auth/auth-types'
 import { permitAdmin } from 'permissions'
 import { lazy } from 'react'
 
-const Churches = lazy(() => import('./profile/SelectedProfile'))
+const Churches = lazy(() => import('./members/components/SelectedProfile'))
 const CreateContinent = lazy(() => import('./create/CreateContinent'))
 const CreateCountry = lazy(() => import('./create/CreateCountry'))
 const CreateCity = lazy(() => import('./create/CreateCity'))

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -17,9 +17,12 @@ import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { useUser } from 'contexts/UserContext'
 import { RoleChurch } from 'types/types'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
+import useCustomColors from 'hooks/useCustomColors'
 
-const SelectCategory: React.FC = () => {
-  const { user } = useUser()
+const SelectProfile: React.FC = () => {
+  const { user, setCurrentUser } = useUser()
+  const { yellow, gray, textPrimary, darkButtonBg } = useCustomColors()
+  const { selectedProfile } = user
 
   const roleChurchesRef = collection(
     useFirestore(),
@@ -35,27 +38,59 @@ const SelectCategory: React.FC = () => {
   } = useFirestoreCollectionData(roleChurchesRef)
   const roleChurches = data as RoleChurch[]
 
-  console.log('🚀 ~ file: SelectCategory.tsx:8 ~ roles:', roleChurches)
-  const initialRole = roleChurches
-    ? roleChurches[0]
-    : { name: 'ACCRA', level: 'CAMPUS', role: 'ADMIN' }
+  const initialRole =
+    (selectedProfile && {
+      name: selectedProfile.name,
+      level: selectedProfile.level,
+      role: selectedProfile.role,
+      id: selectedProfile.id,
+    }) ||
+    roleChurches[0]
 
   const [selectedItem, setSelectedItem] = useState<{
     label: string
     subLabel: string
+    id: string
   }>({
     label: initialRole.name,
     subLabel: `${initialRole.level} ${initialRole.role}`,
+    id: initialRole.id,
   })
+
+  useEffect(() => {
+    if (roleChurches) {
+      setSelectedItem({
+        label: initialRole.name,
+        subLabel: `${initialRole.level} ${initialRole.role}`,
+        id: initialRole.id,
+      })
+
+      setCurrentUser({
+        ...user,
+        selectedProfile: {
+          id: initialRole.id,
+          name: initialRole.name,
+          role: initialRole.role,
+          level: initialRole.level,
+        },
+      })
+    }
+
+    console.log(
+      '🚀 ~ file: SelectProfile.tsx:31 ~ useEffect ~ selectedItem:',
+      selectedItem
+    )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roleChurches])
 
   return (
     <ApolloWrapper data={data} loading={status === 'loading'} error={memError}>
       <Menu matchWidth>
         <MenuButton
           as={Button}
-          rightIcon={<RiArrowDropDownLine />}
-          colorScheme="brandTeal"
-          color={'white'}
+          rightIcon={<RiArrowDropDownLine color={textPrimary} />}
+          colorScheme={darkButtonBg}
           width="100%"
           height="4rem"
           fontSize="1.25rem"
@@ -63,15 +98,16 @@ const SelectCategory: React.FC = () => {
           _active={{ borderRadius: '0.5rem 0.5rem 0 0' }}
         >
           <Flex alignItems="center" gap={1}>
-            <Icon as={FaChurch} mr={2} />
+            <Icon as={FaChurch} mr={2} color={yellow} />
             <Box textAlign="left">
-              <Text fontWeight={500} textTransform={'uppercase'}>
+              <Text fontWeight={500} textTransform={'uppercase'} color={yellow}>
                 {selectedItem?.label}
               </Text>
               <Text
                 fontSize="10px"
                 fontWeight={300}
                 textTransform={'uppercase'}
+                color={gray}
               >
                 {selectedItem?.subLabel}
               </Text>
@@ -86,15 +122,20 @@ const SelectCategory: React.FC = () => {
           borderRadius={'0 0 0.5rem 0.5rem'}
           overflow={'hidden'}
         >
-          {roleChurches?.map((item, index) => (
+          {roleChurches?.map((item) => (
             <MenuItem
-              key={index}
-              onClick={() =>
+              key={item.id}
+              onClick={() => {
                 setSelectedItem({
                   label: item.name,
                   subLabel: `${item.level} ${item.role}`,
+                  id: item.id,
                 })
-              }
+                setCurrentUser({
+                  ...user,
+                  selectedProfile: item,
+                })
+              }}
               height="4rem"
               p={4}
             >
@@ -132,4 +173,4 @@ const SelectCategory: React.FC = () => {
   )
 }
 
-export default SelectCategory
+export default SelectProfile

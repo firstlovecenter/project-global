@@ -16,6 +16,7 @@ import { DIRECTORY_FUNCTION_BASE_URL } from 'firebase/cloudFunctionsConfig'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
+import DesktopRegisterMember from './documents/components/DesktopRegisterMember'
 
 const RegisterMember = () => {
   const { user } = useUser()
@@ -71,8 +72,6 @@ const RegisterMember = () => {
     values.whatsappNumber = parsePhoneNumber(values.whatsappNumber)
     values.phoneNumber = parsePhoneNumber(values.phoneNumber)
 
-    console.log('🚀 ~ file: RegisterMember.tsx:8 ~ values:', values)
-
     try {
       const response = await fetch(DIRECTORY_FUNCTION_BASE_URL + '/member', {
         method: 'POST',
@@ -122,116 +121,134 @@ const RegisterMember = () => {
   })
 
   return (
-    <Container p={10}>
-      <Center>
-        <Heading>Register Member</Heading>
-      </Center>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <ImageUpload
-          user={user}
-          cloudinaryAccount="church-insights"
-          uploadPreset="developer-tests"
-          name="pictureUrl"
-          label="Picture"
-          setValue={setValue}
-          control={control}
-          errors={errors}
-        />
-        <FormInput
-          name="firstName"
-          label="First Name"
-          control={control}
-          errors={errors}
-        />
-
-        <FormInput
-          name="middleName"
-          label="Middle Name"
-          control={control}
-          errors={errors}
-        />
-        <FormInput
-          name="lastName"
-          label="Last Name"
-          control={control}
-          errors={errors}
-        />
-        <FormInput
-          name="email"
-          label="Email"
-          control={control}
-          errors={errors}
-          type="email"
-        />
-        <FormInput
-          name="dateOfBirth"
-          label="Date of Birth"
-          control={control}
-          errors={errors}
-          type="date"
-        />
-        <FormInput
-          name="phoneNumber"
-          label="Phone Number"
-          control={control}
-          errors={errors}
-          type="tel"
-        />
-        <FormInput
-          name="whatsappNumber"
-          label="WhatsApp Number"
-          control={control}
-          errors={errors}
-          type="tel"
-        />
-
-        <FormSelect
-          name="gender"
-          label="Gender"
-          control={control}
-          errors={errors}
-          options={GENDER_OPTIONS}
-        />
-        <FormSelect
-          name="maritalStatus"
-          label="Marital Status"
-          control={control}
-          errors={errors}
-          options={MARITAL_STATUS_OPTIONS}
-        />
-        <FormInput
-          name="occupation"
-          label="Occupation"
-          control={control}
-          errors={errors}
-        />
-        <FormSelect
-          name="employeeStatus"
-          label="Employee Status"
-          control={control}
-          errors={errors}
-          options={[
-            { key: 'Full Time Staff', value: 'staff' },
-            { key: 'Lay/Non Staff', value: 'non-staff' },
-          ]}
-        />
-        <SearchCampus
-          name="campus"
-          label="Campus"
-          control={control}
-          errors={errors}
-          setValue={setValue}
-          placeholder="Search for a campus"
-        />
-
-        <Center marginTop={20}>
-          <Button type="submit" isLoading={isSubmitting} width="100%">
-            Submit
-          </Button>
+    <>
+      <Container p={10} display={{ base: 'block', lg: 'none' }}>
+        <Center>
+          <Heading>Register Member</Heading>
         </Center>
-      </form>
-    </Container>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ImageUpload
+            user={user}
+            cloudinaryAccount="church-insights"
+            uploadPreset="developer-tests"
+            name="pictureUrl"
+            label="Picture"
+            setValue={setValue}
+            control={control}
+            errors={errors}
+          />
+          <FormInput
+            name="firstName"
+            label="First Name"
+            placeholder="Jane"
+            control={control}
+            errors={errors}
+          />
+
+          <FormInput
+            name="middleName"
+            label="Middle Name"
+            placeholder="Mary"
+            control={control}
+            errors={errors}
+          />
+          <FormInput
+            name="lastName"
+            label="Last Name"
+            placeholder="Doe"
+            control={control}
+            errors={errors}
+          />
+          <FormInput
+            name="email"
+            label="Email"
+            placeholder="jdoe@example.com"
+            control={control}
+            errors={errors}
+            type="email"
+          />
+          <FormInput
+            name="dateOfBirth"
+            label="Date of Birth"
+            control={control}
+            errors={errors}
+            type="date"
+          />
+          <FormInput
+            name="phoneNumber"
+            label="Phone Number"
+            placeholder="+447 255 568 926"
+            control={control}
+            errors={errors}
+            type="tel"
+          />
+          <FormInput
+            name="whatsappNumber"
+            label="WhatsApp Number"
+            placeholder="+447 255 568 926"
+            control={control}
+            errors={errors}
+            type="tel"
+          />
+
+          <FormSelect
+            name="gender"
+            label="Gender"
+            control={control}
+            errors={errors}
+            options={GENDER_OPTIONS}
+          />
+          <FormSelect
+            name="maritalStatus"
+            label="Marital Status"
+            control={control}
+            errors={errors}
+            options={MARITAL_STATUS_OPTIONS}
+          />
+          <FormInput
+            name="occupation"
+            label="Occupation"
+            placeholder="Student"
+            control={control}
+            errors={errors}
+          />
+          <FormSelect
+            name="employeeStatus"
+            label="Employee Status"
+            control={control}
+            errors={errors}
+            options={[
+              { key: 'Full Time Staff', value: 'staff' },
+              { key: 'Lay/Non Staff', value: 'non-staff' },
+            ]}
+          />
+          <SearchCampus
+            name="campus"
+            label="Campus"
+            control={control}
+            errors={errors}
+            setValue={setValue}
+            placeholder="Search for a campus"
+          />
+
+          <Center marginTop={20}>
+            <Button type="submit" isLoading={isSubmitting} width="100%">
+              Submit
+            </Button>
+          </Center>
+        </form>
+      </Container>
+      <DesktopRegisterMember
+        user={user}
+        setValue={setValue}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        control={control}
+        errors={errors}
+        name="Add Member"
+      />
+    </>
   )
 }
 

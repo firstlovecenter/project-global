@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { useUser } from 'contexts/UserContext'
 import { useNavigate } from 'react-router-dom'
-import InfoCard from './components/InfoCard'
+import InfoCard from '../../profile/components/InfoCard'
 import { getSubFamilyChurch, getSubGeoChurch, pluralize } from 'globalUtils'
 
 const SelectedProfile = () => {

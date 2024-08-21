@@ -15,11 +15,13 @@ import LogIn from 'auth/LogIn'
 interface UserContextType {
   user: Member
   isAuthorised: (permittedRoles: Role[]) => boolean
+  setCurrentUser: (user: Member) => void
 }
 
 const UserContext = createContext<UserContextType>({
   user: {} as Member,
   isAuthorised: () => false,
+  setCurrentUser: () => void {},
 })
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -83,6 +85,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     () => ({
       user,
       isAuthorised,
+      setCurrentUser,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [user]

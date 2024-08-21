@@ -18,13 +18,12 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SplashLogoImage from '../assets/icons/FL_logo.png'
 import SplashLogoImageDark from '../assets/icons/FL_logo_dark.png'
-import SelectCategory from './SelectCategory'
-import { FaBible, FaChurch } from 'react-icons/fa'
-import { RiBuilding2Line } from 'react-icons/ri'
+import SelectProfile from '../pages/directory/members/components/SelectProfile'
 import { ActionButton } from './ActionButton'
 import SearchBar from './SearchBar'
 import ProfileHeader from './ProfileHeader'
 import { ColorModeSwitcher } from './ColorModeSwitcher'
+import { DUMMY_CATEGORIES } from '../constants'
 
 function Navigation() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -34,24 +33,6 @@ function Navigation() {
   const routeParam = useLocation().pathname
 
   const currentColorMode = useColorModeValue('light', 'dark')
-
-  const DUMMY_CATEGORIES = [
-    {
-      name: 'Directory',
-      path: '/directory',
-      icon: FaBible,
-    },
-    {
-      name: 'Churches',
-      path: '/churches',
-      icon: FaChurch,
-    },
-    {
-      name: 'Buildings & Projects',
-      path: '/buildings',
-      icon: RiBuilding2Line,
-    },
-  ]
 
   if (routeParam === '/login') {
     return null
@@ -106,7 +87,7 @@ function Navigation() {
           </DrawerHeader>
 
           <DrawerBody>
-            <SelectCategory />
+            <SelectProfile />
             <VStack
               spacing={1}
               align="stretch"

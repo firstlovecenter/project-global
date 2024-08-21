@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Center,
   Container,
@@ -7,7 +6,6 @@ import {
   Heading,
   Text,
   VStack,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
@@ -17,7 +15,6 @@ import {
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from 'reactfire'
-import { RoleChurch } from 'types/types'
 import { useUser } from 'contexts/UserContext'
 import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import { GiMailbox } from 'react-icons/gi'
@@ -26,11 +23,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { RootState } from 'redux-config/store'
 import DropDownMenu from 'components/DropDownMenu'
+import CustomAvatar from 'components/chakra-custom/CustomAvatar'
+import useCustomColors from 'hooks/useCustomColors'
+import DesktopMemberProfile from './documents/components/DesktopMemberProfile'
+import { formatDate } from 'globalUtils'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
   const { user } = useUser()
-  const currentColorMode = useColorModeValue('light', 'dark')
+  const { yellow } = useCustomColors()
   const member = useSelector((state: RootState) => state.member?.data)
   const dispatch = useDispatch()
 
@@ -60,7 +61,7 @@ const MemberProfile = () => {
     data: roleChurchesData,
     error: roleChurchesError,
   } = useFirestoreCollectionData(roleChurchesRef)
-  const roleChurches = (roleChurchesData || []) as RoleChurch[]
+  // const roleChurches = (roleChurchesData || []) as RoleChurch[]
 
   const documents = [
     {
@@ -77,7 +78,7 @@ const MemberProfile = () => {
     },
     {
       name: 'Government ID and Certificates',
-      link: '/member/documents/government-id-and-certificates',
+      link: '/member/documents/gov-documents',
     },
     {
       name: 'Educational Certificates',
@@ -108,11 +109,52 @@ const MemberProfile = () => {
     },
   ]
 
-  const colorGoldViaColorMode =
-    currentColorMode === 'light' ? 'brandGold.400' : 'brandGold.200'
-
-  console.log('🚀 ~ file: MemberProfile.tsx:8 ~ Member:', member)
-  console.log('🚀 ~ file: MemberProfile.tsx:8 ~ Role churches:', roleChurches)
+  const fields = [
+    {
+      key: 'First Name',
+      value: member?.firstName,
+    },
+    {
+      key: 'Middle Name',
+      value: member?.middleName || '-',
+    },
+    {
+      key: 'Last Name',
+      value: member?.lastName,
+    },
+    {
+      key: 'Email',
+      value: member?.email,
+    },
+    {
+      key: 'Phone Number',
+      value: member?.phoneNumber,
+    },
+    {
+      key: 'WhatsApp Number',
+      value: member?.whatsappNumber,
+    },
+    {
+      key: 'Gender',
+      value: member?.gender,
+    },
+    {
+      key: 'Marital Status',
+      value: member?.maritalStatus,
+    },
+    {
+      key: 'Occupation',
+      value: member?.occupation,
+    },
+    {
+      key: 'Employee Status',
+      value: member?.occupation ? 'Employed' : 'Unemployed',
+    },
+    {
+      key: 'Date of Birth',
+      value: formatDate(member?.dateOfBirth),
+    },
+  ]
 
   return (
     <ApolloWrapper
@@ -120,15 +162,16 @@ const MemberProfile = () => {
       loading={status === 'loading' || roleChurchesStatus === 'loading'}
       error={error || roleChurchesError}
     >
-      <Container p={8}>
+      {/* TODO: Create a component which displays on mobile and another which displays on larger screen sizes and use those components instead of always suplying this display prop */}
+      <Container p={8} display={{ base: 'block', lg: 'none' }}>
         <VStack>
           <Center marginTop={10}>
-            <Avatar
+            <CustomAvatar
               src={member?.pictureUrl}
               size="2xl"
               padding={1}
               borderWidth={'2px'}
-              borderColor={colorGoldViaColorMode}
+              borderColor={yellow}
             />
           </Center>
           <Heading size="lg" mt={4}>
@@ -136,7 +179,7 @@ const MemberProfile = () => {
           </Heading>
         </VStack>
 
-        <Box textAlign="center" color={colorGoldViaColorMode}>
+        <Box textAlign="center" color={yellow}>
           <Text fontSize="13px">Uk Family Head</Text>
           <Text fontSize="13px">London Campus Shepherd</Text>
 
@@ -186,6 +229,7 @@ const MemberProfile = () => {
           <DropDownMenu label="Construction" />
         </VStack>
       </Container>
+      <DesktopMemberProfile member={member} fields={fields} />
     </ApolloWrapper>
   )
 }
