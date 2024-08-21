@@ -162,6 +162,7 @@ const MemberProfile = () => {
       loading={status === 'loading' || roleChurchesStatus === 'loading'}
       error={error || roleChurchesError}
     >
+      {/* TODO: Create a component which displays on mobile and another which displays on larger screen sizes and use those components instead of always suplying this display prop */}
       <Container p={8} display={{ base: 'block', lg: 'none' }}>
         <VStack>
           <Center marginTop={10}>
