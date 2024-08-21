@@ -79,3 +79,7 @@ export interface Church {
   leaderRef: string
   adminRef: string
 }
+
+export interface ChurchData extends Member {
+  churchName: string
+}
