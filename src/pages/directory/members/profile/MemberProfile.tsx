@@ -1,12 +1,4 @@
-import {
-  Box,
-  Center,
-  Container,
-  HStack,
-  Heading,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, Center, HStack, Heading, Text, VStack } from '@chakra-ui/react'
 import { ApolloWrapper } from '@jaedag/admin-portal-react-core'
 import { useRef } from 'contexts/RefContext'
 import { collection, doc } from 'firebase/firestore'
@@ -27,6 +19,7 @@ import CustomAvatar from 'components/chakra-custom/CustomAvatar'
 import useCustomColors from 'hooks/useCustomColors'
 import DesktopMemberProfile from './documents/components/DesktopMemberProfile'
 import { formatDate } from 'globalUtils'
+import MobileContainer from 'components/MobileContainer'
 
 const MemberProfile = () => {
   const { memberRef } = useRef()
@@ -163,7 +156,7 @@ const MemberProfile = () => {
       error={error || roleChurchesError}
     >
       {/* TODO: Create a component which displays on mobile and another which displays on larger screen sizes and use those components instead of always suplying this display prop */}
-      <Container p={8} display={{ base: 'block', lg: 'none' }}>
+      <MobileContainer p={8}>
         <VStack>
           <Center marginTop={10}>
             <CustomAvatar
@@ -228,7 +221,7 @@ const MemberProfile = () => {
           <DropDownMenu label="Oversight Information" options={oversightInfo} />
           <DropDownMenu label="Construction" />
         </VStack>
-      </Container>
+      </MobileContainer>
       <DesktopMemberProfile member={member} fields={fields} />
     </ApolloWrapper>
   )

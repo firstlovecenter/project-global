@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 import FormInput from 'components/FormPrimitives/FormInput'
 import FormSelect from 'components/FormPrimitives/FormSelect'
 import SearchCampus from 'components/forms/SearchCampus'
@@ -16,6 +16,7 @@ import {
   GENDER_OPTIONS,
   MARITAL_STATUS_OPTIONS,
 } from '@jaedag/admin-portal-react-core'
+import DesktopContainer from 'components/DesktopContainer'
 
 interface DesktopRegisterMemberProps extends ReactHookFormComponentProps {
   user: Member
@@ -55,7 +56,7 @@ const DesktopRegisterMember = ({
 }: DesktopRegisterMemberProps) => {
   const { oppAlpha } = useCustomColors()
   return (
-    <Container display={{ base: 'none', lg: 'block' }} minWidth={'90%'}>
+    <DesktopContainer>
       <Heading mt={7}>Register Member</Heading>
       <Flex
         justifyContent={'space-between'}
@@ -218,7 +219,7 @@ const DesktopRegisterMember = ({
         <Button variant={'ghost'}>Cancel</Button>
         <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
       </Flex>
-    </Container>
+    </DesktopContainer>
   )
 }
 
