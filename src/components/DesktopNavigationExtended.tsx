@@ -73,7 +73,7 @@ const DesktopNavigationExtended = (props: DesktopNavigationExtendedProps) => {
 
               <SearchBar isOpen={isOpen} />
 
-              <VStack align="stretch" gap={'1.6rem'}>
+              <VStack align="stretch" gap={'1.7rem'} mt={1}>
                 {categories.map(({ name, path }) => (
                   <Text
                     onClick={() => {
@@ -83,7 +83,7 @@ const DesktopNavigationExtended = (props: DesktopNavigationExtendedProps) => {
                     cursor={'pointer'}
                     key={name}
                     fontSize={'xl'}
-                    mb={'0.5rem'}
+                    mb={'0.2rem'}
                   >
                     {name}
                   </Text>
