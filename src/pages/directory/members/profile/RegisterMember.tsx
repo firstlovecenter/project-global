@@ -1,4 +1,4 @@
-import { Button, Center, Container, Heading, useToast } from '@chakra-ui/react'
+import { Button, Center, Heading, useToast } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   GENDER_OPTIONS,
@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import DesktopRegisterMember from './documents/components/DesktopRegisterMember'
+import MobileContainer from 'components/MobileContainer'
 
 const RegisterMember = () => {
   const { user } = useUser()
@@ -122,7 +123,7 @@ const RegisterMember = () => {
 
   return (
     <>
-      <Container p={10} display={{ base: 'block', lg: 'none' }}>
+      <MobileContainer p={10}>
         <Center>
           <Heading>Register Member</Heading>
         </Center>
@@ -238,7 +239,7 @@ const RegisterMember = () => {
             </Button>
           </Center>
         </form>
-      </Container>
+      </MobileContainer>
       <DesktopRegisterMember
         user={user}
         setValue={setValue}

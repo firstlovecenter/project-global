@@ -9,13 +9,17 @@ import {
 } from '@chakra-ui/react'
 import SplashLogo from 'assets/icons/FL_logo.png'
 import SplashLogoDark from 'assets/icons/FL_logo_dark.png'
-import { FaHome, FaSearch, FaBible, FaChurch } from 'react-icons/fa'
-import { RiBuilding2Line, RiLogoutBoxRLine } from 'react-icons/ri'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { FaSearch } from 'react-icons/fa'
+import { RiLogoutBoxRLine } from 'react-icons/ri'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from 'contexts/AuthContext'
 import { ColorModeSwitcher } from './ColorModeSwitcher'
 import { useUser } from 'contexts/UserContext'
 import CustomAvatar from './chakra-custom/CustomAvatar'
+import HomeIcon from 'assets/icons/HomeIcon'
+import DirectoryIcon from 'assets/icons/DirectoryIcon'
+import ChurchIcon from 'assets/icons/ChurchIcon'
+import BuildingIcon from 'assets/icons/BuildingIcon'
 
 interface DesktopNavigationBarProps {
   onOpen: () => void
@@ -23,8 +27,6 @@ interface DesktopNavigationBarProps {
 
 const DesktopNavigationBar = (props: DesktopNavigationBarProps) => {
   const { onOpen } = props
-
-  const route = useLocation().pathname
   const { logout, setUser } = useAuth()
   const { user } = useUser()
   const navigate = useNavigate()
@@ -70,43 +72,12 @@ const DesktopNavigationBar = (props: DesktopNavigationBarProps) => {
       <Box mt={4}>
         <Img src={currentColorMode === 'light' ? SplashLogo : SplashLogoDark} />
       </Box>
-      <VStack mt={20} gap={6}>
+      <VStack mt={20} gap={9}>
         <FaSearch size={20} onClick={onOpen} cursor={'pointer'} />
-        <IconButton
-          onClick={() => navigate('/')}
-          colorScheme={route === '/' ? 'yellow' : 'white'}
-          variant="outline"
-          aria-label="home button"
-          border="none"
-          icon={<FaHome size={20} />}
-        />
-
-        <IconButton
-          onClick={() => navigate('/directory')}
-          colorScheme={route === '/directory' ? 'yellow' : 'white'}
-          variant="outline"
-          aria-label="directory button"
-          border="none"
-          icon={<FaBible size={20} />}
-        />
-
-        <IconButton
-          onClick={() => navigate('/churches')}
-          colorScheme={route === '/churches' ? 'yellow' : 'white'}
-          variant="outline"
-          aria-label="churches button"
-          border="none"
-          icon={<FaChurch size={20} />}
-        />
-
-        <IconButton
-          onClick={() => navigate('/buildings')}
-          colorScheme={route === '/buildings' ? 'yellow' : 'white'}
-          variant="outline"
-          aria-label="buildings button"
-          border="none"
-          icon={<RiBuilding2Line size={20} />}
-        />
+        <HomeIcon />
+        <DirectoryIcon />
+        <ChurchIcon />
+        <BuildingIcon />
       </VStack>
       <VStack justifySelf={'flex-end'} mt={'auto'} gap={6}>
         <CustomAvatar
